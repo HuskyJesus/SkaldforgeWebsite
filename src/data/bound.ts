@@ -65,7 +65,7 @@ export const bound: Bound[] = [
     name: 'Skari Quickstep',
     sponsor: "Loki's Bound",
     sponsorNote:
-      'Loki, god of mischief and deception, chose Skari for her speed, cunning, and willingness to fight unfairly.',
+      'Loki, god of mischief, chose Skari for her speed, cunning, and willingness to fight unfairly.',
     description:
       'Skari darts through battle with a grin, marking vulnerable enemies before striking where they least expect her.',
     kit:

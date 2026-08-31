@@ -16,7 +16,7 @@ const roster = publishRoster ? [...leadership, ...team] : [];
 
 <Base
   title="Studio"
-  description="Skaldforge is a multidisciplinary game studio building Mythbound, a competitive Norse arena brawler in Unreal Engine."
+  description="Skaldforge is a small team of indie developers building Mythbound, a competitive Norse arena brawler in Unreal Engine 5.7."
   navOverlay
 >
   <Hero
@@ -47,28 +47,6 @@ const roster = publishRoster ? [...leadership, ...team] : [];
     </div>
   </section>
 
-  {/* ----------------------------------------------------------- philosophy */}
-  <section class="section section--tight philosophy" aria-labelledby="philosophy-title">
-    <div class="wrap wrap--wide">
-      <SectionHeading id="philosophy-title"
-        eyebrow="How we work"
-        title="How we build"
-        class="philosophy__head"
-      />
-      <ul role="list" class="philosophy__list">
-        {
-          studio.philosophy.map((p, i) => (
-            <li class="philosophy__item reveal" style={`--reveal-delay:${i * 80}ms`}>
-              <span class="philosophy__num">{String(i + 1).padStart(2, '0')}</span>
-              <h3 class="philosophy__title">{p.title}</h3>
-              <p>{p.body}</p>
-            </li>
-          ))
-        }
-      </ul>
-    </div>
-  </section>
-
   {/* ------------------------------------------------------ current project */}
   <section class="section project" aria-labelledby="project-title">
     <div class="wrap wrap--wide">
@@ -78,8 +56,8 @@ const roster = publishRoster ? [...leadership, ...team] : [];
           <h2 id="project-title" class="display project__title">Mythbound</h2>
           <p class="project__body">
             A {game.genre.toLowerCase()} built in {game.engine}. Four Bound, contracted to the old
-            gods, fight over an ancient relic in arenas designed to reward speed. In development
-            toward {game.releaseWindow}.
+            gods, fight over an ancient relic in arenas designed to reward speed. Now in
+            post-production, with an Early Access window to be announced.
           </p>
           <div class="project__actions">
             <a class="btn btn--primary" href={url('/mythbound')}>Discover Mythbound</a>
@@ -98,18 +76,11 @@ const roster = publishRoster ? [...leadership, ...team] : [];
     </div>
   </section>
 
-  {/* ---------------------------------------------------------- disciplines */}
-  <section class="section section--tight" aria-labelledby="disciplines-title">
-    <div class="wrap wrap--wide">
-      <SectionHeading id="disciplines-title"
-        eyebrow="Multidisciplinary"
-        title="A shared craft"
-        lede="Design, art, animation and engineering each shape how Mythbound looks, moves and plays."
-        class="disciplines__head"
-      />
-      <ul role="list" class="disciplines reveal">
-        {studio.disciplines.map((d) => <li>{d}</li>)}
-      </ul>
+  <section class="section section--tight craft" aria-labelledby="craft-title">
+    <div class="wrap wrap--wide craft__inner reveal">
+      <p class="eyebrow">One team</p>
+      <h2 id="craft-title" class="display craft__title">A shared craft</h2>
+      <p>Design, engineering, art, animation and production work side by side to make Mythbound feel like one game and one world.</p>
     </div>
   </section>
 
@@ -172,7 +143,7 @@ const roster = publishRoster ? [...leadership, ...team] : [];
 
   <CTA
     lockup
-    eyebrow={`In development. ${game.releaseWindow}`}
+    eyebrow={`In post-production. Release ${game.releaseWindow}`}
     body="Mythbound is the first game from Skaldforge."
     primary={{ label: 'Discover Mythbound', href: url('/mythbound') }}
     secondary={{ label: 'Development', href: url('/technology') }}
@@ -191,33 +162,6 @@ const roster = publishRoster ? [...leadership, ...team] : [];
   .statement__title { font-size: var(--fs-h2); max-width: 16ch; }
   .statement__copy { display: grid; gap: var(--sp-4); color: var(--t-secondary); font-size: var(--fs-lg); }
 
-  /* ----------------------------------------------------------- philosophy */
-  .philosophy { border-block-start: 1px solid var(--s-hairline); }
-  .philosophy__head { margin-block-end: var(--sp-8); }
-  .philosophy__list { display: grid; gap: var(--sp-5); }
-  @media (min-width: 800px) { .philosophy__list { grid-template-columns: repeat(3, 1fr); } }
-
-  .philosophy__item {
-    display: grid;
-    gap: var(--sp-3);
-    align-content: start;
-    padding-block-start: var(--sp-5);
-    border-block-start: 1px solid var(--s-hairline);
-  }
-  .philosophy__num {
-    font-family: var(--f-display);
-    font-size: var(--fs-sm);
-    color: var(--c-gold-500);
-    letter-spacing: var(--tr-label);
-  }
-  .philosophy__title {
-    font-family: var(--f-display);
-    font-size: var(--fs-h3);
-    text-transform: uppercase;
-    letter-spacing: var(--tr-display);
-  }
-  .philosophy__item p { color: var(--t-secondary); }
-
   /* -------------------------------------------------------------- project */
   .project {
     border-block-start: 1px solid var(--s-hairline);
@@ -235,24 +179,10 @@ const roster = publishRoster ? [...leadership, ...team] : [];
   .project__body { color: var(--t-secondary); max-width: 46ch; font-size: var(--fs-lg); }
   .project__actions { display: flex; flex-wrap: wrap; gap: var(--sp-3); margin-block-start: var(--sp-2); }
 
-  /* ---------------------------------------------------------- disciplines */
-  .disciplines__head { margin-block-end: var(--sp-6); }
-  .disciplines {
-    display: flex;
-    flex-wrap: wrap;
-    gap: var(--sp-3);
-  }
-  .disciplines li {
-    font-family: var(--f-display);
-    font-size: var(--fs-sm);
-    text-transform: uppercase;
-    letter-spacing: var(--tr-display);
-    color: var(--t-secondary);
-    padding: var(--sp-3) var(--sp-4);
-    border: 1px solid var(--s-hairline);
-    border-radius: var(--r-md);
-    background: color-mix(in oklab, var(--c-navy-900) 35%, transparent);
-  }
+  .craft { border-block-start: 1px solid var(--s-hairline); }
+  .craft__inner { display:grid; gap:var(--sp-4); }
+  @media(min-width:900px){.craft__inner{grid-template-columns:auto minmax(12rem,.7fr) minmax(0,1.3fr);align-items:center;gap:var(--sp-6)}}
+  .craft__title{font-size:var(--fs-h2);white-space:nowrap}.craft__inner>p:last-child{color:var(--t-secondary);font-size:var(--fs-lg);max-width:52ch}
 
   /* --------------------------------------------------------------- origin */
   .origin { border-block-start: 1px solid var(--s-hairline); }

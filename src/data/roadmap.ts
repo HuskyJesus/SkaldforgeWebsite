@@ -23,7 +23,7 @@ export const roadmapIntro = {
   eyebrow: 'What comes next',
   title: 'The arena is only beginning',
   lede:
-    'Mythbound is in development toward a Fall 2026 window. Further milestones will be shared when they are confirmed.',
+    'Mythbound is in post-production. Release timing and further milestones will be shared when they are confirmed.',
 };
 
 export const roadmap: RoadmapItem[] = [

@@ -2,277 +2,99 @@
 import Base from '../layouts/Base.astro';
 import Hero from '../components/Hero.astro';
 import SectionHeading from '../components/SectionHeading.astro';
-import Figure from '../components/Figure.astro';
-import CompareBlock from '../components/CompareBlock.astro';
 import Snapshot from '../components/Snapshot.astro';
-import CTA from '../components/CTA.astro';
-
 import TrailerPlayer from '../components/TrailerPlayer.astro';
-import { techIntro, techSections, toolchain, vidoc } from '../data/tech';
-import { url } from '../lib/url';
+import CTA from '../components/CTA.astro';
+import { techIntro, techFeatures, toolchain, vidoc } from '../data/tech';
+import { asset, url } from '../lib/url';
 ---
 
-<Base
-  title="Development"
-  description="How Mythbound is built: Unreal Engine, motion capture with Motion Matching, blockout-first arena design, and the technical art behind a fast Norse arena brawler."
-  navOverlay
->
-  <Hero
-    variant="still"
-    stillId="helheim"
-    size="tall"
-    eyebrow={techIntro.eyebrow}
-    heading={techIntro.title}
-    statement="The craft behind the combat. Built in Unreal Engine."
-    primary={{ label: 'Play the trailer', href: `${url('/mythbound')}#trailer` }}
-  />
+<Base title="Development" description="The Unreal Engine technology behind Mythbound: Gameplay Ability System, Motion Matching and competitive multiplayer." navOverlay>
+  <Hero variant="still" stillId="rune-clash" size="tall" eyebrow={techIntro.eyebrow} heading={techIntro.title}
+    statement="Ambitious movement. Godly abilities. One competitive arena."
+    primary={{ label: 'Watch the ViDoc', href: '#vidoc' }} />
 
-  {/* ------------------------------------------------------------ snapshot */}
-  <section class="section section--tight" aria-labelledby="snap-title">
-    <div class="wrap wrap--wide">
-      <h2 id="snap-title" class="visually-hidden">Project snapshot</h2>
-      <p class="intro-lede reveal">{techIntro.lede}</p>
+  <section class="section section--tight" aria-labelledby="snapshot-title">
+    <div class="wrap wrap--wide intro">
+      <div class="intro__copy reveal">
+        <p class="eyebrow">Built in Unreal Engine 5.7</p>
+        <h2 id="snapshot-title" class="display intro__title">Technology in service of the fight</h2>
+        <p>{techIntro.lede}</p>
+      </div>
       <Snapshot />
     </div>
   </section>
 
-  {/* ------------------------------------------------------------ sections */}
-  <div class="tech">
-    {
-      techSections.map((sec, i) => (
-        <section
-          class:list={['section', 'tech__section', i % 2 === 1 && 'tech__section--alt', sec.image && 'tech__section--single']}
-          aria-labelledby={`tech-${sec.id}`}
-        >
-          <div class="wrap wrap--wide">
-            <div class="tech__head reveal">
-              <p class="eyebrow">{sec.eyebrow}</p>
-              <h2 id={`tech-${sec.id}`} class="display tech__title">{sec.title}</h2>
-              <p class="tech__body">{sec.body}</p>
-
-              {sec.points && (
-                <ul role="list" class="tech__points">
-                  {sec.points.map((p) => (
-                    <li>{p}</li>
-                  ))}
-                </ul>
-              )}
-            </div>
-
-            {(sec.compare || sec.image) && <div class="tech__media">
-              {sec.compare ? (
-                <CompareBlock dev={sec.compare.dev} final={sec.compare.final} fit={sec.id === "characters" ? "contain" : "cover"} resultLabel={sec.id === "characters" ? "Character render" : "Gameplay"} />
-              ) : (
-                sec.image && (
-                  <Figure
-                    id={sec.image}
-                    alt={sec.imageCaption ?? sec.title}
-                    caption={sec.imageCaption}
-                    ratio="16 / 9"
-                    sizes="(min-width: 1200px) 1100px, 100vw"
-                    widths={[720, 1100, 1600, 2000]}
-                  />
-                )
-              )}
-            </div>}
+  <div class="features">
+    {techFeatures.map((feature, i) => (
+      <section class:list={['section','feature',i % 2 && 'feature--alt']} aria-labelledby={`tech-${feature.id}`}>
+        <div class="wrap wrap--wide feature__grid">
+          <div class="feature__copy reveal">
+            <p class="eyebrow">{feature.eyebrow}</p>
+            <h2 id={`tech-${feature.id}`} class="display feature__title">{feature.title}</h2>
+            <p>{feature.body}</p>
           </div>
-        </section>
-      ))
-    }
-  </div>
-
-  {/* --------------------------------------------------------------- vidoc */}
-  {
-    vidoc.publish && (
-      <section class="section vidoc" aria-labelledby="vidoc-title">
-        <div class="wrap wrap--wide">
-          <SectionHeading id="vidoc-title"
-            eyebrow="Developer ViDoc"
-            title={vidoc.title}
-            lede={vidoc.lede}
-            align="center"
-            class="vidoc__head"
-          />
-          <div class="vidoc__frame reveal">
-            <TrailerPlayer
-              id="vidoc"
-              kicker="Watch"
-              label={vidoc.title}
-              src={vidoc.src}
-              poster={vidoc.poster}
-              captions={vidoc.captions}
-            />
-          </div>
+          <video class="feature__video reveal" data-tech-video data-src={asset(`assets/video/${feature.video}.mp4`)} muted loop playsinline preload="none" controls poster={asset(`assets/video/${feature.poster}`)} aria-label={`${feature.eyebrow} gameplay example`} />
         </div>
       </section>
-    )
-  }
+    ))}
+  </div>
 
-  {/* ----------------------------------------------------------- toolchain */}
-  <section class="section tools" aria-labelledby="tools-title">
+  <section class="section section--tight tools" aria-labelledby="tools-title">
     <div class="wrap wrap--wide">
-      <SectionHeading id="tools-title"
-        eyebrow="Pipeline"
-        title="The toolchain"
-        lede="The art guide documents the tools used across modeling, texturing, animation and technical art."
-        class="tools__head"
-      />
+      <SectionHeading id="tools-title" eyebrow="Production" title="Tools behind the arena" lede="A focused pipeline built around Unreal Engine." class="tools__head" />
       <ul role="list" class="tools__grid">
-        {
-          toolchain.map((group, i) => (
-            <li class="tools__group reveal" style={`--reveal-delay:${i * 60}ms`}>
-              <h3 class="tools__group-title">{group.group}</h3>
-              <ul role="list" class="tools__list">
-                {group.tools.map((t) => (
-                  <li>{t}</li>
-                ))}
-              </ul>
-            </li>
-          ))
-        }
+        {toolchain.map(group => <li><h3>{group.group}</h3><p>{group.tools.join(' · ')}</p></li>)}
       </ul>
-
-      <div class="budgets reveal">
-        <h3 class="budgets__title">Art production guidelines</h3>
-        <dl class="budgets__list">
-          <div><dt>Characters</dt><dd>25,000 to 40,000 tris · 2K textures</dd></div>
-          <div><dt>Weapons</dt><dd>15,000 to 25,000 tris · 2K textures</dd></div>
-          <div><dt>Environment &amp; props</dt><dd>200 to 30,000 tris by tier · 1K textures</dd></div>
-        </dl>
-      </div>
     </div>
   </section>
 
-  <CTA
-    eyebrow="The game"
-    title="See it in motion"
-    body="See Mythbound’s movement, combat and godly abilities in action."
-    primary={{ label: 'Watch the trailer', href: `${url('/mythbound')}#trailer` }}
-    secondary={{ label: 'About Skaldforge', href: url('/studio') }}
-  />
+  {vidoc.publish && <section class="section vidoc" id="vidoc" aria-labelledby="vidoc-title">
+    <div class="wrap wrap--wide">
+      <SectionHeading id="vidoc-title" eyebrow="Developer ViDoc" title={vidoc.title} lede={vidoc.lede} align="center" class="vidoc__head" />
+      <div class="vidoc__frame reveal"><TrailerPlayer id="developer-vidoc" label={vidoc.title} src={vidoc.src} poster={vidoc.poster} captions={vidoc.captions} /></div>
+    </div>
+  </section>}
+
+  <CTA eyebrow="See the game" title="Enter the arena" body="Watch Mythbound’s movement, combat and abilities in action."
+    primary={{ label: 'Watch the trailer', href: `${url('/mythbound')}#trailer` }} secondary={{ label: 'About Skaldforge', href: url('/studio') }} />
 </Base>
 
+<script>
+  const reduced = window.matchMedia('(prefers-reduced-motion: reduce)');
+  const videos = [...document.querySelectorAll<HTMLVideoElement>('[data-tech-video]')];
+  if (!reduced.matches) {
+    const observer = new IntersectionObserver((entries) => {
+      for (const entry of entries) {
+        const video = entry.target as HTMLVideoElement;
+        if (entry.isIntersecting) {
+          if (!video.src && video.dataset.src) video.src = video.dataset.src;
+          void video.play().catch(() => {});
+        } else {
+          video.pause();
+        }
+      }
+    }, { rootMargin: '150px 0px', threshold: 0.25 });
+    videos.forEach(video => observer.observe(video));
+  }
+</script>
+
 <style>
-  .intro-lede {
-    font-size: var(--fs-xl);
-    line-height: 1.45;
-    color: var(--t-primary);
-    max-width: 54ch;
-    margin-block-end: var(--sp-7);
-    text-wrap: balance;
-  }
-
-  .tech__section { border-block-start: 1px solid var(--s-hairline); }
-  .tech__section--alt {
-    background: radial-gradient(
-      70% 70% at 20% 0%,
-      color-mix(in oklab, var(--c-navy-800) 40%, transparent),
-      transparent 70%
-    );
-  }
-
-  .tech__head {
-    display: grid;
-    gap: var(--sp-4);
-    max-width: 62rem;
-    margin-block-end: var(--sp-7);
-  }
-  .tech__title { font-size: var(--fs-h2); max-width: 18ch; }
-  .tech__body { color: var(--t-secondary); max-width: 58ch; font-size: var(--fs-lg); }
-
-  .tech__points {
-    display: grid;
-    gap: var(--sp-2);
-    margin-block-start: var(--sp-3);
-  }
-  @media (min-width: 700px) {
-    .tech__points { grid-template-columns: repeat(2, 1fr); gap: var(--sp-2) var(--sp-6); }
-  }
-  .tech__points li {
-    display: flex;
-    gap: var(--sp-3);
-    align-items: baseline;
-    font-size: var(--fs-sm);
-    color: var(--t-secondary);
-  }
-  .tech__points li::before {
-    content: '';
-    inline-size: 0.5rem;
-    block-size: 1px;
-    background: var(--c-gold-500);
-    flex: none;
-    transform: translateY(-0.3em);
-  }
-
-  @media (min-width: 1000px) {
-    .tech__section--single > .wrap { display: grid; grid-template-columns: minmax(0, 0.85fr) minmax(0, 1.15fr); align-items: center; gap: var(--sp-8); }
-    .tech__section--single .tech__head { margin-block-end: 0; }
-  }
-  .tech__media { max-width: 76rem; }
-
-  /* ---------------------------------------------------------------- vidoc */
-  .vidoc { border-block-start: 1px solid var(--s-hairline); }
-  .vidoc__head { margin-block-end: var(--sp-7); }
-  .vidoc__frame { max-width: 68rem; margin-inline: auto; }
-
-  /* ------------------------------------------------------------ toolchain */
-  .tools { border-block-start: 1px solid var(--s-hairline); }
-  .tools__head { margin-block-end: var(--sp-8); }
-
-  .tools__grid {
-    display: grid;
-    gap: 1px;
-    background: var(--s-hairline);
-    border: 1px solid var(--s-hairline);
-    border-radius: var(--r-lg);
-    overflow: hidden;
-  }
-  @media (min-width: 560px) { .tools__grid { grid-template-columns: repeat(2, 1fr); } }
-  @media (min-width: 900px) { .tools__grid { grid-template-columns: repeat(3, 1fr); } }
-
-  .tools__group {
-    display: grid;
-    gap: var(--sp-3);
-    align-content: start;
-    padding: var(--sp-5);
-    background: color-mix(in oklab, var(--c-navy-900) 40%, var(--c-ink));
-  }
-  .tools__group-title {
-    font-size: var(--fs-eyebrow);
-    font-weight: 600;
-    letter-spacing: var(--tr-eyebrow);
-    text-transform: uppercase;
-    color: var(--c-gold-500);
-  }
-  .tools__list { display: grid; gap: var(--sp-2); }
-  .tools__list li { font-size: var(--fs-sm); color: var(--t-secondary); }
-
-  /* -------------------------------------------------------------- budgets */
-  .budgets {
-    margin-block-start: var(--sp-6);
-    padding: var(--sp-6);
-    border: 1px solid var(--s-hairline);
-    border-radius: var(--r-lg);
-  }
-  .budgets__title {
-    font-family: var(--f-display);
-    font-size: var(--fs-lg);
-    text-transform: uppercase;
-    letter-spacing: var(--tr-display);
-    margin-block-end: var(--sp-5);
-  }
-  .budgets__list { display: grid; gap: var(--sp-4); }
-  @media (min-width: 800px) { .budgets__list { grid-template-columns: repeat(3, 1fr); } }
-  .budgets__list dt {
-    font-size: var(--fs-eyebrow);
-    letter-spacing: var(--tr-eyebrow);
-    text-transform: uppercase;
-    color: var(--t-muted);
-    margin-block-end: var(--sp-2);
-  }
-  .budgets__list dd {
-    margin: 0;
-    font-size: var(--fs-sm);
-    color: var(--t-secondary);
-  }
+  .intro { display:grid; gap:var(--sp-7); align-items:start; }
+  @media(min-width:900px){.intro{grid-template-columns:1.1fr .9fr;gap:var(--sp-9)}}
+  .intro__copy{display:grid;gap:var(--sp-4)} .intro__title,.feature__title{font-size:var(--fs-h2)}
+  .intro__copy>p:last-child,.feature__copy>p:last-child{color:var(--t-secondary);font-size:var(--fs-lg);max-width:54ch}
+  .feature{border-block-start:1px solid var(--s-hairline)}
+  .feature--alt{background:radial-gradient(65% 75% at 20% 10%,color-mix(in oklab,var(--c-navy-800) 42%,transparent),transparent 72%)}
+  .feature__grid{display:grid;gap:var(--sp-7);align-items:center}.feature__copy{display:grid;gap:var(--sp-4)}
+  .feature__video{inline-size:100%;aspect-ratio:16/9;object-fit:cover;border:1px solid var(--s-hairline);border-radius:var(--r-lg);box-shadow:var(--sh-3)}
+  @media(min-width:960px){.feature__grid{grid-template-columns:minmax(0,.78fr) minmax(0,1.22fr);gap:var(--sp-9)}.feature--alt .feature__copy{order:2}.feature--alt .feature__video{order:1}}
+  @media(prefers-reduced-motion:reduce){.feature__video{display:none}}
+  .tools,.vidoc{border-block-start:1px solid var(--s-hairline)} .tools__head,.vidoc__head{margin-block-end:var(--sp-7)}
+  .tools__grid{display:grid;gap:1px;background:var(--s-hairline);border:1px solid var(--s-hairline);border-radius:var(--r-lg);overflow:hidden}
+  @media(min-width:720px){.tools__grid{grid-template-columns:repeat(3,1fr)}}
+  .tools__grid li{padding:var(--sp-5);background:color-mix(in oklab,var(--c-navy-900) 40%,var(--c-ink))}
+  .tools__grid h3{font-size:var(--fs-eyebrow);letter-spacing:var(--tr-eyebrow);text-transform:uppercase;color:var(--c-gold-500);margin-block-end:var(--sp-3)}
+  .tools__grid p{font-size:var(--fs-sm);color:var(--t-secondary)}
+  .vidoc__frame{max-width:68rem;margin-inline:auto}
 </style>

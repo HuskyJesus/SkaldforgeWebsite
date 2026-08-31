@@ -130,24 +130,23 @@ column and the Studio contact section do not render. No invented accounts exist.
 
 **Action:** supply real URLs and a monitored public address. `src/data/site.ts`.
 
-## 12. Release window : VERIFY STILL CURRENT
+## 12. Release window: resolved for public copy
 
-**Published: "Coming Fall 2026"**, from the TRAILER end card. The only date
-claim on the site; no platforms are claimed anywhere.
+The PM confirmed the public target should read **TBA**. A Q4 2026 Early Access
+window exists internally, but it is not presented as a public commitment. The
+site identifies Mythbound as in post-production and refers to Early Access
+without publishing a date.
 
-**Action:** confirm the window has not moved. `src/data/game.ts`.
+## 13. Engine and technology claims: PM approved
 
-## 13. Engine and technology claims : deliberately conservative
+The PM approved public coverage of **Unreal Engine 5.7**, **Gameplay Ability
+System**, **Motion Matching** and **competitive multiplayer** for the Epic-facing
+technology story. The Development page now focuses on those areas and uses
+current gameplay clips instead of old blockouts, asset budgets or concept-art
+pipeline material.
 
-Published: "Built in Unreal Engine"; motion capture with **Unreal Engine Motion
-Matching** (ASG slide 11 states this explicitly); asset budgets (ASG 8 to 9); the
-DCC toolchain (ASG 6).
-
-**Not claimed:** Nanite, Lumen, Gameplay Ability System, Chaos, World Partition,
-engine version, or any networking architecture.
-
-**Action:** supply engine version, engine features actually in use, and the
-current networking model if you want them stated.
+**Still not claimed:** Nanite, Lumen, Chaos, World Partition, a specific
+networking architecture or unconfirmed engine features.
 
 ## 14. Generative-AI tools omitted from the public toolchain : CONFIRM
 
@@ -161,12 +160,11 @@ watermark. It is **not used anywhere**.
 
 **Action:** decide whether to disclose. `src/data/tech.ts` → `toolchain`.
 
-## 15. Trailer captions : verify timings
+## 15. Video captions
 
-`public/assets/video/mythbound-trailer.en.vtt` was transcribed from the
-burned-in subtitles. Wording is verbatim; **cue timings are approximate**.
-
-**Action:** check timings against playback, or supply the original subtitle file.
+The trailer's optional WebVTT captions now default off because the supplied
+video already contains captions. The Developer ViDoc is also confirmed to have
+captions in the video and is published on the Development page.
 
 ## 16. FIEA / UCF origin wording
 
@@ -191,6 +189,5 @@ correct legal entity and rights line. `src/components/Footer.astro`.
 ## Review pass: remaining publication inputs
 
 - Roadmap expansion cards are now disabled. Existing gods and arenas do not verify plans for new roster slots, new arenas, or future technical capacity. Supply approved milestones before re-enabling them.
-- Confirm the Fall 2026 target from the trailer before launch. The site keeps it as the supplied target, not a new release commitment.
 - Confirm rights to use the supplied PNGTree valknut commercially, including any attribution requirements. The source image is unchanged.
-- Contact details, approved team presentation and ViDoc captions remain missing. These are the strongest remaining improvements to the studio and development pages.
+- Contact details and an approved team presentation remain missing. These are the strongest remaining improvements to the Studio page.

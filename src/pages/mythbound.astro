@@ -21,7 +21,7 @@ import { url } from '../lib/url';
 
 <Base
   title="Mythbound"
-  description="Mythbound is a competitive Norse arena brawler in development at Skaldforge. Chain your movement, fight for the relic, and claim a place in Valhalla. Built in Unreal Engine."
+  description="Mythbound is a competitive Norse arena brawler in post-production at Skaldforge. Chain your movement, fight for the relic, and claim a place in Valhalla. Built in Unreal Engine 5.7."
   navOverlay
 >
   {/* ------------------------------------------------------------ 1. HERO */}
@@ -29,7 +29,7 @@ import { url } from '../lib/url';
     variant="still"
     stillId="bridge-beam"
     size="tall"
-    eyebrow={`${game.status}. Coming ${game.releaseWindow}`}
+    eyebrow={`${game.status}. Release ${game.releaseWindow}`}
     statement="A competitive Norse arena brawler. Chain your movement, take the relic, and prove your place in Valhalla."
     primary={{ label: 'Watch Trailer', href: '#trailer' }}
     secondary={{ label: 'How it’s built', href: url('/technology') }}
@@ -59,6 +59,15 @@ import { url } from '../lib/url';
         <div class="overview__aside reveal">
           <Snapshot />
         </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section--tight" id="trailer" aria-labelledby="trailer-title">
+    <div class="wrap wrap--wide">
+      <SectionHeading id="trailer-title" eyebrow="Media" title="Official Trailer" align="center" class="trailer__head" />
+      <div class="trailer__frame reveal">
+        <TrailerPlayer id="trailer-player" />
       </div>
     </div>
   </section>
@@ -114,10 +123,6 @@ import { url } from '../lib/url';
         class="roster__head"
       />
       <BoundRoster />
-      <p class="roster__note reveal">
-        See the <a href={`${url('/technology')}#tech-characters`}>character pipeline</a>
-        for how each Bound moves from concept art to a game-ready model.
-      </p>
     </div>
   </section>
 
@@ -140,11 +145,10 @@ import { url } from '../lib/url';
       <div class="status__grid">
         <div class="status__text reveal">
           <p class="eyebrow">Development status</p>
-          <h2 id="status-title" class="display status__title">A playable game. Still growing.</h2>
+          <h2 id="status-title" class="display status__title">The arena is taking shape.</h2>
           <p class="status__body">
-            Mythbound is in active development toward a {game.releaseWindow} window. The traversal
-            and combat systems are playable, with four Bound, three arenas and three game modes
-            shown in the final presentation.
+            Mythbound is now in post-production. The team is focused on refining combat,
+            movement, multiplayer stability and presentation ahead of Early Access.
           </p>
           <a class="link-arrow" href={url('/technology')}>See the development work</a>
         </div>
@@ -186,20 +190,10 @@ import { url } from '../lib/url';
     )
   }
 
-  {/* --------------------------------------------------------- 12. TRAILER */}
-  <section class="section section--tight" id="trailer" aria-labelledby="trailer-title">
-    <div class="wrap wrap--wide">
-      <SectionHeading id="trailer-title" eyebrow="Media" title="Official Trailer" align="center" class="trailer__head" />
-      <div class="trailer__frame reveal">
-        <TrailerPlayer id="trailer-player" />
-      </div>
-    </div>
-  </section>
-
   <CTA
     lockup
-    eyebrow={`Coming ${game.releaseWindow}`}
-    body="Built in Unreal Engine at Skaldforge."
+    eyebrow={`Release ${game.releaseWindow}`}
+    body="Built in Unreal Engine 5.7 at Skaldforge."
     primary={{ label: 'Development', href: url('/technology') }}
     secondary={{ label: 'About the studio', href: url('/studio') }}
   />
@@ -229,18 +223,6 @@ import { url } from '../lib/url';
   /* --------------------------------------------------------- roster/arena */
   .roster__head,
   .arena__head { margin-block-end: var(--sp-8); }
-
-  .roster__note {
-    margin-block-start: var(--sp-5);
-    font-size: var(--fs-sm);
-    color: var(--t-muted);
-    text-align: center;
-  }
-  .roster__note a {
-    color: var(--t-accent);
-    text-decoration: underline;
-    text-underline-offset: 0.25em;
-  }
 
   /* --------------------------------------------------------------- status */
   .status {

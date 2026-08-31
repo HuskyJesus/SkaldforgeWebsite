@@ -135,7 +135,7 @@ project documents support:
 
 - No invented lore, features, platforms, dates, metrics, awards or quotes
 - No engine feature is named unless a supplied document says the project uses it
-  (Motion Matching is stated; Nanite, Lumen, GAS and networking are not)
+  (Gameplay Ability System and Motion Matching are stated; unsupported engine features are not)
 - No third-party or AI-generated imagery
 - No placeholder social accounts
 - Sections without verified content are disabled by flag, not filled with filler

@@ -51,3 +51,13 @@ The existing Asgard/Himinbjorg naming question, approved team information, conta
 - Preserved the detailed gameplay, character and development content for visitors who choose to explore beyond Home.
 - Removed repeated sponsor summaries and gameplay keyword lists; sponsor labels and all eight ability descriptions remain.
 - Follow-up verification: type check clean, production build passed, 385 local references validated. All four main pages checked at 320, 768 and 1440px with no horizontal overflow or observed broken loaded images; mobile arena and desktop mode composition inspected visually.
+
+## PM content and technology pass
+
+- Moved the official trailer directly after the Mythbound overview.
+- Rebuilt Development around Unreal Engine 5.7, Gameplay Ability System, Motion Matching and competitive multiplayer.
+- Replaced old process, budget and concept pipeline sections with current gameplay loops, a compact toolchain and the Developer ViDoc.
+- Changed public release timing to TBA and status to post-production.
+- Corrected movement and Skari language, kept the Relic Rush defense phrase together and defaulted optional trailer captions off.
+- Reframed Studio as a small indie team, removed How We Build and collapsed A Shared Craft into one line.
+- Verified all four pages at 320, 768 and 1440px with no overflow, broken loaded images or long dashes.

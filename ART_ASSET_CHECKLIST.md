@@ -179,18 +179,19 @@ best available frame rather than a shot composed for that slot.
 | **Why it matters** | Current cards use trailer frames that were composed for motion, not for a static card. Purpose-shot stills would look markedly more expensive. |
 | **Have?** | Trailer frames : `midgard-aerial`, `bridge-walls` |
 
-### P1-5 · Blockout → final comparison pairs
+### P1-5 · Technology feature loops
 | | |
 | --- | --- |
-| **Filename** | `compare-<area>-dev.jpg` / `compare-<area>-final.jpg` |
-| **Page / section** | Development → all `CompareBlock` sections |
-| **Shows** | **Matched camera** : the same viewpoint in blockout and in the finished lit arena |
-| **Dimensions** | 2000 × 1250 each |
-| **Aspect** | 16:10 |
-| **Format** | JPEG q85 |
+| **Filename** | `tech-gas.mp4`, `tech-motion-matching.mp4`, `tech-multiplayer.mp4` |
+| **Page / section** | Development → GAS / Motion Matching / Multiplayer |
+| **Shows** | A clean 8 to 15 second example matched directly to each feature: an ability interaction, fluid traversal transitions, and a readable multiplayer fight |
+| **Dimensions** | 1920 × 1080 |
+| **Aspect** | 16:9 |
+| **Format** | H.264 MP4, muted loop, under 4 MB each |
 | **Baked text** | No |
-| **Why it matters** | This is the most persuasive format on the Development page for an Epic reviewer, and it only fully lands when both halves share a camera. Today the pairs are thematically matched but shot from different viewpoints, which weakens the effect. |
-| **Have?** | Unmatched pairs : real, but different cameras |
+| **Mobile variant** | Optional 1280 × 720 version |
+| **Why it matters** | The rebuilt Development page is strongest when each technical claim has a current, purpose-captured gameplay example rather than a reused mode clip. |
+| **Have?** | Reused current gameplay clips are wired as temporary replacements |
 
 ### P1-6 · Unreal Editor screenshots
 | | |
@@ -216,7 +217,7 @@ best available frame rather than a shot composed for that slot.
 | **Aspect** | 16:10 |
 | **Format** | JPEG q85 |
 | **Baked text** | No |
-| **Why it matters** | The site states motion capture + Unreal Motion Matching (the strongest verified technical claim it makes) and illustrates it with a greybox test. Evidence of actual capture would substantiate it. Requires talent release for anyone identifiable. |
+| **Why it matters** | The site states motion capture + Unreal Motion Matching (the strongest verified technical claim it makes) and pairs it with gameplay. Evidence of the actual capture and animation tools would substantiate it. Requires talent release for anyone identifiable. |
 | **Have?** | No |
 
 The standalone screenshot gallery was removed in the brevity pass. No extra gallery assets are required for launch; prioritize the existing gameplay and arena placements above.
@@ -271,14 +272,13 @@ The standalone screenshot gallery was removed in the brevity pass. No extra gall
 | **Why it matters** | Would enable full-bleed parallax section breaks between arenas. Not required by the current design. |
 | **Have?** | No |
 
-### P2-6 · Developer ViDoc ✅ HAVE : needs captions
+### P2-6 · Developer ViDoc ✅ HAVE
 | | |
 | --- | --- |
 | **Filename** | `developer-vidoc.mp4` (2:21, 11.4 MB) |
 | **Page / section** | Development page |
-| **Have?** | **Yes** : recovered from the final presentation (slide 8, "A look at our journey"). |
-| **Remaining** | **No caption track.** The trailer has one; this does not, so it is currently the only significant video on the site without captions. Supply a `.vtt` (or the script) and it drops straight in beside the existing player. |
-| **Priority of remaining work** | P1 : accessibility gap |
+| **Have?** | **Yes**: recovered from the final presentation and now published. The PM confirmed captions are already present in the video. |
+| **Future polish** | A shorter 60 to 90 second cut using newer footage would make the Epic-facing story faster and more current. |
 
 ### P2-7 · Press kit
 | | |
@@ -319,4 +319,4 @@ The homepage now uses shorter gameplay features and a compact cast introduction.
 
 Development now pairs Eirik concept art with Eirik's supplied render. Character images use contain cropping so the full artwork remains visible. Single-image technical sections are smaller editorial layouts, not full-screen plates.
 
-The hero and closing Mythbound logos use a tighter display crop around the existing transparent artwork, without changing the source files. Trailer playback preserves its full 16:9 frame. Remaining high-value art requests are clean gameplay captures, sharper hero footage, approved studio photography and a captioned ViDoc.
+The hero and closing Mythbound logos use a tighter display crop around the existing transparent artwork, without changing the source files. Trailer playback preserves its full 16:9 frame. Remaining high-value art requests are clean gameplay captures, sharper hero footage, approved studio photography and purpose-captured technology loops.

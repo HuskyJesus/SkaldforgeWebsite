@@ -6,7 +6,7 @@ export const studio = {
   name: 'Skaldforge',
   statement: 'We forge worlds worth fighting for.',
   lede:
-    'Skaldforge is a multidisciplinary game studio. We are currently building Mythbound, a competitive Norse arena brawler in Unreal Engine.',
+    'Skaldforge is a small team of indie developers building Mythbound, a competitive Norse arena brawler in Unreal Engine 5.7.',
 
   /**
    * source: user brief. The team's roots are at UCF's Florida Interactive
@@ -19,36 +19,6 @@ export const studio = {
       'Skaldforge formed out of the Florida Interactive Entertainment Academy at the University of Central Florida, a graduate program focused on collaborative game development. Mythbound is our first game together.',
   },
 
-  philosophy: [
-    {
-      title: 'Feel first',
-      body:
-        'Movement and combat are prototyped in grey boxes before anything is dressed. The goal is responsive movement and satisfying combat from the start.',
-    },
-    {
-      title: 'Build it playable',
-      body:
-        'Mythbound has been a game people can pick up and play from early on. Playtesting connects the work of every discipline.',
-    },
-    {
-      title: 'One voice',
-      body:
-        'Art, design, animation and engineering share a single reference for what Mythbound is. The interface, the arenas and the characters are meant to read as one world.',
-    },
-  ],
-
-  /** Disciplines are non-personal and safe to publish. source: ASG slide 2. */
-  disciplines: [
-    'Game Design',
-    'Technical Design',
-    'Level Design',
-    'Programming',
-    'Character Art',
-    'Environment Art',
-    'Technical Art',
-    'Animation',
-    'Production',
-  ],
 };
 
 /**

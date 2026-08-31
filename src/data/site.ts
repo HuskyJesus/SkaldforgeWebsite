@@ -15,7 +15,7 @@ export const site = {
   game: 'Mythbound',
   title: 'Skaldforge. Makers of Mythbound',
   description:
-    'Skaldforge is a game studio building Mythbound, a competitive Norse arena brawler where movement, melee, and godly power collide. Built in Unreal Engine.',
+    'Skaldforge is a game studio building Mythbound, a competitive Norse arena brawler where movement, melee, and godly power collide. Built in Unreal Engine 5.7.',
   // Absolute URL is supplied at build time via astro.config.mjs `site`.
   ogImage: 'assets/social/og-default.jpg',
   locale: 'en_US',

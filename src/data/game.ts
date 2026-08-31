@@ -9,13 +9,13 @@ export const game = {
   /** source: GDD "Genre" + brief. */
   genre: 'Competitive Multiplayer Arena Brawler',
 
-  /** source: ASG slide 11 (Unreal Engine Motion Matching), trailer is UE-rendered. */
-  engine: 'Unreal Engine',
+  /** Version confirmed in the PM review on August 31, 2026. */
+  engine: 'Unreal Engine 5.7',
 
-  /** source: TRAILER end card, "Coming Fall 2026". */
-  releaseWindow: 'Fall 2026',
+  /** Public date remains unannounced. Internal Early Access planning is not a promise. */
+  releaseWindow: 'TBA',
 
-  status: 'In Development',
+  status: 'In Post-Production',
 
   /**
    * source: studio direction (current). Relic Rush leads the three modes.
@@ -47,7 +47,7 @@ export const snapshot = [
  * The three gameplay pillars.
  *
  * source: studio direction (current). Traversal is running, sliding,
- * wall-kicking, mantling and ground slamming. Dash and grapple are NOT
+ * wall-kicking and mantling. Dash, grapple and ground slam are NOT
  * advertised. they are older prototype tuning and may not be in the build.
  * Combat copy stays behavioural rather than quoting frame or damage data.
  */
@@ -58,8 +58,8 @@ export const pillars = [
     title: 'Move',
     heading: 'Momentum is the weapon',
     body:
-      'Running, sliding, wall-kicking and mantling chain into one another, and a ground slam turns height into pressure. Carry your momentum from one move to the next.',
-    detail: ['Run', 'Slide', 'Wall-Kick', 'Mantle', 'Ground Slam'],
+      'Running, sliding, wall-kicking and mantling chain into one another. Carry your momentum from one move to the next and turn speed into an advantage.',
+    detail: ['Run', 'Slide', 'Wall-Kick', 'Mantle'],
     image: 'village-street',
   },
   {
@@ -78,7 +78,7 @@ export const pillars = [
     title: 'Wield Power',
     heading: 'The gods are sponsors',
     body:
-      'Thor, Loki, Njord and Hel each grant their Bound two distinct abilities. Lightning, deception, wind and the power of the dead give every contestant a different approach.',
+      'Thor, Loki, Njord and Hel each grant their Bound two distinct abilities. Lightning, speed, wind and the power of the dead give every contestant a different approach.',
     detail: ['Thor', 'Loki', 'Njord', 'Hel'],
     image: 'gold-burst',
   },
@@ -103,7 +103,7 @@ export const pillars = [
 export const relicRush = {
   name: 'Relic Rush',
   format: 'Featured mode',
-  heading: 'Take the relic. Break their defense.',
+  heading: 'Take the relic. Break their defenses.',
   body:
     'Two teams fight over a central relic while defending three goals of their own. Delivering the relic destroys one. When a team loses every life it can no longer respawn, and the last team standing wins.',
   beats: [
@@ -141,7 +141,7 @@ export const arenas = [
     id: 'midgard',
     name: 'Midgard',
     blurb:
-      'Home of the Bound, Midgard sits at the heart of the World Tree. Its hardy people raise generations of strong warriors.',
+      'Midgard sits at the heart of the World Tree and is home to the Bound. Its hardy people raise generations of strong warriors shaped for the arena.',
     hasFinalArt: true,
     image: 'midgard',
   },
