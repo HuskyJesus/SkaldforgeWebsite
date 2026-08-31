@@ -1,0 +1,212 @@
+---
+import { modes } from '../data/game';
+import { asset } from '../lib/url';
+
+/**
+ * Three ways to fight, with Relic Rush given the most weight because it is the
+ * distinctive objective mode.
+ *
+ * Clips are real playtest captures and carry a live HUD and debug readout. That
+ * is deliberate — for a developer audience it reads as evidence the game runs,
+ * not as polish that is missing. Nothing autoplays: each card loads its poster
+ * and fetches video only when the viewer asks for it.
+ */
+---
+
+<ul role="list" class="modes">
+  {
+    modes.map((mode, i) => (
+      <li
+        class:list={['mode', mode.feature && 'mode--feature', 'reveal']}
+        style={`--reveal-delay:${i * 90}ms`}
+      >
+        <article class="mode__card" data-mode>
+          <div class="mode__media">
+            <img
+              class="mode__poster"
+              src={asset(`assets/video/${mode.video}-poster.jpg`)}
+              alt={`${mode.name} gameplay`}
+              width="1280"
+              height="720"
+              loading="lazy"
+              decoding="async"
+              data-mode-poster
+            />
+            <video
+              class="mode__video"
+              data-mode-video
+              data-src={asset(`assets/video/${mode.video}.mp4`)}
+              muted
+              loop
+              playsinline
+              preload="none"
+              hidden
+            />
+            <button class="mode__play" type="button" data-mode-play>
+              <span class="mode__play-ring" aria-hidden="true">
+                <svg viewBox="0 0 16 18" focusable="false">
+                  <path d="M16 9 0 18V0z" fill="currentColor" />
+                </svg>
+              </span>
+              <span class="visually-hidden">Play {mode.name} gameplay</span>
+            </button>
+          </div>
+
+          <div class="mode__body">
+            <p class="mode__kicker">{mode.kicker}</p>
+            <h3 class="display mode__name">{mode.name}</h3>
+            <p class="mode__desc">{mode.body}</p>
+          </div>
+        </article>
+      </li>
+    ))
+  }
+</ul>
+
+<p class="modes__note reveal">Gameplay captured from a work-in-progress playtest build.</p>
+
+<style>
+  .modes { display: grid; gap: var(--sp-5); }
+  @media (min-width: 720px) {
+    .modes { grid-template-columns: repeat(2, 1fr); }
+    /* The featured mode spans the full row above the other two. */
+    .mode--feature { grid-column: 1 / -1; }
+  }
+
+  .mode__card {
+    block-size: 100%;
+    display: grid;
+    grid-template-rows: auto 1fr;
+    overflow: hidden;
+    border: 1px solid var(--s-hairline);
+    border-radius: var(--r-lg);
+    background: linear-gradient(
+      180deg,
+      color-mix(in oklab, var(--c-navy-900) 50%, transparent),
+      transparent
+    );
+    transition: border-color var(--d-mid) var(--e-out);
+  }
+  .mode:hover .mode__card { border-color: var(--s-hairline-lit); }
+
+  @media (min-width: 720px) {
+    .mode--feature .mode__card { grid-template-rows: none; grid-template-columns: 1.35fr 1fr; }
+  }
+
+  .mode__media {
+    position: relative;
+    aspect-ratio: 16 / 9;
+    overflow: hidden;
+    background: var(--c-ink-raised);
+  }
+  .mode--feature .mode__media { aspect-ratio: 16 / 9; }
+
+  .mode__poster,
+  .mode__video {
+    position: absolute;
+    inset: 0;
+    inline-size: 100%;
+    block-size: 100%;
+    object-fit: cover;
+  }
+  .mode__video[hidden] { display: none; }
+  .mode__poster { filter: brightness(0.82) saturate(0.95); }
+
+  .mode__play {
+    position: absolute;
+    inset: 0;
+    display: grid;
+    place-items: center;
+    background: radial-gradient(
+      60% 60% at 50% 50%,
+      color-mix(in oklab, var(--c-ink) 22%, transparent),
+      color-mix(in oklab, var(--c-ink) 62%, transparent)
+    );
+  }
+  .mode__play[hidden] { display: none; }
+
+  .mode__play-ring {
+    display: grid;
+    place-items: center;
+    inline-size: clamp(2.75rem, 2.2rem + 2.4vw, 4rem);
+    aspect-ratio: 1;
+    border: 1px solid var(--c-gold-400);
+    border-radius: 50%;
+    color: var(--c-gold-300);
+    background: color-mix(in oklab, var(--c-ink) 55%, transparent);
+    backdrop-filter: blur(4px);
+    transition: background var(--d-mid) var(--e-out), color var(--d-mid) var(--e-out),
+      transform var(--d-mid) var(--e-out);
+  }
+  .mode__play-ring svg { inline-size: 26%; margin-inline-start: 12%; }
+  .mode__play:hover .mode__play-ring,
+  .mode__play:focus-visible .mode__play-ring {
+    background: var(--c-gold-400);
+    color: var(--c-navy-900);
+    transform: scale(1.07);
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .mode__play:hover .mode__play-ring { transform: none; }
+  }
+
+  .mode__body {
+    display: grid;
+    align-content: start;
+    gap: var(--sp-3);
+    padding: var(--sp-5);
+  }
+  @media (min-width: 720px) {
+    .mode--feature .mode__body { align-content: center; padding: var(--sp-6); }
+  }
+
+  .mode__kicker {
+    font-size: var(--fs-eyebrow);
+    font-weight: 600;
+    letter-spacing: var(--tr-eyebrow);
+    text-transform: uppercase;
+    color: var(--c-gold-500);
+  }
+  .mode__name { font-size: var(--fs-h3); }
+  .mode--feature .mode__name { font-size: var(--fs-h2); }
+  .mode__desc { font-size: var(--fs-sm); color: var(--t-secondary); max-width: 46ch; }
+  .mode--feature .mode__desc { font-size: var(--fs-base); }
+
+  .modes__note {
+    margin-block-start: var(--sp-5);
+    font-size: var(--fs-sm);
+    color: var(--t-muted);
+    text-align: center;
+  }
+</style>
+
+<script>
+  document.querySelectorAll<HTMLElement>('[data-mode]').forEach((card) => {
+    const video = card.querySelector<HTMLVideoElement>('[data-mode-video]');
+    const button = card.querySelector<HTMLButtonElement>('[data-mode-play]');
+    const poster = card.querySelector<HTMLImageElement>('[data-mode-poster]');
+    if (!video || !button) return;
+
+    button.addEventListener('click', () => {
+      if (!video.src) video.src = video.dataset.src ?? '';
+      video.hidden = false;
+      button.hidden = true;
+      poster?.setAttribute('hidden', '');
+      video.play().catch(() => {
+        // Autoplay refused — restore the poster so the card is never blank.
+        video.hidden = true;
+        button.hidden = false;
+        poster?.removeAttribute('hidden');
+      });
+    });
+
+    // Stop decoding once the card scrolls away.
+    new IntersectionObserver(
+      ([e]) => {
+        if (!video.src) return;
+        if (e.isIntersecting) video.play().catch(() => {});
+        else video.pause();
+      },
+      { threshold: 0.15 },
+    ).observe(card);
+  });
+</script>

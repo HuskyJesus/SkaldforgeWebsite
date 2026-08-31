@@ -5,6 +5,7 @@ import SectionHeading from '../components/SectionHeading.astro';
 import Figure from '../components/Figure.astro';
 import FeatureSplit from '../components/FeatureSplit.astro';
 import ArenaShowcase from '../components/ArenaShowcase.astro';
+import GameModes from '../components/GameModes.astro';
 import BoundRoster from '../components/BoundRoster.astro';
 import TrailerPlayer from '../components/TrailerPlayer.astro';
 import Snapshot from '../components/Snapshot.astro';
@@ -24,7 +25,7 @@ import { url } from '../lib/url';
     variant="video"
     size="full"
     eyebrow="A Skaldforge Game"
-    statement="Fight for glory in a Norse arena where movement, melee, and godly power collide."
+    statement="Fight for glory in a Norse arena where movement, melee, and god-granted power collide."
     primary={{ label: 'Watch Trailer', href: '#trailer' }}
     secondary={{ label: 'Discover Mythbound', href: url('/mythbound') }}
   />
@@ -36,13 +37,13 @@ import { url } from '../lib/url';
         <div class="intro__text reveal">
           <p class="eyebrow">The Game</p>
           <h2 id="game-title" class="display intro__title">
-            Four contestants.<br />One relic.<br />No safe ground.
+            Bound to a god.<br />Loosed in the arena.
           </h2>
           <div class="intro__copy">
             <p>
-              In an alternate modern-day Norway, the Valkyries run a competition for the
-              entertainment of the powerful. Those with nothing left to trade sign a contract,
-              bind their soul, and enter the arena as the Bound.
+              The Bound fight for glory under the sponsorship of the gods. Thor, Loki, Njord and
+              Hel each back a contestant, trading power for spectacle — and {game.announcer} presides
+              over the whole competition.
             </p>
             <p>
               Mythbound is a {game.genre.toLowerCase()} about speed. Chain your movement, arrive
@@ -131,7 +132,20 @@ import { url } from '../lib/url';
     </div>
   </section>
 
-  {/* ------------------------------------------------------------ 5. ARENAS */}
+  {/* ------------------------------------------------------------- 5. MODES */}
+  <section class="section" aria-labelledby="modes-title">
+    <div class="wrap wrap--wide">
+      <SectionHeading
+        eyebrow="Game modes"
+        title="Three ways to fight"
+        lede="One objective mode built around the relic, and two that come down to who is left standing."
+        class="modes__head"
+      />
+      <GameModes />
+    </div>
+  </section>
+
+  {/* ------------------------------------------------------------ 6. ARENAS */}
   <section class="section" aria-labelledby="arenas-title">
     <div class="wrap wrap--wide">
       <SectionHeading
@@ -172,7 +186,7 @@ import { url } from '../lib/url';
           <p class="unreal__body">
             Animation uses motion capture combined with Unreal's Motion Matching, which keeps a
             large blendable library available — necessary when a player can enter the same attack
-            out of a slide, a dash, a wall-kick or a grapple.
+            out of a slide, a wall-kick, a mantle or a fall.
           </p>
           <a class="link-arrow" href={url('/technology')}>See how it's built</a>
         </div>
@@ -374,6 +388,7 @@ import { url } from '../lib/url';
 
   /* ----------------------------------------------------------- arenas/bound */
   .arenas__head,
+  .modes__head,
   .bound__head { margin-block-end: var(--sp-8); }
 
   /* --------------------------------------------------------------- unreal */

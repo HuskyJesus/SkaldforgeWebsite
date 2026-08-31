@@ -1,204 +1,201 @@
 # CONTENT_TODO
 
-Facts, copy, links and claims that need Skaldforge sign-off before the site can
-be considered final. Nothing in this list is currently published as a claim —
-each item is either omitted, disabled behind a flag, or flagged here because it
+Open items needing Skaldforge sign-off. Nothing here is currently published as
+a claim — each item is omitted, disabled behind a flag, or flagged because it
 was inferred rather than verified.
 
-**Sources referenced below**
-- `GDD` — *Mythbound GDD.docx*, Design Document v1.80
-- `ASG` — *Mythbound ASG.pptx*, Art Style Guide (slide numbers given)
+**Sources, newest first**
+- `STUDIO` — studio-supplied current canon (chat direction). **Authoritative.**
+- `FINAL` — *Final Presentation - Copy.pptx* (recovered from the OneDrive zip)
 - `TRAILER` — *Mythbound_FinalTrailerV02.mp4*
-- `BRIEF` — the written brief supplied with this build
+- `ASG` — *Mythbound ASG.pptx* (slide numbers given)
+- `GDD` — *Mythbound GDD.docx* v1.80 — **largely superseded, see below**
 
 ---
 
-## 1. Game mode and team size — CONFLICT, NEEDS A DECISION
+## 0. What is now treated as OBSOLETE
 
-**Currently published:** "4v4 Relic Rush" as the primary mode.
+Per STUDIO direction, none of the following may appear on the site, and all
+have been removed:
 
-The sources disagree:
+- **4v4** as a universal format · **3v3v3** · **1v1v1** · three-team Relic Rush
+- **Hel as announcer** (Hel is Yrsa's sponsor; **Odin** is the announcer)
+- The old three-Bound roster
+- Older prototype abilities: Thunderous Advance, Thunderfall, Tidal Spear,
+  Leviathan's Wake, Hex Recall, Soul Rend
+- **Dash** and **grapple** as advertised core traversal
+- Any description of Mythbound as a local multiplayer party game
+- Ultimates — every Bound has exactly two abilities
 
-| Source | Says |
-| --- | --- |
-| BRIEF | "competitive 4v4 multiplayer PvP arena brawler", premiere mode "Relic Rush" |
-| GDD §Multiplayer Gamemode | **3v3v3** (three teams of three, 15 min, elimination race), **1v1v1** free-for-all, and **Capture the Flag** (three teams, banners at spawns). No mode named "Relic Rush". |
-| GDD §Skari abilities | References a **Relic** — "Translates player location to Relic Location", "Teleport disabled while holding Relic" — so relic carrying *is* in the current design. |
-| TRAILER | "Four champions rise", "Fight your way into their base and capture the ancient relic", "Choose to defend your base or fight head on" |
+The GDD remains the source only for build/height/movement-feel flavour and the
+"contract and marked eyes" premise. Its mode, ability and roster sections are
+dead.
 
-The trailer describes a two-sided base-assault relic capture, which is neither
-the GDD's 3v3v3 nor its three-team CTF. The GDD's mode section appears to
-predate the relic work.
+---
 
-**Action:** confirm the correct public description — team format (4v4? 3v3v3?),
-mode name, and win condition. Then update `src/data/game.ts` → `game.primaryMode`
-and `relicRush`. The mode copy currently sticks to what the trailer states
-out loud and avoids asserting a win condition or match length.
+## 1. Asgard vs Himinbjorg — CONFLICT, NEEDS A DECISION ⚠️
 
-## 2. Arena names — "Himinbjorg" vs "Asgard"
+**Currently published: Asgard**, per STUDIO ("Midgard, Helheim, and Asgard are
+still the current named arena/world set I can substantiate").
 
-**Currently published:** Midgard, Helheim, **Asgard**.
+However **FINAL slide 6 reads "HIMINBJORG | HELHEIM | MIDGARD"** and supplies
+the dressed capture the site now uses for that arena. The original website brief
+also said Himinbjorg. So the newest *artifact* says Himinbjorg while the newest
+*instruction* says Asgard.
 
-BRIEF lists the arenas as Himinbjorg / Midgard / Helheim. Both GDD §Setting and
-ASG slides 17–19 name the third arena **Asgard** ("a breathtaking kingdom in the
-sky"). Himinbjorg appears in neither supplied document. Since Himinbjorg is
-Heimdall's hall *within* Asgard, this may be a rename, a sub-area, or a fourth
-space.
+I went with the instruction. This is the single highest-priority item — it is a
+proper noun on three pages and in the page metadata.
 
-**Action:** confirm. Update `src/data/game.ts` → `arenas`.
+**Action:** confirm. One-line change: `src/data/game.ts` → `arenas[2].name`, and
+rename `src/assets/arenas/asgard.jpg`.
 
-## 3. Screenshot → arena attribution — INFERRED
+## 2. Skari's surname — likely a typo in the supplied copy
 
-Arena imagery is captured from the trailer and matched to arenas by reading the
-GDD's descriptions against what is on screen:
+The supplied character copy heads Skari's section **"Skari Gravewind"**, but
+also gives Yrsa as **"Yrsa Gravewind"**. Both cannot be Gravewind, and
+**Skari Quickstep** is used consistently in GDD, ASG slide 20 and FINAL slide 5.
 
-- **Midgard** → the green timber village shot (GDD: village structures, greenery, mountains).
-- **Helheim** → the dark high-walled stone causeway (GDD: ruined, brutalist, greys, high walls).
-- **Asgard** → shown honestly as a blockout, because no dressed Asgard footage exists.
+**Currently published: Skari Quickstep.**
 
-This mapping is a reasonable inference, **not** a verified fact.
+**Action:** confirm. `src/data/bound.ts`.
 
-**Action:** confirm each image is the arena it is labelled as. Files are in
-`src/assets/gameplay/` and `src/assets/arenas/`; the mapping lives in
-`src/data/game.ts` → `arenas[].image`.
+## 3. Skari's pronouns — changed
 
-## 4. Engine and technology claims — deliberately conservative
+The supplied copy uses **she/her** for Skari ("her speed, cunning"). The GDD used
+they/them. The site now uses she/her, per the newer source.
 
-**Published:** "Built in Unreal Engine"; motion capture combined with **Unreal
-Engine Motion Matching** (ASG slide 11 states this explicitly); asset budgets
-(ASG slides 8–9); the DCC toolchain (ASG slide 6).
+**Action:** confirm this is intentional and not an inconsistency.
 
-**Deliberately NOT published**, because no supplied document supports them:
-Nanite, Lumen, Gameplay Ability System, Chaos, World Partition, engine version,
-or any networking architecture.
+## 4. Relic Rush — goals and lives
 
-Note: GDD §Lobby System says "Peer to peer connection, players join/invite into
-a shared lobby." That is a real networking claim but is **not** published —
-it is one line in a v1.80 doc, and networking is exactly the kind of detail an
-Epic reviewer may probe.
+Two statements were supplied a few minutes apart:
+1. "carry it into the enemy goal, costing the opposing team a life"
+2. "protecting their own **three goals**. The relic destroys a goal upon entry.
+   When a team loses every life, it can no longer respawn."
 
-**Action:** supply the engine version and any engine features actually in use,
-plus the current networking model, if you want them stated.
+The site publishes (2), the later version: three goals, relic destroys a goal on
+entry, lose all lives and you stop respawning, last team standing wins.
 
-## 5. Generative-AI tools omitted from the public toolchain — CONFIRM
+**Action:** confirm goals and lives are the same resource, or clarify the
+relationship. `src/data/game.ts` → `relicRush`, `modes`.
 
-ASG slide 6 lists **Stable Diffusion** (concept art, UI, textures, paintovers,
-marketing assets), **Hunyuan Studio** and **Hitem 3D** (model generation)
-alongside Maya, ZBrush, Substance and the rest.
+## 5. Free For All player count
 
-Those three are **omitted** from the published toolchain on the Development page.
-This was a judgement call, not an oversight: a public pipeline page aimed partly
-at an Epic MegaGrant reviewer is a high-scrutiny surface, and generative tooling
-invites questions about asset provenance that the site cannot answer for you.
+STUDIO gave "2-8 players" in one message and omitted it in the next. The site
+publishes **2–8**.
 
-Related: ASG `image65.png` (on the Yrsa slide) is an AI-generated environment
-image carrying a visible generative watermark. It is **not used anywhere** on the
-site.
+**Action:** confirm. `src/data/game.ts` → `modes`.
 
-**Action:** decide whether to disclose the generative tools. If yes, add them to
-`src/data/tech.ts` → `toolchain`. If any shipped art was generated, that needs to
-be understood before submitting to Epic.
+## 6. Arena descriptions — deliberately thin
 
-## 6. Team roster — BUILT BUT DISABLED
+Per STUDIO ("do not put detailed claims like 'Helheim is compact ruins' or
+'Asgard is the vertical map' into public copy"), all layout, verticality and
+chokepoint claims were **removed**. Only Midgard's open/expansive character is
+stated. The other two get a single visual line each.
 
-`src/data/studio.ts` contains the full roster (names + roles) with
-`publishRoster = false`. The Studio page renders the section only when that flag
-is true; today it shows disciplines instead.
+**Action:** supply verified descriptions when the current maps are settled, and
+they can be restored. `src/data/game.ts` → `arenas[].blurb`.
 
-The names are real and already public — they appear in the trailer's own
-"Brought to you by" credits. The **role titles** come from ASG slide 2, an
-internal document, and may be stale. Publishing ~26 named individuals with
-internal titles is the studio's call, not a default.
+## 7. Defensive shield — described generically
+
+Per STUDIO, no numeric shield behaviour is published. The Brawl pillar says
+"parry timing" and "spacing" rather than durability or regeneration values.
+
+**Action:** none required. Revisit only if you want the mechanic named publicly.
+
+## 8. Setting — modern-day Norway de-emphasised
+
+Per STUDIO, the alternate-modern-Norway framing was pulled back. The site now
+leads with the gods, the sponsorship contract and the arena. The Valkyries are
+no longer mentioned. The "contract and marked eyes" premise is retained because
+every finished render visibly supports it.
+
+**Action:** confirm the current narrative framing.
+
+## 9. Gameplay clips carry a live HUD and dev names
+
+The three mode clips (FINAL slides 7) are playtest captures. Visible on screen:
+an FPS/ping debug readout, and real player names in scoreboards and kill feeds
+(DanielDR, CaiusR, Jacob, RichardH, ChrisC, MichaelD, Abner, MichaelK).
+
+This was kept deliberately — for a developer or Epic audience it reads as
+evidence the game genuinely runs, and the section is labelled "captured from a
+work-in-progress playtest build". But it does put team members' handles on a
+public marketing site.
+
+**Action:** confirm that is acceptable, or supply clean captures. Also listed as
+ART_ASSET_CHECKLIST P1.
+
+## 10. Team roster — BUILT BUT DISABLED
+
+`src/data/studio.ts` holds the full roster from FINAL slide 3 with
+`publishRoster = false`. The Studio page shows disciplines instead.
+
+FINAL supersedes ASG here — it moves Level Design Lead from Kenzey Estes to
+Michael Doctor and adds sound design and voice acting.
 
 **Action:** confirm names, spellings and titles, then set `publishRoster = true`.
-Note the trailer credits also list people not in the ASG roles table (Leo
-Hoerdemann, Rachel Flatley, Ethan Powell, Andrew Bielek, Lea Fournier, and
-contracted talent) — decide whether they belong in the public list.
 
-## 7. Social links — NONE PUBLISHED
+## 11. Social links and contact — NONE PUBLISHED
 
-`src/data/site.ts` → `socials` is an empty array, so the footer's "Connect"
-column does not render. No placeholder or invented accounts exist anywhere.
+`socials` is empty and `contact.email` is `null`, so the footer's "Connect"
+column and the Studio contact section do not render. No invented accounts exist.
 
-**Action:** supply real URLs (Discord / X / YouTube / Bluesky / itch / Steam).
+**Action:** supply real URLs and a monitored public address. `src/data/site.ts`.
 
-## 8. Contact address — NONE PUBLISHED
+## 12. Release window — VERIFY STILL CURRENT
 
-`src/data/site.ts` → `contact.email` is `null`, so the Studio page's contact
-section does not render.
+**Published: "Coming Fall 2026"**, from the TRAILER end card. The only date
+claim on the site; no platforms are claimed anywhere.
 
-**Action:** supply a monitored public address (press / business / general).
+**Action:** confirm the window has not moved. `src/data/game.ts`.
 
-## 9. Release window — VERIFY IT IS STILL CURRENT
+## 13. Engine and technology claims — deliberately conservative
 
-**Published:** "Coming Fall 2026" / "Target Window: Fall 2026", taken from the
-TRAILER end card. This is the only date claim on the site, and no platforms are
-claimed anywhere.
+Published: "Built in Unreal Engine"; motion capture with **Unreal Engine Motion
+Matching** (ASG slide 11 states this explicitly); asset budgets (ASG 8–9); the
+DCC toolchain (ASG 6).
 
-Given the trailer is dated August 2026, confirm the window has not moved before
-launch. `src/data/game.ts` → `game.releaseWindow`.
+**Not claimed:** Nanite, Lumen, Gameplay Ability System, Chaos, World Partition,
+engine version, or any networking architecture.
 
-## 10. Yrsa Gravewind — incomplete character data
+**Action:** supply engine version, engine features actually in use, and the
+current networking model if you want them stated.
 
-The GDD gives Yrsa a playstyle ("Support") but **no abilities**; ASG slide 29
-gives build, height and movement, with colour palette "TBD". Her card renders
-with "Abilities in development" instead of inventing a kit.
+## 14. Generative-AI tools omitted from the public toolchain — CONFIRM
 
-Note: GDD §Abilities heads her section "HEL BOUND: Yrsa **Quickstep**", which
-duplicates Skari's surname. ASG slide 20 says **Yrsa Gravewind**, which is what
-the site uses.
+ASG slide 6 lists **Stable Diffusion**, **Hunyuan Studio** and **Hitem 3D**
+alongside Maya, ZBrush and Substance. These are omitted from the published
+toolchain — a public pipeline page aimed at an Epic reviewer invites provenance
+questions the site cannot answer for you.
 
-**Action:** confirm the surname; supply abilities when defined.
-`src/data/bound.ts`.
+Separately, ASG `image65.png` is an AI-generated image with a visible generative
+watermark. It is **not used anywhere**.
 
-## 11. Character accent colours — partially inferred
+**Action:** decide whether to disclose. `src/data/tech.ts` → `toolchain`.
 
-Card accents use the documented palettes: Skari orange/red (ASG 25), Alvar
-blues/purples (ASG 27). Eirik (ASG 22) and Yrsa (ASG 29) are both "TBD" and fall
-back to forge gold rather than an invented colour.
+## 15. Trailer captions — verify timings
 
-**Action:** supply palettes for Eirik and Yrsa. `src/data/bound.ts` → `accent`.
+`public/assets/video/mythbound-trailer.en.vtt` was transcribed from the
+burned-in subtitles. Wording is verbatim; **cue timings are approximate**.
 
-## 12. Forward-looking section — 3 of 6 items disabled
+**Action:** check timings against playback, or supply the original subtitle file.
 
-`src/data/roadmap.ts` gates each item behind its own `publish` flag. Published
-items describe only what is already true (four Bound in development, three
-realms with Asgard in blockout, momentum-driven depth).
-
-Disabled pending verified information: **competitive structure**, **platforms**,
-**broader worldbuilding**. Each has a placeholder body reading "PENDING".
-
-**Action:** supply roadmap information you are willing to state publicly, or
-leave disabled. Never flip one on without rewriting its body.
-
-## 13. Trailer captions — verify timings
-
-`public/assets/video/mythbound-trailer.en.vtt` was transcribed from the burned-in
-subtitles. Wording is verbatim; **cue timings were read off the video and are
-approximate**.
-
-**Action:** have someone check the caption timing against playback, or supply the
-original subtitle file if one exists.
-
-## 14. FIEA / UCF origin wording
+## 16. FIEA / UCF origin wording
 
 The Studio page states Skaldforge formed out of UCF's Florida Interactive
-Entertainment Academy. This comes from BRIEF only — no supplied document
-mentions FIEA. The wording deliberately frames it as origin, not identity.
+Entertainment Academy. This comes from the original brief only.
 
-**Action:** approve the wording, or disable via `src/data/studio.ts` →
-`studio.origin.show = false`.
+**Action:** approve, or disable via `src/data/studio.ts` → `origin.show = false`.
 
-## 15. Custom domain
+## 17. Custom domain
 
-The build reads `SITE_URL` / `BASE_PATH` from the environment and the workflow
-fills them from `actions/configure-pages`, so no URL is hardcoded. To move to a
-custom domain: add `public/CNAME` containing the domain, and set the Pages custom
-domain in repository settings. `public/robots.txt` has the sitemap URL written
-out and must be updated by hand at that point.
+`SITE_URL` / `BASE_PATH` come from the environment and the workflow fills them
+from `actions/configure-pages`, so no URL is hardcoded. To move to a custom
+domain: add `public/CNAME`, set the domain in repository settings, and update
+the `Sitemap:` line in `public/robots.txt` by hand.
 
-## 16. Studio legal name in the footer
+## 18. Studio legal name
 
 The footer renders "© <year> Skaldforge. All rights reserved." Confirm the
-correct legal entity name and whether a different rights line is required.
-`src/components/Footer.astro`.
+correct legal entity and rights line. `src/components/Footer.astro`.

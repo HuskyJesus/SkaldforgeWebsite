@@ -15,15 +15,28 @@ import { asset } from '../lib/url';
 interface Props {
   id?: string;
   label?: string;
+  kicker?: string;
+  /** Path under /public. Defaults to the trailer. */
+  src?: string;
+  poster?: string;
+  /** WebVTT caption track. Omit only if none exists. */
+  captions?: string | null;
 }
-const { id = 'trailer', label = 'Mythbound — Official Trailer' } = Astro.props;
+const {
+  id = 'trailer',
+  label = 'Mythbound — Official Trailer',
+  kicker = 'Watch',
+  src = 'assets/video/mythbound-trailer-1080.mp4',
+  poster = 'assets/video/trailer-poster.jpg',
+  captions = 'assets/video/mythbound-trailer.en.vtt',
+} = Astro.props;
 ---
 
 <div class="player" id={id} data-player>
   <div class="player__frame">
     <img
       class="player__poster"
-      src={asset('assets/video/trailer-poster.jpg')}
+      src={asset(poster)}
       alt=""
       width="1920"
       height="918"
@@ -35,20 +48,24 @@ const { id = 'trailer', label = 'Mythbound — Official Trailer' } = Astro.props
     <video
       class="player__video"
       data-player-video
-      data-src={asset('assets/video/mythbound-trailer-1080.mp4')}
-      poster={asset('assets/video/trailer-poster.jpg')}
+      data-src={asset(src)}
+      poster={asset(poster)}
       controls
       playsinline
       preload="none"
       hidden
     >
-      <track
-        kind="captions"
-        srclang="en"
-        label="English"
-        src={asset('assets/video/mythbound-trailer.en.vtt')}
-        default
-      />
+      {
+        captions && (
+          <track
+            kind="captions"
+            srclang="en"
+            label="English"
+            src={asset(captions)}
+            default
+          />
+        )
+      }
     </video>
 
     <button class="player__play" type="button" data-player-play>
@@ -58,7 +75,7 @@ const { id = 'trailer', label = 'Mythbound — Official Trailer' } = Astro.props
         </svg>
       </span>
       <span class="player__play-label">
-        <span class="player__play-kicker">Watch</span>
+        <span class="player__play-kicker">{kicker}</span>
         <span class="player__play-title">{label}</span>
       </span>
     </button>

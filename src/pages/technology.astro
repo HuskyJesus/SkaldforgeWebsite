@@ -7,7 +7,8 @@ import CompareBlock from '../components/CompareBlock.astro';
 import Snapshot from '../components/Snapshot.astro';
 import CTA from '../components/CTA.astro';
 
-import { techIntro, techSections, toolchain } from '../data/tech';
+import TrailerPlayer from '../components/TrailerPlayer.astro';
+import { techIntro, techSections, toolchain, vidoc } from '../data/tech';
 import { url } from '../lib/url';
 ---
 
@@ -79,6 +80,33 @@ import { url } from '../lib/url';
       ))
     }
   </div>
+
+  {/* --------------------------------------------------------------- vidoc */}
+  {
+    vidoc.publish && (
+      <section class="section vidoc" aria-labelledby="vidoc-title">
+        <div class="wrap wrap--wide">
+          <SectionHeading
+            eyebrow="Developer ViDoc"
+            title={vidoc.title}
+            lede={vidoc.lede}
+            align="center"
+            class="vidoc__head"
+          />
+          <div class="vidoc__frame reveal">
+            <TrailerPlayer
+              id="vidoc"
+              kicker="Watch"
+              label={vidoc.title}
+              src={vidoc.src}
+              poster={vidoc.poster}
+              captions={vidoc.captions}
+            />
+          </div>
+        </div>
+      </section>
+    )
+  }
 
   {/* ----------------------------------------------------------- toolchain */}
   <section class="section tools" aria-labelledby="tools-title">
@@ -175,6 +203,11 @@ import { url } from '../lib/url';
     flex: none;
     transform: translateY(-0.3em);
   }
+
+  /* ---------------------------------------------------------------- vidoc */
+  .vidoc { border-block-start: 1px solid var(--s-hairline); }
+  .vidoc__head { margin-block-end: var(--sp-7); }
+  .vidoc__frame { max-width: 68rem; margin-inline: auto; }
 
   /* ------------------------------------------------------------ toolchain */
   .tools { border-block-start: 1px solid var(--s-hairline); }

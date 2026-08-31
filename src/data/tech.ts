@@ -53,7 +53,7 @@ export const techSections: TechSection[] = [
     eyebrow: 'Traversal',
     title: 'Movement built to be chained',
     body:
-      'The traversal set — dash, slide, wall-kick, mantle and grapple — is designed so each action resolves back into run speed rather than stopping it. Prototypes are validated in greybox first, where nothing but the movement can be responsible for how it feels.',
+      'The traversal set — running, sliding, wall-kicking, mantling and the ground slam — is designed so each action resolves back into run speed rather than stopping it. Prototypes are validated in greybox first, where nothing but the movement can be responsible for how it feels.',
     points: [
       'Momentum is preserved and redirected, not overwritten',
       'Wall-kicks apply diminishing force to prevent infinite climbing',
@@ -76,7 +76,7 @@ export const techSections: TechSection[] = [
     eyebrow: 'Animation',
     title: 'Motion capture and Motion Matching',
     body:
-      'Mythbound uses motion capture combined with Unreal Engine’s Motion Matching to hold a large library of blendable, movement-friendly animation. That matters for a game where a player can enter the same attack out of a slide, a dash, a wall-kick or a grapple.',
+      'Mythbound uses motion capture combined with Unreal Engine’s Motion Matching to hold a large library of blendable, movement-friendly animation. That matters for a game where a player can enter the same attack out of a slide, a wall-kick, a mantle or a fall.',
     // source: ASG slide 11, verbatim in substance.
     points: [
       'Motion capture cleaned and retargeted in MotionBuilder',
@@ -140,6 +140,24 @@ export const techSections: TechSection[] = [
     imageCaption: 'In-game UI prototype',
   },
 ];
+
+/**
+ * Developer ViDoc — recovered from the final presentation (slide 8).
+ *
+ * DISABLED PENDING CAPTIONS. The asset is committed and ready
+ * (public/assets/video/developer-vidoc.mp4, 2:21), but it has no caption track.
+ * Shipping 2+ minutes of uncaptioned narrated video would fail WCAG 1.2.2, and
+ * the site otherwise meets AA. Supply a .vtt (or the script) and flip `publish`.
+ * See ART_ASSET_CHECKLIST.md P2-6 and CONTENT_TODO.md.
+ */
+export const vidoc = {
+  publish: false,
+  title: 'A look at our journey',
+  lede: 'A short developer walkthrough of how Mythbound came together.',
+  src: 'assets/video/developer-vidoc.mp4',
+  poster: 'assets/video/vidoc-poster.jpg',
+  captions: null as string | null,
+};
 
 /**
  * Production toolchain.

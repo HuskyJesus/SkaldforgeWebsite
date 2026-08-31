@@ -9,7 +9,7 @@
 import type { ImageMetadata } from 'astro';
 
 const modules = import.meta.glob<{ default: ImageMetadata }>(
-  '../assets/{gameplay,arenas,development,brand}/*.{jpg,jpeg,png}',
+  '../assets/{gameplay,arenas,characters,development,brand}/*.{jpg,jpeg,png}',
   { eager: true },
 );
 

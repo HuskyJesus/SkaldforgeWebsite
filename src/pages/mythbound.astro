@@ -5,6 +5,7 @@ import SectionHeading from '../components/SectionHeading.astro';
 import Figure from '../components/Figure.astro';
 import FeatureSplit from '../components/FeatureSplit.astro';
 import ArenaShowcase from '../components/ArenaShowcase.astro';
+import GameModes from '../components/GameModes.astro';
 import BoundRoster from '../components/BoundRoster.astro';
 import TrailerPlayer from '../components/TrailerPlayer.astro';
 import Snapshot from '../components/Snapshot.astro';
@@ -49,21 +50,21 @@ const gallery = [
         <div class="overview__text reveal">
           <p class="eyebrow">Overview</p>
           <h2 id="overview-title" class="display overview__title">
-            The games are entertainment. You are the contestant.
+            The gods are watching. That is the whole problem.
           </h2>
           <div class="prose">
             <p>
-              In an alternate modern-day Norway, mythological runes reshaped technology and
-              split society in two. The Valkyries run a high-speed, lethal competition for the
-              amusement of the people who benefited.
+              Those who enter the arena are the Bound — contestants who signed their souls over
+              in exchange for something greater than themselves. Each one fights under the
+              sponsorship of a god who trades power for spectacle.
             </p>
             <p>
-              Civilians can enter. The price of entry is a contract — your soul bound to Helheim,
-              your death made temporary, your fighting made permanent. Those who sign are the
-              Bound, and a god sponsors each of them in exchange for spectacle.
+              Thor backs Eirik. Loki backs Skari. Njord backs Alvar. Hel backs Yrsa. {game.announcer}
+              presides over the competition, and none of them are especially interested in a
+              careful fight.
             </p>
             <p>
-              What that produces is a fast, close-range team brawler about carrying speed. Every
+              What that produces is a fast, close-range brawler about carrying speed. Every
               movement tool feeds the next one, and the fight rewards whoever arrives with the
               most momentum still intact.
             </p>
@@ -111,6 +112,19 @@ const gallery = [
     </div>
   </section>
 
+  {/* ----------------------------------------------------- 3b. ALL GAMEMODES */}
+  <section class="section" aria-labelledby="modes-title">
+    <div class="wrap wrap--wide">
+      <SectionHeading
+        eyebrow="Game modes"
+        title="Three ways to fight"
+        lede="One objective mode built around the relic, and two that come down to who is left standing."
+        class="modes__head"
+      />
+      <GameModes />
+    </div>
+  </section>
+
   {/* --------------------------------------------- 4–6. MOVEMENT / COMBAT / POWER */}
   <section class="section" aria-labelledby="systems-title">
     <div class="wrap wrap--wide">
@@ -151,9 +165,8 @@ const gallery = [
       />
       <BoundRoster />
       <p class="roster__note reveal">
-        Character models are in production. See the
-        <a href={`${url('/technology')}#tech-characters`}>character pipeline</a>
-        for concept art and sculpts.
+        See the <a href={`${url('/technology')}#tech-characters`}>character pipeline</a>
+        for how each Bound moves from concept art to a game-ready model.
       </p>
     </div>
   </section>
@@ -204,18 +217,17 @@ const gallery = [
           <p class="eyebrow">Development status</p>
           <h2 id="status-title" class="display status__title">Playable, and still being sharpened</h2>
           <p class="status__body">
-            Mythbound is in active development toward a {game.releaseWindow} window. The movement
-            set, melee system and Relic Rush are implemented and playable. Midgard and Helheim are
-            built and lit; Asgard is in blockout. Character models are moving from sculpt to
-            game-ready.
+            Mythbound is in active development toward a {game.releaseWindow} window. The traversal
+            set, melee system and all three modes are implemented and playable across Midgard,
+            Helheim and Asgard, and the full roster is in the build.
           </p>
           <a class="link-arrow" href={url('/technology')}>See the development work</a>
         </div>
         <div class="status__media reveal">
           <Figure
-            id="arena-blockout-vertical"
-            alt="A vertical arena blockout in Unreal Engine, untextured, showing platforms and large branch forms."
-            caption="Asgard — vertical blockout"
+            id="movement-greybox-test"
+            alt="An untextured greybox test arena in Unreal Engine with character mannequins, used to validate movement."
+            caption="Traversal validated in greybox before dressing"
             ratio="16 / 10"
             sizes="(min-width: 1000px) 560px, 100vw"
           />

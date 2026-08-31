@@ -3,12 +3,17 @@
 Derived by walking every finished page of the built site and asking what each
 slot actually needs to reach its intended quality. Ordered by priority.
 
-**What the site runs on today:** every marketing image is a frame pulled from
-`Mythbound_FinalTrailerV02.mp4` (4K, 30s), cropped to remove the burned-in
-subtitles. Development imagery comes from *Mythbound ASG.pptx*. That is enough
-to look credible, but the trailer is a 30-second cut — it cannot supply a
-purpose-framed shot for every slot, and stills lifted from motion carry motion
-blur, compression artefacts and incidental HUD.
+**What the site runs on today:** three sources.
+1. **Final status presentation** (recovered from the OneDrive zip) — supplied the
+   four finished character renders, the three dressed arena captures, the clean
+   relic hall, the three mode clips and the 2:21 Developer ViDoc. This closed
+   the two biggest gaps in the original version of this list.
+2. **Mythbound_FinalTrailerV02.mp4** (4K, 30s) — hero loop and gameplay stills,
+   cropped to remove the burned-in subtitles.
+3. **Mythbound ASG.pptx** — development and pipeline imagery.
+
+Remaining gaps are mostly about *purpose-shot* material: several slots use the
+best available frame rather than a shot composed for that slot.
 
 **Legend**
 - **Have?** — what exists in the repo today
@@ -20,22 +25,14 @@ blur, compression artefacts and incidental HUD.
 
 # P0 — CRITICAL BEFORE MEGAGRANT / PUBLIC LAUNCH
 
-### P0-1 · Character renders — the four Bound
+### P0-1 · Character renders — the four Bound ✅ RESOLVED
 | | |
 | --- | --- |
-| **Filename** | `bound-eirik.png`, `bound-skari.png`, `bound-alvar.png`, `bound-yrsa.png` |
+| **Filename** | `eirik.png`, `skari.png`, `alvar.png`, `yrsa.png` |
 | **Page / section** | Home → The Bound; Mythbound → The Bound (`BoundRoster.astro`) |
-| **Shows** | Full-body hero render of each Bound in a signature pose, lit to read on near-black. Weapon in frame. Solid-colour eyes visible (the mark of the contract). |
-| **Dimensions** | 1600 × 2200 min (portrait) |
-| **Aspect** | 8:11 portrait |
-| **Safe crop** | Head clear of the top 8%; the card crops to a 3:4 window from the top, so keep the face and shoulders inside the upper 60% |
-| **Transparent BG** | **Yes** — PNG with alpha, no baked backdrop |
-| **Format** | PNG (source), site converts to AVIF/WebP |
-| **Baked text** | No |
-| **Mobile variant** | No — one render, responsive srcset handles it |
-| **Why it matters** | This is the single largest gap. The roster is currently a typographic dossier with no character imagery at all, because the only character art available is annotated internal concept sheets and a WIP sculpt. A hero brawler whose cast is invisible reads as early. Character renders would transform the roster and give the homepage its missing emotional hook. |
-| **Have?** | **No.** Concept art exists (`concept-eirik`, `concept-alvar`) plus a high-poly sculpt (`sculpt-skari`); Yrsa has no art at all. |
-| **Current stand-in** | Brand dossier card — valknut watermark, accent rule, verified stats |
+| **Have?** | **Yes** — finished textured renders on transparent backgrounds, from the final presentation (slide 5). All four show the solid glowing eyes. |
+| **Remaining** | Renders are A-pose / neutral stance. **Signature action poses** would be a clear upgrade for a marketing roster — Eirik mid-slam, Skari mid-dash, Alvar pulling a current, Yrsa opening a grave pool. Same specs: 1600 × 2200, transparent PNG, no baked text. |
+| **Priority of remaining work** | P1 |
 
 ### P0-2 · Purpose-shot hero footage (clean plate)
 | | |
@@ -100,21 +97,14 @@ blur, compression artefacts and incidental HUD.
 | **Why it matters** | Relic Rush is the premiere mode and gets its own full-bleed section. The current frame shows the relic on its pedestal but nobody contesting it, so the section illustrates the *object* rather than the *fight*. |
 | **Have?** | Partial — `relic-altar` (pedestal, no action) |
 
-### P0-6 · Asgard arena capture
+### P0-6 · Arena captures — all three ✅ RESOLVED
 | | |
 | --- | --- |
-| **Filename** | `arena-asgard.jpg` |
+| **Filename** | `midgard.jpg`, `helheim.jpg`, `asgard.jpg` |
 | **Page / section** | Home + Mythbound → Arenas (`ArenaShowcase.astro`) |
-| **Shows** | Dressed and lit Asgard — sky kingdom, floating platforms, Yggdrasil branches, rainbow links |
-| **Dimensions** | 1600 × 1200 min |
-| **Aspect** | 4:3 |
-| **Safe crop** | Bottom 35% sits under a scrim |
-| **Format** | JPEG q85 |
-| **Baked text** | No |
-| **Mobile variant** | No |
-| **Why it matters** | One of three arena cards currently ships desaturated with an "In development" badge and a greybox image. That is honest and reads fine, but a dressed Asgard would complete the set and remove the only visibly unfinished card on the site. |
-| **Have?** | Blockout only — `arena-blockout-vertical` |
-| **Current stand-in** | Desaturated blockout + explicit dev badge |
+| **Have?** | **Yes** — dressed and lit captures of all three from the final presentation (slide 6). No arena card is in a "development" state any more. |
+| **Remaining** | These are **Unreal Editor viewport captures**. The toolbar and status bar were cropped out (top 30px / bottom 34px), but they are editor framing, not composed beauty shots — one has a stray cursor crosshair. Purpose-shot in-game captures at 1600 × 1200, no editor UI, would be a straightforward upgrade. |
+| **Priority of remaining work** | P1 |
 
 ---
 
@@ -148,10 +138,23 @@ blur, compression artefacts and incidental HUD.
 | **Why it matters** | Lets the roster expand into per-character pages without a new art request. Derivable from P0-1. |
 | **Have?** | No |
 
+### P1-2b · Clean gameplay captures without debug overlay
+| | |
+| --- | --- |
+| **Filename** | `mode-relic-rush.mp4`, `mode-team-deathmatch.mp4`, `mode-free-for-all.mp4` |
+| **Page / section** | Home + Mythbound → Three ways to fight (`GameModes.astro`) |
+| **Shows** | The same three modes, captured without the FPS/ping debug readout and ideally with neutral player names |
+| **Dimensions** | 1920 × 1080 |
+| **Duration** | 15–20s, loopable, silent |
+| **Format** | MP4 (H.264) + JPEG poster |
+| **Baked text** | In-game HUD only |
+| **Why it matters** | The current clips are genuine playtest captures and read as credible to a developer audience, but they carry a debug FPS/ping readout and real team member handles in scoreboards and kill feeds. See CONTENT_TODO #9. |
+| **Have?** | Playtest captures with debug overlay |
+
 ### P1-3 · Ability / VFX captures
 | | |
 | --- | --- |
-| **Filename** | `ability-storm-javelin.mp4`, `ability-hex-recall.mp4`, `ability-tidal-spear.mp4`, `ability-tempest-surge.mp4` (+ `.jpg` posters) |
+| **Filename** | `ability-storm-javelin.mp4`, `ability-thunderburst.mp4`, `ability-veilpiercer-dagger.mp4`, `ability-shade-rush.mp4`, `ability-tempest-surge.mp4`, `ability-tidal-hook.mp4`, `ability-grave-bind.mp4`, `ability-soul-bombs.mp4` (+ `.jpg` posters) |
 | **Page / section** | Mythbound → Bound roster (per-ability media); Development → VFX |
 | **Shows** | Each named ability in isolation, clean camera, 2–4s, ideally in a neutral arena |
 | **Dimensions** | 1280 × 720 |
@@ -160,7 +163,7 @@ blur, compression artefacts and incidental HUD.
 | **Duration** | 2–4s each |
 | **Baked text** | No |
 | **Mobile variant** | Poster only |
-| **Why it matters** | The roster names six real abilities with real descriptions and shows none of them. Short loops would turn a text list into the most convincing gameplay content on the site. |
+| **Why it matters** | The roster now names all **eight** abilities with real descriptions and shows none of them in motion. Short loops would turn a text list into the most convincing gameplay content on the site. |
 | **Have?** | No |
 
 ### P1-4 · Arena beauty shots — Midgard & Helheim
@@ -278,15 +281,14 @@ blur, compression artefacts and incidental HUD.
 | **Why it matters** | Would enable full-bleed parallax section breaks between arenas. Not required by the current design. |
 | **Have?** | No |
 
-### P2-6 · Developer commentary / ViDoc
+### P2-6 · Developer ViDoc ✅ HAVE — needs captions
 | | |
 | --- | --- |
-| **Filename** | `vidoc-01.mp4` + `.vtt` captions + poster |
+| **Filename** | `developer-vidoc.mp4` (2:21, 11.4 MB) |
 | **Page / section** | Development page |
-| **Duration** | 2–5 min |
-| **Baked text** | No — captions as a separate WebVTT track |
-| **Why it matters** | A developer talking about the movement system is exactly the kind of material a MegaGrant reviewer engages with. Would slot in beside the existing `TrailerPlayer`. |
-| **Have?** | No |
+| **Have?** | **Yes** — recovered from the final presentation (slide 8, "A look at our journey"). |
+| **Remaining** | **No caption track.** The trailer has one; this does not, so it is currently the only significant video on the site without captions. Supply a `.vtt` (or the script) and it drops straight in beside the existing player. |
+| **Priority of remaining work** | P1 — accessibility gap |
 
 ### P2-7 · Press kit
 | | |

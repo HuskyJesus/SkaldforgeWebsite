@@ -54,11 +54,13 @@ export const studio = {
 /**
  * TEAM ROSTER — DISABLED PENDING APPROVAL.
  *
- * The names below are real and appear in the Mythbound trailer's own credits;
- * role attribution comes from ASG slide 2 (an internal document). Publishing
- * ~26 named individuals with internal role titles is the studio's call, not a
- * default. Flip `publishRoster` to true once the list and titles are confirmed.
- * See CONTENT_TODO.md #5.
+ * source: Final Presentation slide 3 ("Personnel"), which supersedes ASG slide 2.
+ * Notably it moves Level Design Lead from Kenzey Estes to Michael Doctor and
+ * adds voice acting and sound design.
+ *
+ * These names are already public in the studio's own presentation and trailer
+ * credits, but publishing ~25 named individuals is the studio's call, not a
+ * default. Flip `publishRoster` to true once confirmed. See CONTENT_TODO.md.
  */
 export const publishRoster = false;
 
@@ -67,22 +69,32 @@ export type TeamMember = { name: string; role: string };
 export const leadership: TeamMember[] = [
   { name: 'Daniel Diaz-Rivera', role: 'Project Lead' },
   { name: 'Christopher Caban', role: 'Development Director' },
-  { name: 'Claire Durenberger', role: 'Art Lead' },
   { name: 'Soumya Thakur', role: 'Programming Lead' },
   { name: 'Caius Ruscella', role: 'Design Lead' },
-  { name: 'Kenzey Estes', role: 'Level Design Lead' },
-  { name: 'Abner Wilhelm', role: 'Technical Design Lead' },
+  { name: 'Claire Durenberger', role: 'Art Lead' },
+  { name: 'Abner Wilhelm', role: 'Tech Design Lead' },
+  { name: 'Michael Doctor', role: 'Level Design Lead' },
 ];
 
 export const team: TeamMember[] = [
-  { name: 'Mia Parent', role: '3D Artist' },
+  { name: 'Siddharth Parulekar', role: 'Tech Design' },
+  { name: 'Michael Kocis', role: 'Tech Design' },
+  { name: 'Keith Lerner', role: 'Programming' },
+  { name: 'Donald Arango', role: 'Programming' },
+  { name: 'Kenzey Estes', role: 'Level Design' },
+  { name: 'Jacob Jarrett', role: 'Level Design' },
   { name: 'Richard Huang', role: 'Technical Artist' },
   { name: 'Casina Gan', role: 'Technical Artist' },
   { name: 'Melanie Aguirre', role: 'Animation' },
-  { name: 'Michael Doctor', role: 'Level Designer' },
-  { name: 'Jacob Jarrett', role: 'Level Designer' },
-  { name: 'Siddharth Parulekar', role: 'Technical Designer' },
-  { name: 'Michael Kocis', role: 'Technical Designer' },
-  { name: 'Donald Arango', role: 'Programmer' },
-  { name: 'Keith Lerner', role: 'Programmer' },
+  { name: 'Joshua Almeida', role: 'Animation' },
+  { name: 'Mia Parent', role: '3D Artist' },
+  { name: 'Anna-Lauren Kahn', role: '3D Artist' },
+  { name: 'Rachel Flatley', role: '3D Artist' },
+  { name: 'Rachel Tiv', role: '3D Artist' },
+  { name: 'Ash Koltz', role: '3D Artist' },
+  { name: 'Ethan Powell', role: '3D Artist' },
+  { name: 'Jack Warden', role: '3D Artist' },
+  { name: 'Leo Hoerdemann', role: 'Sound Design' },
+  { name: 'Andrew Bielek', role: 'Voice Acting' },
+  { name: 'Lea Fournier', role: 'Voice Acting' },
 ];

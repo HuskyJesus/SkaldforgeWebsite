@@ -4,9 +4,11 @@ import { arenas } from '../data/game';
 import { img } from '../lib/images';
 
 /**
- * Arenas presented as destinations. Entries without finished art are shown
- * honestly with their development state rather than dressed with unrelated
- * imagery — an arena in blockout is still a real arena.
+ * Arenas presented as destinations.
+ *
+ * Copy is deliberately thin: only Midgard's open character is substantiated as
+ * current. No layout, verticality or chokepoint claims are made — those came
+ * from older documentation and have not been verified against the current maps.
  */
 ---
 
@@ -16,16 +18,12 @@ import { img } from '../lib/images';
       const source = img(arena.image);
       if (!source) return null;
       return (
-        <li class:list={['arena', !arena.hasFinalArt && 'arena--wip', 'reveal']} style={`--reveal-delay:${i * 90}ms`}>
+        <li class="arena reveal" style={`--reveal-delay:${i * 90}ms`}>
           <article class="arena__card">
             <div class="arena__media">
               <Image
                 src={source}
-                alt={
-                  arena.hasFinalArt
-                    ? `${arena.name} — ${arena.realm}, an arena in Mythbound`
-                    : `${arena.name} arena blockout, in development`
-                }
+                alt={`${arena.name}, an arena in Mythbound`}
                 widths={[420, 640, 900, 1200]}
                 sizes="(min-width: 1000px) 420px, (min-width: 640px) 46vw, 92vw"
                 loading="lazy"
@@ -33,19 +31,9 @@ import { img } from '../lib/images';
                 class="arena__img"
               />
               <div class="arena__scrim" aria-hidden="true" />
-              {!arena.hasFinalArt && <p class="arena__wip">{arena.devNote}</p>}
-            </div>
-
-            <div class="arena__body">
-              <p class="arena__realm">{arena.realm}</p>
               <h3 class="display arena__name">{arena.name}</h3>
-              <p class="arena__blurb">{arena.blurb}</p>
-              <ul role="list" class="arena__traits">
-                {arena.traits.map((t) => (
-                  <li>{t}</li>
-                ))}
-              </ul>
             </div>
+            <p class="arena__blurb">{arena.blurb}</p>
           </article>
         </li>
       );
@@ -54,16 +42,9 @@ import { img } from '../lib/images';
 </ul>
 
 <style>
-  .arenas {
-    display: grid;
-    gap: var(--sp-5);
-  }
-  @media (min-width: 640px) {
-    .arenas { grid-template-columns: repeat(2, 1fr); }
-  }
-  @media (min-width: 1000px) {
-    .arenas { grid-template-columns: repeat(3, 1fr); }
-  }
+  .arenas { display: grid; gap: var(--sp-5); }
+  @media (min-width: 640px) { .arenas { grid-template-columns: repeat(2, 1fr); } }
+  @media (min-width: 1000px) { .arenas { grid-template-columns: repeat(3, 1fr); } }
 
   .arena__card {
     block-size: 100%;
@@ -77,9 +58,7 @@ import { img } from '../lib/images';
     border: 1px solid var(--s-hairline);
     border-radius: var(--r-lg);
     overflow: hidden;
-    transition:
-      border-color var(--d-mid) var(--e-out),
-      transform var(--d-mid) var(--e-out);
+    transition: border-color var(--d-mid) var(--e-out), transform var(--d-mid) var(--e-out);
   }
   .arena:hover .arena__card {
     border-color: var(--s-hairline-lit);
@@ -110,70 +89,23 @@ import { img } from '../lib/images';
     inset: 0;
     background: linear-gradient(
       to top,
-      color-mix(in oklab, var(--c-ink) 90%, transparent) 0%,
-      transparent 55%
+      color-mix(in oklab, var(--c-ink) 92%, transparent) 0%,
+      transparent 60%
     );
   }
 
-  /* Blockout imagery is desaturated so it never reads as a finished capture. */
-  .arena--wip .arena__img { filter: saturate(0.45) contrast(0.95); }
-
-  .arena__wip {
+  /* Name sits on the image so the card below stays quiet. */
+  .arena__name {
     position: absolute;
-    inset-block-start: var(--sp-3);
-    inset-inline-start: var(--sp-3);
-    padding: 0.3rem 0.55rem;
-    font-size: var(--fs-eyebrow);
-    font-weight: 600;
-    letter-spacing: var(--tr-label);
-    text-transform: uppercase;
-    color: var(--c-ice-300);
-    background: color-mix(in oklab, var(--c-ink) 78%, transparent);
-    border: 1px solid var(--s-hairline);
-    border-radius: var(--r-sm);
-    backdrop-filter: blur(6px);
+    inset-block-end: var(--sp-4);
+    inset-inline-start: var(--sp-5);
+    font-size: var(--fs-h3);
+    text-shadow: 0 2px 16px rgb(0 0 0 / 0.7);
   }
 
-  .arena__body {
-    display: grid;
-    gap: var(--sp-3);
-    align-content: start;
-    padding: var(--sp-5);
-  }
-
-  .arena__realm {
-    font-size: var(--fs-eyebrow);
-    font-weight: 600;
-    letter-spacing: var(--tr-eyebrow);
-    text-transform: uppercase;
-    color: var(--c-gold-500);
-  }
-  .arena__name { font-size: var(--fs-h3); }
   .arena__blurb {
+    padding: var(--sp-5);
     font-size: var(--fs-sm);
     color: var(--t-secondary);
-  }
-
-  .arena__traits {
-    display: grid;
-    gap: var(--sp-2);
-    margin-block-start: var(--sp-2);
-    padding-block-start: var(--sp-4);
-    border-block-start: 1px solid var(--s-hairline);
-  }
-  .arena__traits li {
-    font-size: var(--fs-sm);
-    color: var(--t-muted);
-    display: flex;
-    gap: var(--sp-3);
-    align-items: baseline;
-  }
-  .arena__traits li::before {
-    content: '';
-    inline-size: 0.35rem;
-    block-size: 1px;
-    background: var(--c-gold-600);
-    flex: none;
-    transform: translateY(-0.3em);
   }
 </style>

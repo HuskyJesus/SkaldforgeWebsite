@@ -38,10 +38,10 @@ export const roadmap: RoadmapItem[] = [
   {
     id: 'arenas',
     publish: true,
-    // Safe: Midgard, Helheim and Asgard are all documented in the GDD/ASG.
-    title: 'Three realms, one in blockout',
+    // Safe: all three arenas are built, lit and shown on the site.
+    title: 'Three realms, and room for more',
     body:
-      'Midgard and Helheim are playable. Asgard — a kingdom in the sky built for grapple and vertical traversal — is in blockout and is the clearest picture of where the arenas are heading.',
+      'Midgard, Helheim and Asgard are built and playable. The arena set was designed to take additions rather than to be finished at three.',
   },
   {
     id: 'depth',
