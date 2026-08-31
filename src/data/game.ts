@@ -131,7 +131,7 @@ export const relicRush = {
  * source: Final Presentation slide 6 names the three arenas
  * "HIMINBJORG | HELHEIM | MIDGARD" and supplies a dressed capture of each.
  *
- * The studio confirmed Himinbjorg on August 31, 2026, matching FINAL slide 6.
+ * Arena names and lore confirmed by the studio on August 31, 2026.
  *
  * `hasFinalArt` gates whether a finished capture is shown; all three now have
  * one, but the flag stays so a future arena can be added honestly.
@@ -140,23 +140,22 @@ export const arenas = [
   {
     id: 'midgard',
     name: 'Midgard',
-    // Only Midgard's open/expansive character is substantiated as current.
     blurb:
-      'Open ground and long sightlines give fast traversal room to shine.',
+      'Home of the Bound, Midgard sits at the heart of the World Tree. Its hardy people raise generations of strong warriors.',
     hasFinalArt: true,
     image: 'midgard',
   },
   {
     id: 'helheim',
     name: 'Helheim',
-    blurb: 'A cold stone realm of the dead, fought over under torchlight.',
+    blurb: 'Deep beneath the roots of the World Tree, Helheim shelters forgotten souls denied entry to Valhalla. Its city of the dead is now an arena where the Bound fight to prove their worth.',
     hasFinalArt: true,
     image: 'helheim',
   },
   {
     id: 'himinbjorg',
     name: 'Himinbjorg',
-    blurb: 'A snowbound seat of the gods, beneath the branches of the world tree.',
+    blurb: 'High atop mountains that scrape the sky, the Bound fight in and around the palace of Himinbjorg. Home to Heimdallr, it guards the gateway between Midgard and Asgard.',
     hasFinalArt: true,
     image: 'himinbjorg',
   },

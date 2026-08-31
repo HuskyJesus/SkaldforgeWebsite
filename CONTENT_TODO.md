@@ -76,14 +76,12 @@ publishes **2 to 8**.
 
 **Action:** confirm. `src/data/game.ts` → `modes`.
 
-## 6. Arena descriptions : deliberately thin
+## 6. Arena descriptions: resolved
 
-Per studio direction, unverified layout, verticality and chokepoint claims
-were **removed**. Only Midgard's open/expansive character is
-stated. The other two get a single visual line each.
-
-**Action:** supply verified descriptions when the current maps are settled, and
-they can be restored. `src/data/game.ts` → `arenas[].blurb`.
+The studio supplied lore for Himinbjorg, Helheim and Midgard on August 31, 2026.
+Edited for brevity and published in the shared arena showcase on Home and Mythbound.
+Asgard is mentioned only as the realm connected to Midgard through Himinbjorg,
+not as an arena name. No additional map-layout claims are implied.
 
 ## 7. Defensive shield : described generically
 
