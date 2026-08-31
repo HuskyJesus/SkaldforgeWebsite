@@ -41,7 +41,7 @@ export const roadmap: RoadmapItem[] = [
     // Safe: all three arenas are built, lit and shown on the site.
     title: 'Three realms, and room for more',
     body:
-      'Midgard, Helheim and Asgard are built and playable. The arena set was designed to take additions rather than to be finished at three.',
+      'Midgard, Helheim and Himinbjorg are built and playable. The arena set was designed to take additions rather than to be finished at three.',
   },
   {
     id: 'depth',

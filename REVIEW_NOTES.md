@@ -40,3 +40,14 @@ Reviewed August 31, 2026.
 This is not a WCAG certification or a measured Lighthouse performance report. Reduced-motion behavior was reviewed in code; browser preference emulation was not available in the testing surface.
 
 The existing Asgard/Himinbjorg naming question, approved team information, contact details, ViDoc captions, confirmed roadmap and the trailer's target window still need studio confirmation. See CONTENT_TODO.md and ART_ASSET_CHECKLIST.md.
+
+
+## Arena naming and brevity follow-up
+
+- Studio correction applied: Himinbjorg throughout arena copy, data and asset naming.
+- Removed the duplicate Relic Rush introduction, screenshot and rule cards on the game page. The featured playable clip and mode description remain.
+- Removed the six-image gallery, whose imagery already appears in gameplay and development sections.
+- Removed the overview paragraph listing divine sponsors, which the Bound roster already explains.
+- Preserved the detailed gameplay, character and development content for visitors who choose to explore beyond Home.
+- Removed repeated sponsor summaries and gameplay keyword lists; sponsor labels and all eight ability descriptions remain.
+- Follow-up verification: type check clean, production build passed, 385 local references validated. All four main pages checked at 320, 768 and 1440px with no horizontal overflow or observed broken loaded images; mobile arena and desktop mode composition inspected visually.

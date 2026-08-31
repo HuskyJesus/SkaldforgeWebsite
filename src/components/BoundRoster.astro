@@ -62,7 +62,6 @@ const { compact = false } = Astro.props;
                 ))}
               </dl>}
 
-              {!compact && <p class="bound__sponsor-note">{b.sponsorNote}</p>}
             </div>
           </article>
         </li>
@@ -224,12 +223,4 @@ const { compact = false } = Astro.props;
     color: var(--t-muted);
   }
 
-  .bound__sponsor-note {
-    margin-block-start: auto;
-    padding-block-start: var(--sp-4);
-    border-block-start: 1px solid var(--s-hairline);
-    font-size: var(--fs-sm);
-    font-style: italic;
-    color: var(--t-muted);
-  }
 </style>

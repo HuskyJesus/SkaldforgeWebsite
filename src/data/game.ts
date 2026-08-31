@@ -131,9 +131,7 @@ export const relicRush = {
  * source: Final Presentation slide 6 names the three arenas
  * "HIMINBJORG | HELHEIM | MIDGARD" and supplies a dressed capture of each.
  *
- * NOTE: the GDD and ASG call the third arena "Asgard". The final presentation
- *. the newest source. calls it Himinbjorg, which matches the brief. Treated
- * as a rename. See CONTENT_TODO.md #2.
+ * The studio confirmed Himinbjorg on August 31, 2026, matching FINAL slide 6.
  *
  * `hasFinalArt` gates whether a finished capture is shown; all three now have
  * one, but the flag stays so a future arena can be added honestly.
@@ -156,11 +154,11 @@ export const arenas = [
     image: 'helheim',
   },
   {
-    id: 'asgard',
-    name: 'Asgard',
+    id: 'himinbjorg',
+    name: 'Himinbjorg',
     blurb: 'A snowbound seat of the gods, beneath the branches of the world tree.',
     hasFinalArt: true,
-    image: 'asgard',
+    image: 'himinbjorg',
   },
 ] as const;
 

@@ -33,21 +33,11 @@ dead.
 
 ---
 
-## 1. Asgard vs Himinbjorg : CONFLICT, NEEDS A DECISION ⚠️
+## 1. Arena naming: resolved
 
-**Currently published: Asgard**, per STUDIO ("Midgard, Helheim, and Asgard are
-still the current named arena/world set I can substantiate").
-
-However **FINAL slide 6 reads "HIMINBJORG | HELHEIM | MIDGARD"** and supplies
-the dressed capture the site now uses for that arena. The original website brief
-also said Himinbjorg. So the newest *artifact* says Himinbjorg while the newest
-*instruction* says Asgard.
-
-I went with the instruction. This is the single highest-priority item : it is a
-proper noun on three pages and in the page metadata.
-
-**Action:** confirm. One-line change: `src/data/game.ts` → `arenas[2].name`, and
-rename `src/assets/arenas/asgard.jpg`.
+The studio confirmed **Himinbjorg** on August 31, 2026. This matches FINAL
+slide 6. Public copy, arena data and the image filename now use Himinbjorg.
+No further naming decision is needed.
 
 ## 2. Skari's surname : likely a typo in the supplied copy
 
@@ -88,9 +78,8 @@ publishes **2 to 8**.
 
 ## 6. Arena descriptions : deliberately thin
 
-Per STUDIO ("do not put detailed claims like 'Helheim is compact ruins' or
-'Asgard is the vertical map' into public copy"), all layout, verticality and
-chokepoint claims were **removed**. Only Midgard's open/expansive character is
+Per studio direction, unverified layout, verticality and chokepoint claims
+were **removed**. Only Midgard's open/expansive character is
 stated. The other two get a single visual line each.
 
 **Action:** supply verified descriptions when the current maps are settled, and

@@ -100,7 +100,7 @@ best available frame rather than a shot composed for that slot.
 ### P0-6 · Arena captures : all three ✅ RESOLVED
 | | |
 | --- | --- |
-| **Filename** | `midgard.jpg`, `helheim.jpg`, `asgard.jpg` |
+| **Filename** | `midgard.jpg`, `helheim.jpg`, `himinbjorg.jpg` |
 | **Page / section** | Home + Mythbound → Arenas (`ArenaShowcase.astro`) |
 | **Have?** | **Yes** : dressed and lit captures of all three from the final presentation (slide 6). No arena card is in a "development" state any more. |
 | **Remaining** | These are **Unreal Editor viewport captures**. The toolbar and status bar were cropped out (top 30px / bottom 34px), but they are editor framing, not composed beauty shots : one has a stray cursor crosshair. Purpose-shot in-game captures at 1600 × 1200, no editor UI, would be a straightforward upgrade. |
@@ -219,17 +219,7 @@ best available frame rather than a shot composed for that slot.
 | **Why it matters** | The site states motion capture + Unreal Motion Matching (the strongest verified technical claim it makes) and illustrates it with a greybox test. Evidence of actual capture would substantiate it. Requires talent release for anyone identifiable. |
 | **Have?** | No |
 
-### P1-8 · Media gallery expansion
-| | |
-| --- | --- |
-| **Filename** | `gallery-01.jpg` … `gallery-09.jpg` |
-| **Page / section** | Mythbound → From the arena |
-| **Dimensions** | 1920 × 1080 |
-| **Aspect** | 16:9 |
-| **Format** | JPEG q85 |
-| **Baked text** | No |
-| **Why it matters** | The gallery holds six frames, all from the same 30-second trailer, so variety is limited and a few are visually close to one another. Nine varied, purpose-captured shots would make the game look bigger. |
-| **Have?** | Six trailer frames |
+The standalone screenshot gallery was removed in the brevity pass. No extra gallery assets are required for launch; prioritize the existing gameplay and arena placements above.
 
 ---
 
@@ -275,7 +265,7 @@ best available frame rather than a shot composed for that slot.
 ### P2-5 · Environment panoramas
 | | |
 | --- | --- |
-| **Filename** | `pano-midgard.jpg`, `pano-helheim.jpg`, `pano-asgard.jpg` |
+| **Filename** | `pano-midgard.jpg`, `pano-helheim.jpg`, `pano-himinbjorg.jpg` |
 | **Dimensions** | 3840 × 1080 |
 | **Aspect** | 32:9 |
 | **Why it matters** | Would enable full-bleed parallax section breaks between arenas. Not required by the current design. |
