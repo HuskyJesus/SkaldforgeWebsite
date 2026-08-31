@@ -1,0 +1,450 @@
+---
+import Base from '../layouts/Base.astro';
+import Hero from '../components/Hero.astro';
+import SectionHeading from '../components/SectionHeading.astro';
+import Figure from '../components/Figure.astro';
+import FeatureSplit from '../components/FeatureSplit.astro';
+import ArenaShowcase from '../components/ArenaShowcase.astro';
+import BoundRoster from '../components/BoundRoster.astro';
+import TrailerPlayer from '../components/TrailerPlayer.astro';
+import Snapshot from '../components/Snapshot.astro';
+import CTA from '../components/CTA.astro';
+import Valknut from '../components/Valknut.astro';
+
+import { site } from '../data/site';
+import { game, pillars, relicRush } from '../data/game';
+import { boundPremise } from '../data/bound';
+import { studio } from '../data/studio';
+import { url } from '../lib/url';
+---
+
+<Base title={site.title} description={site.description} navOverlay>
+  {/* ------------------------------------------------------ 1. CINEMATIC HERO */}
+  <Hero
+    variant="video"
+    size="full"
+    eyebrow="A Skaldforge Game"
+    statement="Fight for glory in a Norse arena where movement, melee, and godly power collide."
+    primary={{ label: 'Watch Trailer', href: '#trailer' }}
+    secondary={{ label: 'Discover Mythbound', href: url('/mythbound') }}
+  />
+
+  {/* ---------------------------------------------------------- 2. THE GAME */}
+  <section class="section" aria-labelledby="game-title">
+    <div class="wrap wrap--wide">
+      <div class="intro">
+        <div class="intro__text reveal">
+          <p class="eyebrow">The Game</p>
+          <h2 id="game-title" class="display intro__title">
+            Four contestants.<br />One relic.<br />No safe ground.
+          </h2>
+          <div class="intro__copy">
+            <p>
+              In an alternate modern-day Norway, the Valkyries run a competition for the
+              entertainment of the powerful. Those with nothing left to trade sign a contract,
+              bind their soul, and enter the arena as the Bound.
+            </p>
+            <p>
+              Mythbound is a {game.genre.toLowerCase()} about speed. Chain your movement, arrive
+              faster than they expect, and turn that momentum into the hit that ends it.
+            </p>
+          </div>
+          <a class="link-arrow" href={url('/mythbound')}>Explore the game</a>
+        </div>
+
+        <div class="intro__media reveal">
+          <Figure
+            id="champions-clash"
+            alt="A Bound mid-fight in a stone arena, a bright orb of energy bursting into scattered sparks around them."
+            ratio="4 / 5"
+            sizes="(min-width: 1100px) 500px, (min-width: 700px) 60vw, 100vw"
+          />
+        </div>
+      </div>
+
+      <div class="snapshot-band">
+        <Snapshot />
+      </div>
+    </div>
+  </section>
+
+  {/* --------------------------------------------------- 3. GAMEPLAY PILLARS */}
+  <section class="section section--tight" aria-labelledby="pillars-title">
+    <div class="wrap wrap--wide">
+      <SectionHeading
+        eyebrow="How it plays"
+        title="Three ways to win a fight"
+        lede="Movement, melee and sponsor abilities are one system. Mastering the seams between them is the game."
+        class="pillars__head"
+      />
+      <div class="pillars">
+        {
+          pillars.map((p, i) => (
+            <FeatureSplit
+              index={p.index}
+              eyebrow={p.title}
+              title={p.heading}
+              body={p.body}
+              points={p.detail}
+              imageId={p.image}
+              imageAlt={`Mythbound gameplay — ${p.heading.toLowerCase()}`}
+              media={i % 2 === 0 ? 'right' : 'left'}
+              ratio="16 / 10"
+            />
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  {/* -------------------------------------------------------- 4. RELIC RUSH */}
+  <section class="relic" aria-labelledby="relic-title">
+    <div class="relic__media" aria-hidden="true">
+      <Figure
+        id="relic-altar"
+        alt=""
+        ratio="21 / 9"
+        sizes="100vw"
+        widths={[900, 1400, 1920, 2400]}
+      />
+    </div>
+
+    <div class="wrap wrap--wide relic__inner">
+      <div class="relic__text reveal">
+        <p class="eyebrow">{relicRush.format}</p>
+        <h2 id="relic-title" class="display relic__title">{relicRush.name}</h2>
+        <p class="relic__lede">{relicRush.heading}</p>
+        <p class="relic__body">{relicRush.body}</p>
+      </div>
+
+      <ol role="list" class="relic__beats reveal">
+        {
+          relicRush.beats.map((beat, i) => (
+            <li class="relic__beat">
+              <span class="relic__beat-num">{String(i + 1).padStart(2, '0')}</span>
+              <h3 class="relic__beat-title">{beat.title}</h3>
+              <p>{beat.body}</p>
+            </li>
+          ))
+        }
+      </ol>
+    </div>
+  </section>
+
+  {/* ------------------------------------------------------------ 5. ARENAS */}
+  <section class="section" aria-labelledby="arenas-title">
+    <div class="wrap wrap--wide">
+      <SectionHeading
+        eyebrow="The Realms"
+        title="Arenas built for momentum"
+        lede="Every arena is designed around a different answer to the same question: where can you carry your speed?"
+        class="arenas__head"
+      />
+      <ArenaShowcase />
+    </div>
+  </section>
+
+  {/* --------------------------------------------------------- 6. THE BOUND */}
+  <section class="section section--tight" aria-labelledby="bound-title">
+    <div class="wrap wrap--wide">
+      <SectionHeading
+        eyebrow="The Roster"
+        title="The Bound"
+        lede={boundPremise}
+        class="bound__head"
+      />
+      <BoundRoster />
+    </div>
+  </section>
+
+  {/* ---------------------------------------------------------- 7. UNREAL */}
+  <section class="section unreal" aria-labelledby="unreal-title">
+    <div class="wrap wrap--wide">
+      <div class="unreal__grid">
+        <div class="unreal__text reveal">
+          <p class="eyebrow">Technology</p>
+          <h2 id="unreal-title" class="display unreal__title">Forged in Unreal Engine</h2>
+          <p class="unreal__body">
+            Mythbound is built in Unreal Engine, in-engine from the first blockout onward.
+            Arenas are playable before they are dressed, and the traversal set is tuned against
+            real level geometry rather than handed over at the end.
+          </p>
+          <p class="unreal__body">
+            Animation uses motion capture combined with Unreal's Motion Matching, which keeps a
+            large blendable library available — necessary when a player can enter the same attack
+            out of a slide, a dash, a wall-kick or a grapple.
+          </p>
+          <a class="link-arrow" href={url('/technology')}>See how it's built</a>
+        </div>
+
+        <div class="unreal__media reveal">
+          <Figure
+            id="movement-greybox-test"
+            alt="Untextured greybox test arena in Unreal Engine with character mannequins, used to validate movement."
+            caption="Traversal prototype — greybox test space"
+            ratio="16 / 10"
+            sizes="(min-width: 1100px) 640px, 100vw"
+          />
+          <Figure
+            id="midgard-set-dressing"
+            alt="Midgard village assets arranged in the Unreal Engine viewport without final lighting."
+            caption="Midgard — set dressing in engine"
+            ratio="16 / 10"
+            sizes="(min-width: 1100px) 640px, 100vw"
+          />
+        </div>
+      </div>
+    </div>
+  </section>
+
+  {/* --------------------------------------------------------- 8. SKALDFORGE */}
+  <section class="section studio" aria-labelledby="studio-title">
+    <div class="wrap wrap--wide">
+      <div class="studio__inner reveal">
+        <span class="studio__mark"><Valknut /></span>
+        <p class="eyebrow eyebrow--center">The Studio</p>
+        <h2 id="studio-title" class="display studio__title">We are Skaldforge</h2>
+        <p class="studio__statement">{studio.statement}</p>
+        <p class="studio__body">
+          A multidisciplinary team of designers, artists, animators and engineers building
+          Mythbound. We prototype in grey boxes, test on real builds, and keep one shared idea of
+          what this world is.
+        </p>
+
+        <ul role="list" class="studio__disciplines">
+          {studio.disciplines.map((d) => <li>{d}</li>)}
+        </ul>
+
+        <a class="btn btn--ghost studio__cta" href={url('/studio')}>About Skaldforge</a>
+      </div>
+    </div>
+  </section>
+
+  {/* ------------------------------------------------------- 9. TRAILER / CTA */}
+  <section class="section section--tight" aria-labelledby="trailer-title" id="trailer">
+    <div class="wrap wrap--wide">
+      <SectionHeading
+        eyebrow="Media"
+        title="Official Trailer"
+        align="center"
+        class="trailer__head"
+      />
+      <div class="trailer__frame reveal">
+        <TrailerPlayer id="trailer-player" />
+      </div>
+    </div>
+  </section>
+
+  <CTA
+    lockup
+    eyebrow={`Coming ${game.releaseWindow}`}
+    body="A competitive Norse arena brawler in development at Skaldforge."
+    primary={{ label: 'Discover Mythbound', href: url('/mythbound') }}
+    secondary={{ label: 'Development', href: url('/technology') }}
+  />
+</Base>
+
+<style>
+  /* ------------------------------------------------------------- the game */
+  .intro {
+    display: grid;
+    gap: var(--sp-6);
+    align-items: center;
+  }
+  @media (min-width: 900px) {
+    .intro {
+      grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr);
+      gap: clamp(var(--sp-7), 6vw, var(--sp-9));
+    }
+  }
+  .intro__text { display: grid; gap: var(--sp-5); align-content: start; }
+  .intro__title { font-size: var(--fs-h1); }
+  .intro__copy { display: grid; gap: var(--sp-4); color: var(--t-secondary); max-width: 48ch; }
+
+  .snapshot-band { margin-block-start: var(--sp-8); }
+
+  /* --------------------------------------------------------------- pillars */
+  .pillars {
+    display: grid;
+    gap: clamp(var(--sp-8), 7vw, var(--sp-10));
+    margin-block-start: var(--sp-8);
+  }
+  .pillars__head { margin-block-end: 0; }
+
+  /* ------------------------------------------------------------ relic rush */
+  .relic {
+    position: relative;
+    isolation: isolate;
+    padding-block: clamp(var(--sp-9), 10vw, 12rem);
+    overflow: hidden;
+    border-block: 1px solid var(--s-hairline);
+  }
+  .relic__media {
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+  }
+  .relic__media :global(.fig),
+  .relic__media :global(.fig__frame) {
+    block-size: 100%;
+    border: 0;
+    border-radius: 0;
+    box-shadow: none;
+  }
+  .relic__media :global(.fig__frame) { aspect-ratio: auto; }
+  /*
+    Scrim tuned so the arena still reads behind the copy. Text sits in the left
+    column, so the gradient is heaviest there and opens up toward the right.
+  */
+  .relic__media::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background:
+      linear-gradient(
+        90deg,
+        color-mix(in oklab, var(--c-ink) 92%, transparent) 0%,
+        color-mix(in oklab, var(--c-ink) 74%, transparent) 38%,
+        color-mix(in oklab, var(--c-ink) 40%, transparent) 100%
+      ),
+      linear-gradient(
+        180deg,
+        var(--c-ink) 0%,
+        transparent 26%,
+        transparent 72%,
+        var(--c-ink) 100%
+      );
+  }
+
+  .relic__inner {
+    display: grid;
+    gap: var(--sp-7);
+  }
+  @media (min-width: 1000px) {
+    .relic__inner {
+      grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+      gap: clamp(var(--sp-7), 6vw, var(--sp-9));
+      align-items: center;
+    }
+  }
+
+  .relic__text { display: grid; gap: var(--sp-4); align-content: start; }
+  .relic__title { font-size: var(--fs-h1); }
+  .relic__lede {
+    font-family: var(--f-display);
+    font-size: var(--fs-xl);
+    text-transform: uppercase;
+    letter-spacing: var(--tr-display);
+    color: var(--c-gold-300);
+    max-width: 18ch;
+  }
+  .relic__body { color: var(--t-secondary); max-width: 46ch; }
+
+  .relic__beats {
+    display: grid;
+    gap: 1px;
+    background: var(--s-hairline);
+    border: 1px solid var(--s-hairline);
+    border-radius: var(--r-lg);
+    overflow: hidden;
+  }
+  @media (min-width: 560px) {
+    .relic__beats { grid-template-columns: repeat(2, 1fr); }
+  }
+  .relic__beat {
+    display: grid;
+    gap: var(--sp-2);
+    padding: var(--sp-5);
+    background: color-mix(in oklab, var(--c-ink) 88%, var(--c-navy-900));
+    backdrop-filter: blur(6px);
+  }
+  .relic__beat-num {
+    font-family: var(--f-display);
+    font-size: var(--fs-sm);
+    color: var(--c-gold-500);
+    letter-spacing: var(--tr-label);
+  }
+  .relic__beat-title {
+    font-family: var(--f-display);
+    font-size: var(--fs-lg);
+    text-transform: uppercase;
+    letter-spacing: var(--tr-display);
+  }
+  .relic__beat p { font-size: var(--fs-sm); color: var(--t-secondary); }
+
+  /* ----------------------------------------------------------- arenas/bound */
+  .arenas__head,
+  .bound__head { margin-block-end: var(--sp-8); }
+
+  /* --------------------------------------------------------------- unreal */
+  .unreal {
+    background:
+      radial-gradient(80% 60% at 15% 0%, color-mix(in oklab, var(--c-navy-800) 55%, transparent), transparent 70%);
+    border-block-start: 1px solid var(--s-hairline);
+  }
+  .unreal__grid {
+    display: grid;
+    gap: var(--sp-7);
+    align-items: center;
+  }
+  @media (min-width: 1000px) {
+    .unreal__grid {
+      grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
+      gap: clamp(var(--sp-7), 6vw, var(--sp-9));
+    }
+  }
+  .unreal__text { display: grid; gap: var(--sp-4); align-content: start; }
+  .unreal__title { font-size: var(--fs-h2); max-width: 14ch; }
+  .unreal__body { color: var(--t-secondary); max-width: 46ch; }
+  .unreal__media { display: grid; gap: var(--sp-4); }
+  @media (min-width: 620px) {
+    .unreal__media { grid-template-columns: repeat(2, 1fr); }
+  }
+
+  /* --------------------------------------------------------------- studio */
+  .studio { border-block-start: 1px solid var(--s-hairline); }
+  .studio__inner {
+    display: grid;
+    justify-items: center;
+    text-align: center;
+    gap: var(--sp-4);
+  }
+  .studio__mark {
+    display: block;
+    inline-size: 2.5rem;
+    color: var(--c-gold-500);
+    margin-block-end: var(--sp-2);
+  }
+  .studio__title { font-size: var(--fs-h2); }
+  .studio__statement {
+    font-family: var(--f-display);
+    font-size: var(--fs-xl);
+    text-transform: uppercase;
+    letter-spacing: var(--tr-display);
+    color: var(--c-gold-300);
+  }
+  .studio__body {
+    color: var(--t-secondary);
+    max-width: 54ch;
+  }
+  .studio__disciplines {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: var(--sp-2) var(--sp-3);
+    margin-block-start: var(--sp-3);
+    max-width: 46rem;
+  }
+  .studio__disciplines li {
+    font-size: var(--fs-sm);
+    color: var(--t-muted);
+    padding: 0.3rem 0.7rem;
+    border: 1px solid var(--s-hairline);
+    border-radius: var(--r-sm);
+  }
+  .studio__cta { margin-block-start: var(--sp-4); }
+
+  /* -------------------------------------------------------------- trailer */
+  .trailer__head { margin-block-end: var(--sp-7); }
+  .trailer__frame { max-width: 68rem; margin-inline: auto; }
+</style>

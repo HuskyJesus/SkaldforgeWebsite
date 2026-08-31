@@ -1,0 +1,122 @@
+---
+import { Image } from 'astro:assets';
+import Valknut from './Valknut.astro';
+import mythboundLogo from '../assets/brand/mythbound-logo.png';
+
+interface Props {
+  eyebrow?: string;
+  title?: string;
+  body?: string;
+  primary?: { label: string; href: string };
+  secondary?: { label: string; href: string };
+  /** Show the Mythbound lockup instead of a text heading. */
+  lockup?: boolean;
+}
+const {
+  eyebrow,
+  title,
+  body,
+  primary,
+  secondary,
+  lockup = false,
+} = Astro.props;
+---
+
+<section class="cta">
+  <div class="cta__glow" aria-hidden="true"></div>
+  <div class="wrap cta__inner reveal">
+    {eyebrow && <p class="eyebrow eyebrow--center">{eyebrow}</p>}
+
+    {
+      lockup ? (
+        <Image
+          src={mythboundLogo}
+          alt="Mythbound"
+          widths={[360, 540, 720]}
+          sizes="(min-width: 900px) 420px, 70vw"
+          loading="lazy"
+          decoding="async"
+          class="cta__logo"
+        />
+      ) : (
+        <span class="cta__mark"><Valknut /></span>
+      )
+    }
+
+    {title && <h2 class="display cta__title">{title}</h2>}
+    {body && <p class="cta__body">{body}</p>}
+
+    {
+      (primary || secondary) && (
+        <div class="cta__actions">
+          {primary && <a class="btn btn--primary" href={primary.href}>{primary.label}</a>}
+          {secondary && <a class="btn btn--ghost" href={secondary.href}>{secondary.label}</a>}
+        </div>
+      )
+    }
+  </div>
+</section>
+
+<style>
+  .cta {
+    position: relative;
+    isolation: isolate;
+    padding-block: var(--sp-section);
+    border-block-start: 1px solid var(--s-hairline);
+    overflow: hidden;
+  }
+
+  /* Single restrained forge-light from below. */
+  .cta__glow {
+    position: absolute;
+    inset-block-end: -40%;
+    inset-inline-start: 50%;
+    translate: -50% 0;
+    inline-size: min(120%, 70rem);
+    aspect-ratio: 2 / 1;
+    z-index: -1;
+    background: radial-gradient(
+      50% 50% at 50% 50%,
+      color-mix(in oklab, var(--c-gold-600) 16%, transparent),
+      transparent 70%
+    );
+  }
+
+  .cta__inner {
+    display: grid;
+    justify-items: center;
+    text-align: center;
+    gap: var(--sp-5);
+  }
+
+  .cta__logo {
+    inline-size: clamp(13rem, 30vw, 26rem);
+    block-size: auto;
+    filter: drop-shadow(0 6px 24px rgb(0 0 0 / 0.6));
+  }
+
+  .cta__mark {
+    display: block;
+    inline-size: 2.75rem;
+    color: var(--c-gold-500);
+  }
+
+  .cta__title {
+    font-size: var(--fs-h2);
+    max-width: 20ch;
+  }
+
+  .cta__body {
+    font-size: var(--fs-lg);
+    color: var(--t-secondary);
+    max-width: 52ch;
+  }
+
+  .cta__actions {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: var(--sp-3);
+    margin-block-start: var(--sp-2);
+  }
+</style>

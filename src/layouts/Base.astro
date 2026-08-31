@@ -1,0 +1,120 @@
+---
+import '@fontsource/cinzel/400.css';
+import '@fontsource/cinzel/700.css';
+import '@fontsource-variable/inter';
+import '../styles/global.css';
+
+import Nav from '../components/Nav.astro';
+import Footer from '../components/Footer.astro';
+import { site } from '../data/site';
+import { url, asset } from '../lib/url';
+
+interface Props {
+  title: string;
+  description: string;
+  /** Path to an OG image under /public. Falls back to the branded default. */
+  ogImage?: string;
+  /** Hero pages start under a transparent nav. */
+  navOverlay?: boolean;
+}
+
+const { title, description, ogImage, navOverlay = false } = Astro.props;
+
+const canonical = new URL(Astro.url.pathname, Astro.site).href.replace(/\/$/, '') || Astro.site!.href;
+const ogUrl = new URL(asset(ogImage ?? site.ogImage), Astro.site).href;
+const fullTitle = title === site.title ? title : `${title} — ${site.studio}`;
+
+const orgSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'Organization',
+  name: site.studio,
+  url: Astro.site?.href,
+  logo: new URL(asset('assets/brand/skaldforge-logo.svg'), Astro.site).href,
+  description: site.description,
+};
+
+const gameSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'VideoGame',
+  name: 'Mythbound',
+  url: new URL(url('/mythbound'), Astro.site).href,
+  genre: 'Competitive Multiplayer Arena Brawler',
+  gamePlatform: [],
+  playMode: 'MultiPlayer',
+  publisher: { '@type': 'Organization', name: site.studio },
+  author: { '@type': 'Organization', name: site.studio },
+};
+---
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{fullTitle}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
+
+    <link rel="icon" href={asset('favicon.svg')} type="image/svg+xml" />
+    <link rel="alternate icon" href={asset('favicon-32.png')} sizes="32x32" type="image/png" />
+    <link rel="apple-touch-icon" href={asset('apple-touch-icon.png')} />
+    <meta name="theme-color" content="#05070c" />
+    <meta name="color-scheme" content="dark" />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content={site.studio} />
+    <meta property="og:title" content={fullTitle} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:image" content={ogUrl} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:locale" content={site.locale} />
+
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={fullTitle} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={ogUrl} />
+
+    <script is:inline set:html={JSON.stringify(orgSchema)} type="application/ld+json" />
+    <script is:inline set:html={JSON.stringify(gameSchema)} type="application/ld+json" />
+
+    <!-- Swap the no-js class before first paint so .reveal can hide safely. -->
+    <script is:inline>
+      document.documentElement.classList.remove('no-js');
+    </script>
+  </head>
+
+  <body>
+    <a class="skip-link" href="#main">Skip to content</a>
+    <Nav overlay={navOverlay} />
+    <main id="main" tabindex="-1">
+      <slot />
+    </main>
+    <Footer />
+
+    <script>
+      // Shared scroll-entrance observer. Honours reduced motion by simply
+      // revealing everything up front.
+      const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      const targets = document.querySelectorAll<HTMLElement>('.reveal');
+
+      if (reduce || !('IntersectionObserver' in window)) {
+        targets.forEach((el) => el.classList.add('is-in'));
+      } else {
+        const io = new IntersectionObserver(
+          (entries) => {
+            for (const entry of entries) {
+              if (entry.isIntersecting) {
+                entry.target.classList.add('is-in');
+                io.unobserve(entry.target);
+              }
+            }
+          },
+          { rootMargin: '0px 0px -12% 0px', threshold: 0.05 },
+        );
+        targets.forEach((el) => io.observe(el));
+      }
+    </script>
+  </body>
+</html>

@@ -1,0 +1,53 @@
+---
+/**
+ * Valknut — three interlocking triangles.
+ *
+ * A traditional Norse symbol, and the mark already sitting inside the Mythbound
+ * logotype (ASG slide 42: "the knot of the slain"). It is the site's recurring
+ * geometric motif, so the Norse influence arrives through iconography rather
+ * than decorative texture.
+ *
+ * SIZING: this component always fills its parent box and inherits `color`.
+ * Size and position it by styling the wrapper, never by passing a class — a
+ * parent's scoped styles cannot reach inside a child component's template.
+ *
+ * GEOMETRY: one triangle whose centroid sits well above the figure centre,
+ * plus copies rotated 120° and 240° about that centre. The centroid offset is
+ * what interlocks them; too small an offset collapses all three into one shape.
+ */
+interface Props {
+  title?: string;
+  /** Stroke weight in viewBox units. */
+  weight?: number;
+}
+const { title, weight = 5 } = Astro.props;
+
+// Circumradius 32 about a centroid at (50,37); figure centre (50,52).
+const tri = '50,5 77.7,53 22.3,53';
+---
+
+<svg
+  class="valknut"
+  viewBox="0 0 100 100"
+  fill="none"
+  stroke="currentColor"
+  stroke-width={weight}
+  stroke-linejoin="round"
+  role={title ? 'img' : undefined}
+  aria-hidden={title ? undefined : 'true'}
+  focusable="false"
+>
+  {title && <title>{title}</title>}
+  <polygon points={tri} />
+  <polygon points={tri} transform="rotate(120 50 52)" />
+  <polygon points={tri} transform="rotate(240 50 52)" />
+</svg>
+
+<style>
+  .valknut {
+    display: block;
+    inline-size: 100%;
+    block-size: auto;
+    overflow: visible;
+  }
+</style>

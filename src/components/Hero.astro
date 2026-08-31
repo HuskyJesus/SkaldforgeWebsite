@@ -1,0 +1,365 @@
+---
+import { Image } from 'astro:assets';
+import { asset, url } from '../lib/url';
+import { img } from '../lib/images';
+import mythboundLogo from '../assets/brand/mythbound-logo.png';
+
+interface Props {
+  /** Cinematic hero plays the trailer plate; 'still' uses a key image only. */
+  variant?: 'video' | 'still';
+  stillId?: string;
+  eyebrow?: string;
+  statement: string;
+  /** Rendered instead of the logo lockup on interior pages. */
+  heading?: string;
+  primary?: { label: string; href: string };
+  secondary?: { label: string; href: string };
+  /** Full viewport for the homepage; shorter for interior pages. */
+  size?: 'full' | 'tall';
+}
+
+const {
+  variant = 'still',
+  stillId,
+  eyebrow,
+  statement,
+  heading,
+  primary,
+  secondary,
+  size = 'tall',
+} = Astro.props;
+
+const still = img(stillId);
+---
+
+<section class:list={['hero', `hero--${size}`]} data-hero>
+  <div class="hero__media">
+    {
+      variant === 'video' ? (
+        <>
+          {/*
+            Poster paints immediately and is the LCP candidate. The loop is
+            attached by script only on wide viewports with motion allowed, so
+            phones and reduced-motion users never download it.
+          */}
+          <img
+            class="hero__plate"
+            src={asset('assets/video/hero-poster.jpg')}
+            alt=""
+            width="1920"
+            height="918"
+            fetchpriority="high"
+            decoding="sync"
+          />
+          <video
+            class="hero__video"
+            data-hero-video
+            data-src-lg={asset('assets/video/hero-loop-1080.mp4')}
+            data-src-sm={asset('assets/video/hero-loop-720.mp4')}
+            poster={asset('assets/video/hero-poster.jpg')}
+            muted
+            loop
+            playsinline
+            preload="none"
+            aria-hidden="true"
+            tabindex="-1"
+          />
+        </>
+      ) : (
+        still && (
+          <Image
+            class="hero__plate"
+            src={still}
+            alt=""
+            widths={[960, 1440, 1920, 2400]}
+            sizes="100vw"
+            loading="eager"
+            decoding="sync"
+            fetchpriority="high"
+          />
+        )
+      )
+    }
+    <div class="hero__scrim" aria-hidden="true"></div>
+    <div class="hero__vignette" aria-hidden="true"></div>
+  </div>
+
+  <div class="hero__body">
+    <div class="wrap wrap--wide hero__inner">
+      {eyebrow && <p class="eyebrow hero__eyebrow">{eyebrow}</p>}
+
+      {
+        heading ? (
+          <h1 class="display hero__heading">{heading}</h1>
+        ) : (
+          <h1 class="hero__lockup">
+            <Image
+              src={mythboundLogo}
+              alt="Mythbound"
+              widths={[480, 720, 960, 1200]}
+              sizes="(min-width: 900px) 620px, 78vw"
+              loading="eager"
+              decoding="sync"
+              fetchpriority="high"
+              class="hero__logo"
+            />
+          </h1>
+        )
+      }
+
+      <p class="hero__statement">{statement}</p>
+
+      {
+        (primary || secondary) && (
+          <div class="hero__actions">
+            {primary && (
+              <a class="btn btn--primary" href={primary.href}>
+                {primary.label}
+              </a>
+            )}
+            {secondary && (
+              <a class="btn btn--ghost" href={secondary.href}>
+                {secondary.label}
+              </a>
+            )}
+          </div>
+        )
+      }
+    </div>
+  </div>
+
+  {
+    variant === 'video' && (
+      <button class="hero__pause" data-hero-pause type="button" hidden>
+        <span class="hero__pause-icon" aria-hidden="true" data-icon="pause" />
+        <span data-pause-label>Pause background video</span>
+      </button>
+    )
+  }
+</section>
+
+<style>
+  .hero {
+    position: relative;
+    display: grid;
+    isolation: isolate;
+    /* svh keeps mobile browser chrome from cropping the lockup. */
+    min-block-size: 80svh;
+    padding-block-start: var(--nav-h);
+    overflow: hidden;
+  }
+  .hero--full { min-block-size: 100svh; }
+
+  .hero__media {
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+  }
+
+  .hero__plate,
+  .hero__video {
+    position: absolute;
+    inset: 0;
+    inline-size: 100%;
+    block-size: 100%;
+    object-fit: cover;
+  }
+
+  .hero__video {
+    opacity: 0;
+    transition: opacity var(--d-cine) var(--e-out);
+  }
+  .hero__video.is-playing { opacity: 1; }
+
+  /* Readability scrim: strongest at the bottom where the copy sits. */
+  .hero__scrim {
+    position: absolute;
+    inset: 0;
+    background:
+      linear-gradient(
+        to top,
+        var(--c-ink) 0%,
+        color-mix(in oklab, var(--c-ink) 82%, transparent) 22%,
+        color-mix(in oklab, var(--c-ink) 34%, transparent) 55%,
+        color-mix(in oklab, var(--c-ink) 42%, transparent) 100%
+      );
+  }
+  /* Corner falloff so the frame feels shot rather than cropped. */
+  .hero__vignette {
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(
+      120% 90% at 50% 42%,
+      transparent 40%,
+      color-mix(in oklab, var(--c-ink) 62%, transparent) 100%
+    );
+  }
+
+  .hero__body {
+    align-self: end;
+    inline-size: 100%;
+    padding-block: var(--sp-8) var(--sp-9);
+  }
+  .hero__inner {
+    display: grid;
+    justify-items: start;
+    gap: var(--sp-5);
+  }
+
+  .hero__eyebrow { color: var(--c-gold-300); }
+
+  .hero__lockup { margin: 0; line-height: 0; }
+  .hero__logo {
+    inline-size: clamp(16rem, 46vw, 38.75rem);
+    block-size: auto;
+    /* Lifts the gold off dark footage without a glow effect. */
+    filter: drop-shadow(0 8px 28px rgb(0 0 0 / 0.7));
+  }
+
+  .hero__heading {
+    font-size: var(--fs-hero);
+    max-width: 16ch;
+    color: var(--t-primary);
+    text-shadow: 0 2px 24px rgb(0 0 0 / 0.55);
+  }
+
+  .hero__statement {
+    font-size: var(--fs-xl);
+    line-height: 1.42;
+    max-width: 34ch;
+    color: var(--t-primary);
+    text-wrap: balance;
+    text-shadow: 0 1px 16px rgb(0 0 0 / 0.6);
+  }
+
+  .hero__actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--sp-3);
+    margin-block-start: var(--sp-3);
+  }
+
+  /* ------------------------------------------------------ pause control */
+  .hero__pause {
+    position: absolute;
+    inset-block-end: var(--sp-4);
+    inset-inline-end: var(--gutter);
+    z-index: 2;
+    display: inline-flex;
+    align-items: center;
+    gap: var(--sp-2);
+    padding: 0.5rem 0.75rem;
+    min-block-size: 2.5rem;
+    font-size: var(--fs-eyebrow);
+    letter-spacing: var(--tr-label);
+    text-transform: uppercase;
+    color: var(--t-secondary);
+    background: color-mix(in oklab, var(--c-ink) 72%, transparent);
+    backdrop-filter: blur(8px);
+    border: 1px solid var(--s-hairline);
+    border-radius: var(--r-md);
+    transition: color var(--d-fast) var(--e-out), border-color var(--d-fast) var(--e-out);
+  }
+  .hero__pause:hover {
+    color: var(--c-bone);
+    border-color: var(--s-hairline-lit);
+  }
+  .hero__pause[hidden] { display: none; }
+
+  .hero__pause-icon {
+    inline-size: 0.6rem;
+    block-size: 0.7rem;
+    flex: none;
+    background: currentColor;
+    /* Two bars = pause. */
+    clip-path: polygon(0 0, 36% 0, 36% 100%, 0 100%, 0 0, 64% 0, 100% 0, 100% 100%, 64% 100%, 64% 0);
+  }
+  .hero__pause-icon[data-icon='play'] {
+    clip-path: polygon(0 0, 100% 50%, 0 100%);
+  }
+
+  /* Hide the label text on narrow screens; the icon plus a11y name suffice. */
+  @media (max-width: 599px) {
+    .hero__pause span:last-child {
+      position: absolute;
+      width: 1px; height: 1px;
+      overflow: hidden;
+      clip-path: inset(50%);
+      white-space: nowrap;
+    }
+  }
+</style>
+
+<script>
+  const video = document.querySelector<HTMLVideoElement>('[data-hero-video]');
+  const pause = document.querySelector<HTMLButtonElement>('[data-hero-pause]');
+
+  if (video) {
+    const reduce = window.matchMedia('(prefers-reduced-motion: reduce)');
+    const wide = window.matchMedia('(min-width: 768px)');
+    // Respect a user's metered/limited connection where the browser reports it.
+    const conn = (navigator as any).connection;
+    const saveData = Boolean(conn?.saveData);
+    const slow = /(^|-)2g$/.test(conn?.effectiveType ?? '');
+
+    const shouldLoad = () => wide.matches && !reduce.matches && !saveData && !slow;
+
+    let loaded = false;
+    const load = () => {
+      if (loaded || !shouldLoad()) return;
+      loaded = true;
+      const src = window.matchMedia('(min-width: 1280px)').matches
+        ? video.dataset.srcLg
+        : video.dataset.srcSm;
+      if (!src) return;
+      video.src = src;
+      video.play().then(
+        () => {
+          video.classList.add('is-playing');
+          pause?.removeAttribute('hidden');
+        },
+        () => {
+          // Autoplay refused: leave the poster in place, nothing to control.
+        },
+      );
+    };
+
+    // Defer past first paint so the poster wins LCP.
+    if ('requestIdleCallback' in window) {
+      (window as any).requestIdleCallback(load, { timeout: 2500 });
+    } else {
+      window.setTimeout(load, 1200);
+    }
+
+    // Don't decode video that isn't on screen.
+    new IntersectionObserver(
+      ([e]) => {
+        if (!loaded || !video.src) return;
+        if (e.isIntersecting) {
+          if (video.dataset.userPaused !== 'true') video.play().catch(() => {});
+        } else {
+          video.pause();
+        }
+      },
+      { threshold: 0.05 },
+    ).observe(video);
+
+    if (pause) {
+      const icon = pause.querySelector<HTMLElement>('.hero__pause-icon');
+      const label = pause.querySelector<HTMLElement>('[data-pause-label]');
+      pause.addEventListener('click', () => {
+        const playing = !video.paused;
+        if (playing) {
+          video.pause();
+          video.dataset.userPaused = 'true';
+        } else {
+          video.dataset.userPaused = 'false';
+          video.play().catch(() => {});
+        }
+        icon?.setAttribute('data-icon', playing ? 'play' : 'pause');
+        const text = playing ? 'Play background video' : 'Pause background video';
+        if (label) label.textContent = text;
+      });
+    }
+  }
+</script>

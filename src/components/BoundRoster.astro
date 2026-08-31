@@ -1,0 +1,259 @@
+---
+import { bound } from '../data/bound';
+import Valknut from './Valknut.astro';
+
+/**
+ * The Bound.
+ *
+ * Presented as forged dossier cards rather than character art, because no
+ * finished renders exist yet and the available reference sheets are annotated
+ * internal documents. The card carries its weight through scale, the valknut
+ * watermark and the character's documented accent colour. Real concept art and
+ * the in-progress sculpt live on the Development page, correctly framed.
+ */
+---
+
+<ul role="list" class="roster">
+  {
+    bound.map((b, i) => (
+      <li class="roster__item reveal" style={`--reveal-delay:${i * 80}ms`}>
+        <article
+          class="bound"
+          style={b.accent ? `--accent:${b.accent}` : undefined}
+        >
+          <span class="bound__watermark" aria-hidden="true"><Valknut weight={3} /></span>
+
+          <header class="bound__head">
+            <p class="bound__sponsor">
+              <span class="bound__sigil"><Valknut weight={7} /></span>
+              {b.sponsor}
+            </p>
+            <span class="bound__ordinal" aria-hidden="true">
+              {String(i + 1).padStart(2, '0')}
+            </span>
+          </header>
+
+          <h3 class="display bound__name">{b.name}</h3>
+
+          <p class="bound__playstyle">{b.playstyle}</p>
+          <p class="bound__movement">{b.movement}</p>
+
+          {b.abilities.length > 0 ? (
+            <dl class="bound__abilities">
+              {b.abilities.map((a) => (
+                <div class="bound__ability">
+                  <dt>{a.name}</dt>
+                  <dd>{a.body}</dd>
+                </div>
+              ))}
+            </dl>
+          ) : (
+            <p class="bound__pending">
+              <span class="bound__pending-dot" aria-hidden="true" />
+              Abilities in development
+            </p>
+          )}
+
+          <dl class="bound__stats">
+            <div>
+              <dt>Build</dt>
+              <dd>{b.build}</dd>
+            </div>
+            <div>
+              <dt>Height</dt>
+              <dd>{b.height}</dd>
+            </div>
+            {b.palette && (
+              <div>
+                <dt>Palette</dt>
+                <dd>{b.palette}</dd>
+              </div>
+            )}
+          </dl>
+        </article>
+      </li>
+    ))
+  }
+</ul>
+
+<style>
+  .roster { display: grid; gap: var(--sp-5); }
+  @media (min-width: 800px) { .roster { grid-template-columns: repeat(2, 1fr); } }
+  @media (min-width: 1240px) { .roster { gap: var(--sp-6); } }
+
+  .bound {
+    /* Falls back to forge gold where the palette is still TBD. */
+    --accent: var(--c-gold-400);
+
+    position: relative;
+    isolation: isolate;
+    overflow: hidden;
+    block-size: 100%;
+    display: grid;
+    align-content: start;
+    gap: var(--sp-3);
+    padding: var(--sp-6) var(--sp-5) var(--sp-5);
+    border: 1px solid var(--s-hairline);
+    border-radius: var(--r-lg);
+    background:
+      linear-gradient(
+        180deg,
+        color-mix(in oklab, var(--c-navy-800) 55%, transparent),
+        color-mix(in oklab, var(--c-ink) 96%, transparent) 62%
+      );
+    transition: border-color var(--d-mid) var(--e-out), transform var(--d-mid) var(--e-out);
+  }
+
+  /* Accent rule across the top edge — the only place the hue appears strongly. */
+  .bound::before {
+    content: '';
+    position: absolute;
+    inset-block-start: 0;
+    inset-inline: 0;
+    block-size: 2px;
+    background: linear-gradient(90deg, var(--accent), transparent 72%);
+    opacity: 0.85;
+  }
+
+  .bound:hover {
+    border-color: color-mix(in oklab, var(--accent) 45%, transparent);
+    transform: translateY(-3px);
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .bound:hover { transform: none; }
+  }
+
+  /* Oversized sigil bled off the corner: structure, not decoration. */
+  .bound__watermark {
+    position: absolute;
+    z-index: -1;
+    inset-block-start: -9%;
+    inset-inline-end: -11%;
+    inline-size: 42%;
+    max-inline-size: 13rem;
+    color: color-mix(in oklab, var(--accent) 9%, transparent);
+    pointer-events: none;
+  }
+
+  .bound__head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--sp-4);
+  }
+
+  .bound__sponsor {
+    display: flex;
+    align-items: center;
+    gap: var(--sp-3);
+    font-size: var(--fs-eyebrow);
+    font-weight: 600;
+    letter-spacing: var(--tr-eyebrow);
+    text-transform: uppercase;
+    color: var(--accent);
+  }
+  .bound__sigil { inline-size: 0.95rem; flex: none; display: block; }
+
+  .bound__ordinal {
+    font-family: var(--f-display);
+    font-size: var(--fs-sm);
+    letter-spacing: var(--tr-label);
+    color: var(--t-muted);
+  }
+
+  .bound__name {
+    font-size: var(--fs-h3);
+    line-height: 1.05;
+    margin-block-start: var(--sp-2);
+  }
+
+  .bound__playstyle {
+    font-size: var(--fs-sm);
+    font-weight: 600;
+    letter-spacing: var(--tr-label);
+    text-transform: uppercase;
+    color: var(--c-ice-300);
+  }
+
+  .bound__movement {
+    font-size: var(--fs-sm);
+    color: var(--t-secondary);
+    max-width: 42ch;
+  }
+
+  .bound__abilities {
+    display: grid;
+    gap: var(--sp-4);
+    margin-block-start: var(--sp-3);
+    padding-block-start: var(--sp-4);
+    border-block-start: 1px solid var(--s-hairline);
+  }
+  .bound__ability dt {
+    font-family: var(--f-display);
+    font-size: var(--fs-base);
+    text-transform: uppercase;
+    letter-spacing: var(--tr-display);
+    color: var(--t-primary);
+    margin-block-end: var(--sp-2);
+    display: flex;
+    align-items: baseline;
+    gap: var(--sp-3);
+  }
+  .bound__ability dt::before {
+    content: '';
+    inline-size: 0.6rem;
+    block-size: 1px;
+    background: var(--accent);
+    flex: none;
+    transform: translateY(-0.3em);
+  }
+  .bound__ability dd {
+    margin: 0;
+    padding-inline-start: calc(0.6rem + var(--sp-3));
+    font-size: var(--fs-sm);
+    color: var(--t-muted);
+  }
+
+  .bound__pending {
+    display: flex;
+    align-items: center;
+    gap: var(--sp-3);
+    margin-block-start: var(--sp-3);
+    padding-block-start: var(--sp-4);
+    border-block-start: 1px solid var(--s-hairline);
+    font-size: var(--fs-sm);
+    letter-spacing: var(--tr-label);
+    text-transform: uppercase;
+    color: var(--t-muted);
+  }
+  .bound__pending-dot {
+    inline-size: 0.4rem;
+    block-size: 0.4rem;
+    border-radius: 50%;
+    background: var(--c-steel-soft);
+    flex: none;
+  }
+
+  .bound__stats {
+    display: grid;
+    gap: var(--sp-4);
+    margin-block-start: auto;
+    padding-block-start: var(--sp-5);
+  }
+  @media (min-width: 520px) {
+    .bound__stats { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .bound__stats > div:first-child { grid-column: 1 / -1; }
+  }
+  .bound__stats dt {
+    font-size: var(--fs-eyebrow);
+    letter-spacing: var(--tr-eyebrow);
+    text-transform: uppercase;
+    color: var(--t-muted);
+    margin-block-end: var(--sp-1);
+  }
+  .bound__stats dd {
+    margin: 0;
+    font-size: var(--fs-sm);
+    color: var(--t-secondary);
+  }
+</style>

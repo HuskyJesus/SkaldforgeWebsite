@@ -1,0 +1,146 @@
+---
+import { nav, site, socials, contact } from '../data/site';
+import { game } from '../data/game';
+import { url } from '../lib/url';
+import Wordmark from './Wordmark.astro';
+
+const year = new Date().getFullYear();
+---
+
+<footer class="footer">
+  <div class="wrap wrap--wide">
+    <div class="footer__top">
+      <div class="footer__brand">
+        <Wordmark class="footer__logo" title="Skaldforge" />
+        <p class="footer__tagline">We forge worlds worth fighting for.</p>
+      </div>
+
+      <nav class="footer__nav" aria-label="Footer">
+        <h2 class="footer__heading">Explore</h2>
+        <ul role="list">
+          {nav.map((item) => <li><a href={url(item.href)}>{item.label}</a></li>)}
+        </ul>
+      </nav>
+
+      <div class="footer__col">
+        <h2 class="footer__heading">Mythbound</h2>
+        <ul role="list" class="footer__facts">
+          <li><span>Genre</span>{game.genre}</li>
+          <li><span>Engine</span>{game.engine}</li>
+          <li><span>Status</span>{game.status} — {game.releaseWindow}</li>
+        </ul>
+      </div>
+
+      {
+        (socials.length > 0 || contact.email) && (
+          <div class="footer__col">
+            <h2 class="footer__heading">Connect</h2>
+            <ul role="list">
+              {socials.map((s) => (
+                <li>
+                  <a href={s.href} rel="me noopener">{s.label}</a>
+                </li>
+              ))}
+              {contact.email && (
+                <li><a href={`mailto:${contact.email}`}>{contact.email}</a></li>
+              )}
+            </ul>
+          </div>
+        )
+      }
+    </div>
+
+    <hr class="rule footer__rule" />
+
+    <div class="footer__bottom">
+      <p>&copy; {year} {site.studio}. All rights reserved.</p>
+      <p class="footer__note">
+        Mythbound is in development. Everything shown is work in progress.
+      </p>
+    </div>
+  </div>
+</footer>
+
+<style>
+  .footer {
+    padding-block: var(--sp-8) var(--sp-6);
+    border-block-start: 1px solid var(--s-hairline);
+    background: linear-gradient(180deg, transparent, color-mix(in oklab, var(--c-navy-900) 30%, transparent));
+  }
+
+  .footer__top {
+    display: grid;
+    gap: var(--sp-7);
+  }
+  @media (min-width: 760px) {
+    .footer__top {
+      grid-template-columns: minmax(0, 1.4fr) repeat(auto-fit, minmax(9rem, 1fr));
+      gap: var(--sp-6);
+    }
+  }
+
+  .footer__brand { display: grid; gap: var(--sp-4); align-content: start; }
+  /* Global for the same reason as the nav wordmark: injected via set:html. */
+  .footer__brand :global(.footer__logo) {
+    block-size: 2.75rem;
+    inline-size: auto;
+    color: var(--c-ice-300);
+  }
+  .footer__tagline {
+    font-family: var(--f-display);
+    font-size: var(--fs-sm);
+    text-transform: uppercase;
+    letter-spacing: var(--tr-display);
+    color: var(--t-muted);
+    max-width: 24ch;
+  }
+
+  .footer__heading {
+    font-size: var(--fs-eyebrow);
+    font-weight: 600;
+    letter-spacing: var(--tr-eyebrow);
+    text-transform: uppercase;
+    color: var(--c-gold-500);
+    margin-block-end: var(--sp-4);
+  }
+
+  .footer__nav ul,
+  .footer__col ul { display: grid; gap: var(--sp-3); }
+
+  .footer__nav a,
+  .footer__col a {
+    font-size: var(--fs-sm);
+    color: var(--t-secondary);
+    transition: color var(--d-fast) var(--e-out);
+    /* Comfortable target without visibly changing the layout. */
+    padding-block: var(--sp-1);
+  }
+  .footer__nav a:hover,
+  .footer__col a:hover { color: var(--c-gold-300); }
+
+  .footer__facts li {
+    display: grid;
+    gap: 2px;
+    font-size: var(--fs-sm);
+    color: var(--t-secondary);
+  }
+  .footer__facts span {
+    font-size: var(--fs-eyebrow);
+    letter-spacing: var(--tr-label);
+    text-transform: uppercase;
+    color: var(--t-muted);
+  }
+
+  .footer__rule { margin-block: var(--sp-7) var(--sp-5); }
+
+  .footer__bottom {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--sp-3) var(--sp-6);
+    justify-content: space-between;
+    font-size: var(--fs-sm);
+    color: var(--t-muted);
+  }
+  /* Kept at --t-muted so the disclaimer still clears 4.5:1 against the ink. */
+  .footer__note { color: var(--t-muted); }
+</style>

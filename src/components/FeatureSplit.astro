@@ -1,0 +1,139 @@
+---
+import Figure from './Figure.astro';
+
+/**
+ * Large alternating editorial block: one substantial visual, restrained copy.
+ * Deliberately not a card grid.
+ */
+interface Props {
+  index?: string;
+  eyebrow?: string;
+  title: string;
+  body: string;
+  points?: readonly string[];
+  imageId: string;
+  imageAlt: string;
+  caption?: string | null;
+  badge?: string | null;
+  /** 'left' puts the media on the left at desktop widths. */
+  media?: 'left' | 'right';
+  ratio?: string;
+  as?: 'h2' | 'h3';
+}
+
+const {
+  index,
+  eyebrow,
+  title,
+  body,
+  points,
+  imageId,
+  imageAlt,
+  caption,
+  badge,
+  media = 'right',
+  ratio = '4 / 3',
+  as: Tag = 'h3',
+} = Astro.props;
+---
+
+<article class:list={['split', `split--${media}`, 'reveal']}>
+  <div class="split__text">
+    {
+      (index || eyebrow) && (
+        <p class="split__meta">
+          {index && <span class="split__index">{index}</span>}
+          {eyebrow && <span class="split__eyebrow">{eyebrow}</span>}
+        </p>
+      )
+    }
+    <Tag class="display split__title">{title}</Tag>
+    <p class="split__body">{body}</p>
+    {
+      points && points.length > 0 && (
+        <ul role="list" class="split__points">
+          {points.map((p) => (
+            <li>{p}</li>
+          ))}
+        </ul>
+      )
+    }
+    <slot />
+  </div>
+
+  <div class="split__media">
+    <Figure
+      id={imageId}
+      alt={imageAlt}
+      caption={caption}
+      badge={badge}
+      ratio={ratio}
+      sizes="(min-width: 1100px) 620px, (min-width: 700px) 90vw, 100vw"
+    />
+  </div>
+</article>
+
+<style>
+  .split {
+    display: grid;
+    gap: var(--sp-6);
+    align-items: center;
+  }
+
+  @media (min-width: 1000px) {
+    .split {
+      grid-template-columns: minmax(0, 0.85fr) minmax(0, 1.15fr);
+      gap: clamp(var(--sp-7), 5vw, var(--sp-9));
+    }
+    .split--left .split__text { order: 2; }
+    .split--left .split__media { order: 1; }
+  }
+
+  .split__text { display: grid; gap: var(--sp-4); align-content: start; }
+
+  .split__meta {
+    display: flex;
+    align-items: center;
+    gap: var(--sp-4);
+  }
+  .split__index {
+    font-family: var(--f-display);
+    font-size: var(--fs-sm);
+    color: var(--c-gold-500);
+    letter-spacing: var(--tr-label);
+  }
+  .split__eyebrow {
+    font-size: var(--fs-eyebrow);
+    font-weight: 600;
+    letter-spacing: var(--tr-eyebrow);
+    text-transform: uppercase;
+    color: var(--t-muted);
+    padding-inline-start: var(--sp-4);
+    border-inline-start: 1px solid var(--s-hairline);
+  }
+
+  .split__title {
+    font-size: var(--fs-h3);
+    max-width: 18ch;
+  }
+
+  .split__body {
+    color: var(--t-secondary);
+    max-width: 46ch;
+  }
+
+  .split__points {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--sp-2) var(--sp-3);
+    margin-block-start: var(--sp-2);
+  }
+  .split__points li {
+    font-size: var(--fs-sm);
+    color: var(--t-secondary);
+    padding: 0.3rem 0.7rem;
+    border: 1px solid var(--s-hairline);
+    border-radius: var(--r-sm);
+    background: color-mix(in oklab, var(--c-navy-900) 40%, transparent);
+  }
+</style>

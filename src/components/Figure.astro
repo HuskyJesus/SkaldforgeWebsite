@@ -1,0 +1,109 @@
+---
+import { Image } from 'astro:assets';
+import { img } from '../lib/images';
+
+interface Props {
+  /** Image id from the registry. Renders nothing if it is missing. */
+  id: string | null | undefined;
+  alt: string;
+  caption?: string | null;
+  /** Aspect ratio applied to the frame; the image covers it. */
+  ratio?: string;
+  /** Above-the-fold imagery should be eager + high priority. */
+  priority?: boolean;
+  sizes?: string;
+  widths?: number[];
+  /** Small uppercase tag pinned to the frame, e.g. "In development". */
+  badge?: string | null;
+  class?: string;
+}
+
+const {
+  id,
+  alt,
+  caption,
+  ratio = '16 / 9',
+  priority = false,
+  sizes = '(min-width: 1280px) 1200px, (min-width: 900px) 90vw, 100vw',
+  widths = [640, 960, 1280, 1600, 2000],
+  badge,
+  class: className,
+} = Astro.props;
+
+const source = img(id);
+---
+
+{
+  source && (
+    <figure class:list={['fig', className]}>
+      <div class="fig__frame" style={`--ratio:${ratio}`}>
+        <Image
+          src={source}
+          alt={alt}
+          widths={widths}
+          sizes={sizes}
+          loading={priority ? 'eager' : 'lazy'}
+          decoding={priority ? 'sync' : 'async'}
+          fetchpriority={priority ? 'high' : 'auto'}
+          class="fig__img"
+        />
+        {badge && <span class="fig__badge">{badge}</span>}
+      </div>
+      {caption && <figcaption class="fig__caption">{caption}</figcaption>}
+    </figure>
+  )
+}
+
+<style>
+  .fig { display: grid; gap: var(--sp-3); }
+
+  .fig__frame {
+    position: relative;
+    aspect-ratio: var(--ratio);
+    overflow: hidden;
+    border-radius: var(--r-lg);
+    background: var(--s-panel);
+    border: 1px solid var(--s-hairline);
+    /* Inner top highlight reads as a bevelled metal edge. */
+    box-shadow: var(--sh-2), var(--sh-inset-top);
+  }
+
+  .fig__img {
+    inline-size: 100%;
+    block-size: 100%;
+    object-fit: cover;
+    transform: scale(1.005); /* hides sub-pixel edges from the cover crop */
+  }
+
+  .fig__badge {
+    position: absolute;
+    inset-block-end: var(--sp-3);
+    inset-inline-start: var(--sp-3);
+    padding: 0.35rem 0.6rem;
+    background: color-mix(in oklab, var(--c-ink) 82%, transparent);
+    backdrop-filter: blur(6px);
+    border: 1px solid var(--s-hairline-lit);
+    border-radius: var(--r-sm);
+    font-size: var(--fs-eyebrow);
+    font-weight: 600;
+    letter-spacing: var(--tr-label);
+    text-transform: uppercase;
+    color: var(--c-gold-300);
+  }
+
+  .fig__caption {
+    font-size: var(--fs-sm);
+    color: var(--t-muted);
+    display: flex;
+    align-items: baseline;
+    gap: var(--sp-3);
+  }
+  .fig__caption::before {
+    content: '';
+    inline-size: 0.75rem;
+    block-size: 1px;
+    background: var(--c-gold-600);
+    flex: none;
+    transform: translateY(-0.28em);
+  }
+</style>

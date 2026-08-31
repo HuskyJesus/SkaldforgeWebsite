@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://huskyjesus.github.io/SkaldforgeWebsite/sitemap-index.xml

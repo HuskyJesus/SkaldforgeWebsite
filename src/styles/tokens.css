@@ -1,0 +1,134 @@
+/* =========================================================================
+   SKALDFORGE — DESIGN TOKENS
+   Palette sampled directly from the Mythbound logotype and the in-engine UI
+   prototype: near-black -> deep navy -> steel -> silver -> forge gold -> ivory.
+   ========================================================================= */
+
+:root {
+  /* ---------------------------------------------------------------- color */
+  --c-ink:          #05070c;  /* page ground */
+  --c-ink-raised:   #090e18;  /* raised panel on ink */
+  --c-navy-900:     #0b1524;
+  --c-navy-800:     #101d31;
+  --c-navy-700:     #16283f;
+  --c-navy-600:     #1e3350;
+  --c-steel:        #2a4066;
+  --c-steel-soft:   #3d5680;
+
+  --c-ice-100:      #e6eef1;
+  --c-ice-300:      #a8bcc2;  /* logo lettering silver */
+  --c-ice-500:      #7d939b;
+
+  --c-gold-700:     #8a6520;
+  --c-gold-600:     #b08528;
+  --c-gold-500:     #c9a227;
+  --c-gold-400:     #d8b055;
+  --c-gold-300:     #e8cd8e;
+
+  --c-ivory:        #efeddb;
+  --c-bone:         #f6f3e8;
+
+  /* Team-read colours lifted from the arena rim-lighting. Accents only. */
+  --c-rune:         #4fd2ff;
+  --c-rune-deep:    #1d8fbf;
+  --c-ember:        #e0457b;
+
+  /* -------------------------------------------------------------- surface */
+  --s-page:         var(--c-ink);
+  --s-panel:        color-mix(in oklab, var(--c-navy-900) 82%, black);
+  --s-panel-2:      color-mix(in oklab, var(--c-navy-800) 70%, black);
+  --s-hairline:     color-mix(in oklab, var(--c-ice-300) 14%, transparent);
+  --s-hairline-lit: color-mix(in oklab, var(--c-gold-400) 34%, transparent);
+
+  /* ----------------------------------------------------------------- text */
+  --t-primary:      var(--c-bone);
+  --t-secondary:    color-mix(in oklab, var(--c-ice-300) 80%, transparent);
+  --t-muted:        color-mix(in oklab, var(--c-ice-500) 88%, transparent);
+  --t-accent:       var(--c-gold-300);
+  --t-on-light:     var(--c-navy-900);
+
+  /* ------------------------------------------------------------ typography */
+  --f-display: 'Cinzel', 'Trajan Pro', 'Times New Roman', serif;
+  --f-body: 'Inter Variable', 'Inter', system-ui, -apple-system, 'Segoe UI', sans-serif;
+
+  /* Fluid type scale — 360px to 1600px viewport */
+  --fs-eyebrow:  clamp(0.688rem, 0.64rem + 0.20vw, 0.813rem);
+  --fs-sm:       clamp(0.813rem, 0.78rem + 0.16vw, 0.906rem);
+  --fs-base:     clamp(0.938rem, 0.90rem + 0.20vw, 1.063rem);
+  --fs-lg:       clamp(1.063rem, 0.99rem + 0.34vw, 1.25rem);
+  --fs-xl:       clamp(1.25rem, 1.11rem + 0.63vw, 1.625rem);
+  --fs-h3:       clamp(1.375rem, 1.16rem + 0.95vw, 2rem);
+  --fs-h2:       clamp(1.875rem, 1.40rem + 2.09vw, 3.25rem);
+  --fs-h1:       clamp(2.5rem, 1.66rem + 3.72vw, 4.875rem);
+  --fs-hero:     clamp(2.75rem, 1.30rem + 6.45vw, 6.875rem);
+
+  --lh-tight: 1.04;
+  --lh-snug: 1.18;
+  --lh-body: 1.62;
+
+  --tr-display: -0.015em;   /* Cinzel caps want a touch of negative tracking */
+  --tr-eyebrow: 0.22em;
+  --tr-label: 0.14em;
+
+  /* ---------------------------------------------------------------- space */
+  --sp-1: 0.25rem;
+  --sp-2: 0.5rem;
+  --sp-3: 0.75rem;
+  --sp-4: 1rem;
+  --sp-5: 1.5rem;
+  --sp-6: 2rem;
+  --sp-7: 3rem;
+  --sp-8: 4rem;
+  --sp-9: 6rem;
+  --sp-10: 8rem;
+
+  /* Vertical rhythm between major page sections */
+  --sp-section: clamp(4.5rem, 3.2rem + 5.6vw, 9.5rem);
+  --sp-section-tight: clamp(3rem, 2.2rem + 3.4vw, 6rem);
+
+  /* ---------------------------------------------------------------- layout */
+  --w-content: 1280px;   /* standard section width */
+  --w-wide: 1560px;      /* full-bleed-ish media */
+  --w-prose: 62ch;       /* readable measure */
+  --gutter: clamp(1.25rem, 0.85rem + 1.7vw, 3rem);
+
+  /* ---------------------------------------------------------------- radius */
+  --r-sm: 2px;
+  --r-md: 3px;
+  --r-lg: 4px;   /* Deliberately near-square: forged metal, not soft UI. */
+
+  /* --------------------------------------------------------------- shadows */
+  --sh-1: 0 1px 2px rgb(0 0 0 / 0.4);
+  --sh-2: 0 8px 24px -8px rgb(0 0 0 / 0.6);
+  --sh-3: 0 24px 64px -16px rgb(0 0 0 / 0.75);
+  --sh-glow-gold: 0 0 32px -8px color-mix(in oklab, var(--c-gold-500) 55%, transparent);
+  --sh-inset-top: inset 0 1px 0 color-mix(in oklab, var(--c-ice-100) 8%, transparent);
+
+  /* ---------------------------------------------------------------- motion */
+  --d-fast: 140ms;
+  --d-mid: 260ms;
+  --d-slow: 520ms;
+  --d-cine: 900ms;
+  --e-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --e-inout: cubic-bezier(0.65, 0, 0.35, 1);
+  --e-entrance: cubic-bezier(0.22, 0.61, 0.36, 1);
+
+  /* ----------------------------------------------------------------- misc */
+  --z-nav: 100;
+  --z-modal: 200;
+  --nav-h: 4.5rem;
+}
+
+@media (min-width: 900px) {
+  :root { --nav-h: 5.25rem; }
+}
+
+/* Reduced motion: collapse all durations rather than patching each animation. */
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --d-fast: 1ms;
+    --d-mid: 1ms;
+    --d-slow: 1ms;
+    --d-cine: 1ms;
+  }
+}

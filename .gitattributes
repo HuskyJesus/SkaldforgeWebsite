@@ -1,0 +1,14 @@
+# Normalise line endings so the repo stays consistent across Windows and CI.
+* text=auto eol=lf
+
+# Binary assets must never be line-ending converted.
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.webp binary
+*.avif binary
+*.mp4 binary
+*.webm binary
+*.mov binary
+*.woff2 binary
+*.ico binary

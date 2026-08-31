@@ -1,0 +1,417 @@
+---
+import Base from '../layouts/Base.astro';
+import Hero from '../components/Hero.astro';
+import SectionHeading from '../components/SectionHeading.astro';
+import Figure from '../components/Figure.astro';
+import FeatureSplit from '../components/FeatureSplit.astro';
+import ArenaShowcase from '../components/ArenaShowcase.astro';
+import BoundRoster from '../components/BoundRoster.astro';
+import TrailerPlayer from '../components/TrailerPlayer.astro';
+import Snapshot from '../components/Snapshot.astro';
+import CTA from '../components/CTA.astro';
+import Valknut from '../components/Valknut.astro';
+
+import { game, pillars, relicRush } from '../data/game';
+import { boundPremise } from '../data/bound';
+import { roadmapIntro, publishedRoadmap } from '../data/roadmap';
+import { url } from '../lib/url';
+
+const gallery = [
+  { id: 'relic-altar', alt: 'The relic glowing above its pedestal on a blue and gold banner runway inside a torchlit stone base.' },
+  { id: 'gold-burst', alt: 'A golden ability detonating around a Bound, throwing light across the arena floor.' },
+  { id: 'rune-clash', alt: 'Two teams collide as cyan rune-light spreads in cracks across the ground and magenta trails cut through it.' },
+  { id: 'village-dome', alt: 'A red dome of energy encloses a timber hall as Bound fight in the street below.' },
+  { id: 'winter-statue', alt: 'A snow-covered arena district with a towering stone statue above the rooftops.' },
+  { id: 'bridge-beam', alt: 'A vertical beam of light rising from a dark stone causeway between high arena walls.' },
+];
+---
+
+<Base
+  title="Mythbound"
+  description="Mythbound is a competitive Norse arena brawler in development at Skaldforge. Chain your movement, fight for the relic, and claim a place in Valhalla. Built in Unreal Engine."
+  navOverlay
+>
+  {/* ------------------------------------------------------------ 1. HERO */}
+  <Hero
+    variant="still"
+    stillId="bridge-beam"
+    size="tall"
+    eyebrow={`${game.status} — Coming ${game.releaseWindow}`}
+    statement="A competitive Norse arena brawler. Chain your movement, take the relic, and prove your place in Valhalla."
+    primary={{ label: 'Watch Trailer', href: '#trailer' }}
+    secondary={{ label: 'How it’s built', href: url('/technology') }}
+  />
+
+  {/* -------------------------------------------------------- 2. OVERVIEW */}
+  <section class="section" aria-labelledby="overview-title">
+    <div class="wrap wrap--wide">
+      <div class="overview">
+        <div class="overview__text reveal">
+          <p class="eyebrow">Overview</p>
+          <h2 id="overview-title" class="display overview__title">
+            The games are entertainment. You are the contestant.
+          </h2>
+          <div class="prose">
+            <p>
+              In an alternate modern-day Norway, mythological runes reshaped technology and
+              split society in two. The Valkyries run a high-speed, lethal competition for the
+              amusement of the people who benefited.
+            </p>
+            <p>
+              Civilians can enter. The price of entry is a contract — your soul bound to Helheim,
+              your death made temporary, your fighting made permanent. Those who sign are the
+              Bound, and a god sponsors each of them in exchange for spectacle.
+            </p>
+            <p>
+              What that produces is a fast, close-range team brawler about carrying speed. Every
+              movement tool feeds the next one, and the fight rewards whoever arrives with the
+              most momentum still intact.
+            </p>
+          </div>
+        </div>
+        <div class="overview__aside reveal">
+          <Snapshot />
+        </div>
+      </div>
+    </div>
+  </section>
+
+  {/* ------------------------------------------------------ 3. RELIC RUSH */}
+  <section class="section section--tight" aria-labelledby="mode-title">
+    <div class="wrap wrap--wide">
+      <SectionHeading
+        eyebrow={`Premiere mode — ${relicRush.format}`}
+        title={relicRush.name}
+        lede={relicRush.body}
+        class="mode__head"
+      />
+
+      <div class="mode__hero reveal">
+        <Figure
+          id="base-approach"
+          alt="A Bound carrying a spear advances down a blue and gold banner runway toward an enemy base, opponents rim-lit in red ahead."
+          ratio="21 / 9"
+          sizes="(min-width: 1600px) 1500px, 100vw"
+          widths={[900, 1400, 1920, 2400]}
+          caption="Pushing into a defended base"
+        />
+      </div>
+
+      <ol role="list" class="mode__beats">
+        {
+          relicRush.beats.map((beat, i) => (
+            <li class="mode__beat reveal" style={`--reveal-delay:${i * 80}ms`}>
+              <span class="mode__beat-num">{String(i + 1).padStart(2, '0')}</span>
+              <h3 class="mode__beat-title">{beat.title}</h3>
+              <p>{beat.body}</p>
+            </li>
+          ))
+        }
+      </ol>
+    </div>
+  </section>
+
+  {/* --------------------------------------------- 4–6. MOVEMENT / COMBAT / POWER */}
+  <section class="section" aria-labelledby="systems-title">
+    <div class="wrap wrap--wide">
+      <SectionHeading
+        eyebrow="Systems"
+        title="One connected skill ceiling"
+        lede="Traversal, melee and sponsor abilities were designed against each other. The interesting play lives where they overlap."
+        class="systems__head"
+      />
+      <div class="systems">
+        {
+          pillars.map((p, i) => (
+            <FeatureSplit
+              index={p.index}
+              eyebrow={p.title}
+              title={p.heading}
+              body={p.body}
+              points={p.detail}
+              imageId={p.image}
+              imageAlt={`Mythbound gameplay — ${p.heading.toLowerCase()}`}
+              media={i % 2 === 0 ? 'right' : 'left'}
+              ratio="16 / 10"
+            />
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  {/* ------------------------------------------------------- 7. THE BOUND */}
+  <section class="section section--tight" aria-labelledby="roster-title">
+    <div class="wrap wrap--wide">
+      <SectionHeading
+        eyebrow="The Roster"
+        title="The Bound"
+        lede={boundPremise}
+        class="roster__head"
+      />
+      <BoundRoster />
+      <p class="roster__note reveal">
+        Character models are in production. See the
+        <a href={`${url('/technology')}#tech-characters`}>character pipeline</a>
+        for concept art and sculpts.
+      </p>
+    </div>
+  </section>
+
+  {/* ---------------------------------------------------------- 8. ARENAS */}
+  <section class="section" aria-labelledby="arena-title">
+    <div class="wrap wrap--wide">
+      <SectionHeading
+        eyebrow="The Realms"
+        title="Three arenas, three problems"
+        lede="Midgard rewards speed across open ground. Helheim compresses the fight into corridors. Asgard builds it upward."
+        class="arena__head"
+      />
+      <ArenaShowcase />
+    </div>
+  </section>
+
+  {/* --------------------------------------------------------- 9. GALLERY */}
+  <section class="section section--tight" aria-labelledby="gallery-title">
+    <div class="wrap wrap--wide">
+      <SectionHeading eyebrow="Media" title="From the arena" align="center" class="gallery__head" />
+      <ul role="list" class="gallery">
+        {
+          gallery.map((shot, i) => (
+            <li class="gallery__item reveal" style={`--reveal-delay:${(i % 3) * 70}ms`}>
+              <Figure
+                id={shot.id}
+                alt={shot.alt}
+                ratio="16 / 9"
+                sizes="(min-width: 1000px) 33vw, (min-width: 640px) 48vw, 100vw"
+                widths={[400, 640, 900]}
+              />
+            </li>
+          ))
+        }
+      </ul>
+      <p class="gallery__note reveal">
+        All imagery captured in engine from a work-in-progress build.
+      </p>
+    </div>
+  </section>
+
+  {/* --------------------------------------------- 10. DEVELOPMENT STATUS */}
+  <section class="section status" aria-labelledby="status-title">
+    <div class="wrap wrap--wide">
+      <div class="status__grid">
+        <div class="status__text reveal">
+          <p class="eyebrow">Development status</p>
+          <h2 id="status-title" class="display status__title">Playable, and still being sharpened</h2>
+          <p class="status__body">
+            Mythbound is in active development toward a {game.releaseWindow} window. The movement
+            set, melee system and Relic Rush are implemented and playable. Midgard and Helheim are
+            built and lit; Asgard is in blockout. Character models are moving from sculpt to
+            game-ready.
+          </p>
+          <a class="link-arrow" href={url('/technology')}>See the development work</a>
+        </div>
+        <div class="status__media reveal">
+          <Figure
+            id="arena-blockout-vertical"
+            alt="A vertical arena blockout in Unreal Engine, untextured, showing platforms and large branch forms."
+            caption="Asgard — vertical blockout"
+            ratio="16 / 10"
+            sizes="(min-width: 1000px) 560px, 100vw"
+          />
+        </div>
+      </div>
+    </div>
+  </section>
+
+  {/* ------------------------------------------------- 11. FUTURE POTENTIAL */}
+  {
+    publishedRoadmap.length > 0 && (
+      <section class="section section--tight future" aria-labelledby="future-title">
+        <div class="wrap wrap--wide">
+          <div class="future__head reveal">
+            <span class="future__mark"><Valknut /></span>
+            <p class="eyebrow eyebrow--center">{roadmapIntro.eyebrow}</p>
+            <h2 id="future-title" class="display future__title">{roadmapIntro.title}</h2>
+            <p class="future__lede">{roadmapIntro.lede}</p>
+          </div>
+
+          <ul role="list" class="future__list">
+            {publishedRoadmap.map((item, i) => (
+              <li class="future__item reveal" style={`--reveal-delay:${i * 80}ms`}>
+                <h3 class="future__item-title">{item.title}</h3>
+                <p>{item.body}</p>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </section>
+    )
+  }
+
+  {/* --------------------------------------------------------- 12. TRAILER */}
+  <section class="section section--tight" id="trailer" aria-labelledby="trailer-title">
+    <div class="wrap wrap--wide">
+      <SectionHeading eyebrow="Media" title="Official Trailer" align="center" class="trailer__head" />
+      <div class="trailer__frame reveal">
+        <TrailerPlayer id="trailer-player" />
+      </div>
+    </div>
+  </section>
+
+  <CTA
+    lockup
+    eyebrow={`Coming ${game.releaseWindow}`}
+    body="Built in Unreal Engine at Skaldforge."
+    primary={{ label: 'Development', href: url('/technology') }}
+    secondary={{ label: 'About the studio', href: url('/studio') }}
+  />
+</Base>
+
+<style>
+  /* ------------------------------------------------------------- overview */
+  .overview { display: grid; gap: var(--sp-7); }
+  @media (min-width: 1000px) {
+    .overview {
+      grid-template-columns: minmax(0, 1.15fr) minmax(0, 0.85fr);
+      gap: clamp(var(--sp-7), 6vw, var(--sp-9));
+      align-items: start;
+    }
+  }
+  .overview__text { display: grid; gap: var(--sp-5); align-content: start; }
+  .overview__title { font-size: var(--fs-h2); max-width: 18ch; }
+  .overview__aside :global(.snap) { position: sticky; top: calc(var(--nav-h) + var(--sp-5)); }
+  @media (max-width: 999px) {
+    .overview__aside :global(.snap) { position: static; }
+  }
+
+  /* ----------------------------------------------------------- relic rush */
+  .mode__head { margin-block-end: var(--sp-7); }
+  .mode__hero { margin-block-end: var(--sp-7); }
+
+  .mode__beats {
+    display: grid;
+    gap: 1px;
+    background: var(--s-hairline);
+    border: 1px solid var(--s-hairline);
+    border-radius: var(--r-lg);
+    overflow: hidden;
+  }
+  @media (min-width: 560px) { .mode__beats { grid-template-columns: repeat(2, 1fr); } }
+  @media (min-width: 1000px) { .mode__beats { grid-template-columns: repeat(4, 1fr); } }
+
+  .mode__beat {
+    display: grid;
+    gap: var(--sp-2);
+    align-content: start;
+    padding: var(--sp-5);
+    background: color-mix(in oklab, var(--c-navy-900) 40%, var(--c-ink));
+  }
+  .mode__beat-num {
+    font-family: var(--f-display);
+    font-size: var(--fs-sm);
+    color: var(--c-gold-500);
+    letter-spacing: var(--tr-label);
+  }
+  .mode__beat-title {
+    font-family: var(--f-display);
+    font-size: var(--fs-lg);
+    text-transform: uppercase;
+    letter-spacing: var(--tr-display);
+  }
+  .mode__beat p { font-size: var(--fs-sm); color: var(--t-secondary); }
+
+  /* -------------------------------------------------------------- systems */
+  .systems__head { margin-block-end: var(--sp-8); }
+  .systems { display: grid; gap: clamp(var(--sp-8), 7vw, var(--sp-10)); }
+
+  /* --------------------------------------------------------- roster/arena */
+  .roster__head,
+  .arena__head,
+  .gallery__head { margin-block-end: var(--sp-8); }
+
+  .roster__note,
+  .gallery__note {
+    margin-block-start: var(--sp-5);
+    font-size: var(--fs-sm);
+    color: var(--t-muted);
+    text-align: center;
+  }
+  .roster__note a {
+    color: var(--t-accent);
+    text-decoration: underline;
+    text-underline-offset: 0.25em;
+  }
+
+  /* -------------------------------------------------------------- gallery */
+  .gallery {
+    display: grid;
+    gap: var(--sp-4);
+  }
+  @media (min-width: 640px) { .gallery { grid-template-columns: repeat(2, 1fr); } }
+  @media (min-width: 1000px) { .gallery { grid-template-columns: repeat(3, 1fr); } }
+
+  /* --------------------------------------------------------------- status */
+  .status {
+    border-block-start: 1px solid var(--s-hairline);
+    background: radial-gradient(70% 60% at 85% 0%, color-mix(in oklab, var(--c-navy-800) 45%, transparent), transparent 70%);
+  }
+  .status__grid { display: grid; gap: var(--sp-7); align-items: center; }
+  @media (min-width: 1000px) {
+    .status__grid {
+      grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+      gap: clamp(var(--sp-7), 6vw, var(--sp-9));
+    }
+  }
+  .status__text { display: grid; gap: var(--sp-4); align-content: start; }
+  .status__title { font-size: var(--fs-h2); max-width: 16ch; }
+  .status__body { color: var(--t-secondary); max-width: 48ch; }
+
+  /* --------------------------------------------------------------- future */
+  .future { border-block-start: 1px solid var(--s-hairline); }
+  .future__head {
+    display: grid;
+    justify-items: center;
+    text-align: center;
+    gap: var(--sp-4);
+    margin-block-end: var(--sp-8);
+  }
+  .future__mark { display: block; inline-size: 2.25rem; color: var(--c-gold-500); }
+  .future__title { font-size: var(--fs-h2); }
+  .future__lede { color: var(--t-secondary); max-width: 54ch; font-size: var(--fs-lg); }
+
+  .future__list { display: grid; gap: var(--sp-5); }
+  @media (min-width: 800px) { .future__list { grid-template-columns: repeat(3, 1fr); } }
+
+  .future__item {
+    display: grid;
+    gap: var(--sp-3);
+    align-content: start;
+    padding: var(--sp-6) var(--sp-5);
+    border: 1px solid var(--s-hairline);
+    border-radius: var(--r-lg);
+    background: linear-gradient(180deg, color-mix(in oklab, var(--c-navy-900) 45%, transparent), transparent);
+    /* Gold tick at the top edge instead of an icon. */
+    position: relative;
+  }
+  .future__item::before {
+    content: '';
+    position: absolute;
+    inset-block-start: -1px;
+    inset-inline-start: var(--sp-5);
+    inline-size: 2rem;
+    block-size: 1px;
+    background: var(--c-gold-500);
+  }
+  .future__item-title {
+    font-family: var(--f-display);
+    font-size: var(--fs-lg);
+    text-transform: uppercase;
+    letter-spacing: var(--tr-display);
+  }
+  .future__item p { font-size: var(--fs-sm); color: var(--t-secondary); }
+
+  /* -------------------------------------------------------------- trailer */
+  .trailer__head { margin-block-end: var(--sp-7); }
+  .trailer__frame { max-width: 68rem; margin-inline: auto; }
+</style>

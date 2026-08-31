@@ -1,0 +1,350 @@
+---
+import { nav, site } from '../data/site';
+import { url, isCurrent, asset } from '../lib/url';
+import Wordmark from './Wordmark.astro';
+
+interface Props {
+  /** Hero pages start with the nav transparent over the media. */
+  overlay?: boolean;
+}
+const { overlay = false } = Astro.props;
+const pathname = Astro.url.pathname;
+---
+
+<header class:list={['nav', overlay && 'nav--overlay']} data-nav>
+  <div class="nav__inner">
+    <a class="nav__brand" href={url('/')} aria-label={`${site.studio} — home`}>
+      <Wordmark class="nav__logo" />
+    </a>
+
+    <nav class="nav__desktop" aria-label="Primary">
+      <ul role="list" class="nav__list">
+        {nav.map((item) => (
+          <li>
+            <a
+              class="nav__link"
+              href={url(item.href)}
+              aria-current={isCurrent(item.href, pathname) ? 'page' : undefined}
+            >
+              <span>{item.label}</span>
+            </a>
+          </li>
+        ))}
+      </ul>
+      <a class="nav__cta" href={url('/mythbound#trailer')}>
+        <svg viewBox="0 0 12 14" aria-hidden="true" focusable="false"><path d="M12 7 0 14V0z" fill="currentColor"/></svg>
+        Watch Trailer
+      </a>
+    </nav>
+
+    <button
+      class="nav__toggle"
+      type="button"
+      aria-expanded="false"
+      aria-controls="nav-mobile"
+      data-nav-toggle
+    >
+      <span class="nav__toggle-box" aria-hidden="true">
+        <span class="nav__bar"></span>
+        <span class="nav__bar"></span>
+      </span>
+      <span class="visually-hidden">Menu</span>
+    </button>
+  </div>
+
+  <div class="nav__panel" id="nav-mobile" data-nav-panel hidden>
+    <nav aria-label="Primary mobile">
+      <ul role="list" class="nav__panel-list">
+        {nav.map((item, i) => (
+          <li style={`--i:${i}`}>
+            <a
+              href={url(item.href)}
+              aria-current={isCurrent(item.href, pathname) ? 'page' : undefined}
+            >
+              <span class="nav__panel-index">{String(i + 1).padStart(2, '0')}</span>
+              {item.label}
+            </a>
+          </li>
+        ))}
+      </ul>
+    </nav>
+    <a class="nav__panel-cta" href={url('/mythbound#trailer')}>
+      <svg viewBox="0 0 12 14" aria-hidden="true" focusable="false"><path d="M12 7 0 14V0z" fill="currentColor"/></svg>
+      Watch Trailer
+    </a>
+  </div>
+</header>
+
+<style>
+  .nav {
+    position: fixed;
+    inset-block-start: 0;
+    inset-inline: 0;
+    z-index: var(--z-nav);
+    background: color-mix(in oklab, var(--c-ink) 88%, transparent);
+    backdrop-filter: blur(14px) saturate(1.1);
+    border-block-end: 1px solid var(--s-hairline);
+    transition:
+      background var(--d-mid) var(--e-out),
+      border-color var(--d-mid) var(--e-out);
+  }
+
+  /* Over a hero: fully transparent until the user scrolls past it. */
+  .nav--overlay:not(.is-stuck) {
+    background: linear-gradient(180deg, rgb(0 0 0 / 0.55), transparent);
+    backdrop-filter: none;
+    border-block-end-color: transparent;
+  }
+
+  .nav__inner {
+    width: min(100% - (var(--gutter) * 2), var(--w-wide));
+    margin-inline: auto;
+    block-size: var(--nav-h);
+    display: flex;
+    align-items: center;
+    gap: var(--sp-5);
+  }
+
+  .nav__brand {
+    display: flex;
+    align-items: center;
+    margin-inline-end: auto;
+    padding-block: var(--sp-2);
+  }
+  /*
+    The wordmark is injected with set:html, so Astro's scoped selectors never
+    match it. These two rules are global on purpose.
+  */
+  .nav__brand :global(.nav__logo) {
+    block-size: clamp(1.75rem, 1.4rem + 1.2vw, 2.4rem);
+    inline-size: auto;
+    color: var(--c-bone);
+    transition: color var(--d-mid) var(--e-out);
+  }
+  .nav__brand:hover :global(.nav__logo) { color: var(--c-gold-300); }
+
+  /* ---------------------------------------------------------- desktop */
+  .nav__desktop { display: none; }
+
+  @media (min-width: 900px) {
+    .nav__desktop {
+      display: flex;
+      align-items: center;
+      gap: var(--sp-6);
+    }
+    .nav__list {
+      display: flex;
+      align-items: center;
+      gap: var(--sp-6);
+    }
+    .nav__link {
+      position: relative;
+      display: block;
+      padding-block: var(--sp-2);
+      font-size: var(--fs-sm);
+      font-weight: 500;
+      letter-spacing: var(--tr-label);
+      text-transform: uppercase;
+      color: var(--t-secondary);
+      transition: color var(--d-fast) var(--e-out);
+    }
+    /* Gold rule wipes in from the left rather than fading. */
+    .nav__link::after {
+      content: '';
+      position: absolute;
+      inset-block-end: 0;
+      inset-inline-start: 0;
+      block-size: 1px;
+      inline-size: 100%;
+      background: var(--c-gold-400);
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform var(--d-mid) var(--e-out);
+    }
+    .nav__link:hover { color: var(--c-bone); }
+    .nav__link:hover::after { transform: scaleX(1); }
+    .nav__link[aria-current='page'] { color: var(--c-bone); }
+    .nav__link[aria-current='page']::after {
+      transform: scaleX(1);
+      background: var(--c-gold-500);
+    }
+
+    .nav__cta {
+      display: inline-flex;
+      align-items: center;
+      gap: var(--sp-3);
+      padding: 0.7rem 1.2rem;
+      font-size: var(--fs-eyebrow);
+      font-weight: 600;
+      letter-spacing: var(--tr-label);
+      text-transform: uppercase;
+      color: var(--c-gold-300);
+      border: 1px solid color-mix(in oklab, var(--c-gold-500) 45%, transparent);
+      border-radius: var(--r-md);
+      transition:
+        background var(--d-mid) var(--e-out),
+        color var(--d-mid) var(--e-out),
+        border-color var(--d-mid) var(--e-out);
+    }
+    .nav__cta svg { inline-size: 0.55rem; flex: none; }
+    .nav__cta:hover {
+      background: var(--c-gold-400);
+      border-color: var(--c-gold-400);
+      color: var(--c-navy-900);
+    }
+  }
+
+  /* ----------------------------------------------------------- toggle */
+  .nav__toggle {
+    display: grid;
+    place-items: center;
+    inline-size: 2.75rem;
+    block-size: 2.75rem;
+    margin-inline-end: calc(var(--sp-2) * -1);
+    color: var(--c-bone);
+  }
+  @media (min-width: 900px) { .nav__toggle { display: none; } }
+
+  .nav__toggle-box {
+    display: grid;
+    gap: 6px;
+    inline-size: 1.375rem;
+  }
+  .nav__bar {
+    block-size: 1.5px;
+    background: currentColor;
+    transition: transform var(--d-mid) var(--e-out);
+  }
+  [aria-expanded='true'] .nav__bar:first-child { transform: translateY(3.75px) rotate(45deg); }
+  [aria-expanded='true'] .nav__bar:last-child { transform: translateY(-3.75px) rotate(-45deg); }
+
+  /* ------------------------------------------------------ mobile panel */
+  .nav__panel {
+    position: fixed;
+    inset: var(--nav-h) 0 0 0;
+    background: var(--c-ink);
+    border-block-start: 1px solid var(--s-hairline);
+    padding: var(--sp-7) var(--gutter) var(--sp-8);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: var(--sp-7);
+    overflow-y: auto;
+    overscroll-behavior: contain;
+  }
+  .nav__panel[hidden] { display: none; }
+  @media (min-width: 900px) { .nav__panel { display: none !important; } }
+
+  .nav__panel-list { display: grid; gap: var(--sp-2); }
+  .nav__panel-list a {
+    display: flex;
+    align-items: baseline;
+    gap: var(--sp-4);
+    padding-block: var(--sp-4);
+    border-block-end: 1px solid var(--s-hairline);
+    font-family: var(--f-display);
+    font-size: var(--fs-h3);
+    text-transform: uppercase;
+    letter-spacing: var(--tr-display);
+    color: var(--t-primary);
+    /* 44px+ touch target guaranteed by the block padding above. */
+    opacity: 0;
+    transform: translateY(0.75rem);
+    animation: navItemIn var(--d-slow) var(--e-out) forwards;
+    animation-delay: calc(60ms * var(--i) + 40ms);
+  }
+  .nav__panel-list a[aria-current='page'] { color: var(--c-gold-300); }
+  .nav__panel-index {
+    font-family: var(--f-body);
+    font-size: var(--fs-eyebrow);
+    letter-spacing: var(--tr-eyebrow);
+    color: var(--c-gold-500);
+  }
+
+  @keyframes navItemIn {
+    to { opacity: 1; transform: none; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .nav__panel-list a { opacity: 1; transform: none; animation: none; }
+  }
+
+  .nav__panel-cta {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--sp-3);
+    padding: var(--sp-4) var(--sp-5);
+    min-block-size: 3rem;
+    background: var(--c-gold-400);
+    color: var(--c-navy-900);
+    font-size: var(--fs-sm);
+    font-weight: 700;
+    letter-spacing: var(--tr-label);
+    text-transform: uppercase;
+    border-radius: var(--r-md);
+  }
+  .nav__panel-cta svg { inline-size: 0.6rem; }
+</style>
+
+<script>
+  const header = document.querySelector<HTMLElement>('[data-nav]');
+  const toggle = document.querySelector<HTMLButtonElement>('[data-nav-toggle]');
+  const panel = document.querySelector<HTMLElement>('[data-nav-panel]');
+
+  // Solidify the nav once the user leaves the hero.
+  if (header) {
+    const sentinel = document.createElement('div');
+    sentinel.setAttribute('aria-hidden', 'true');
+    sentinel.style.cssText = 'position:absolute;top:0;height:70svh;width:1px;pointer-events:none;';
+    document.body.prepend(sentinel);
+    new IntersectionObserver(
+      ([e]) => header.classList.toggle('is-stuck', !e.isIntersecting),
+      { threshold: 0 },
+    ).observe(sentinel);
+  }
+
+  if (toggle && panel) {
+    const focusables = () =>
+      panel.querySelectorAll<HTMLElement>('a[href], button:not([disabled])');
+
+    const setOpen = (open: boolean) => {
+      toggle.setAttribute('aria-expanded', String(open));
+      panel.hidden = !open;
+      document.body.style.overflow = open ? 'hidden' : '';
+      if (open) focusables()[0]?.focus();
+    };
+
+    toggle.addEventListener('click', () =>
+      setOpen(toggle.getAttribute('aria-expanded') !== 'true'),
+    );
+
+    // Escape closes and returns focus to the trigger.
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && toggle.getAttribute('aria-expanded') === 'true') {
+        setOpen(false);
+        toggle.focus();
+      }
+    });
+
+    // Trap focus inside the open panel.
+    panel.addEventListener('keydown', (e) => {
+      if (e.key !== 'Tab') return;
+      const items = focusables();
+      if (!items.length) return;
+      const first = items[0];
+      const last = items[items.length - 1];
+      if (e.shiftKey && document.activeElement === first) {
+        e.preventDefault();
+        last.focus();
+      } else if (!e.shiftKey && document.activeElement === last) {
+        e.preventDefault();
+        first.focus();
+      }
+    });
+
+    // Restore scroll if the viewport grows past the mobile breakpoint.
+    matchMedia('(min-width: 900px)').addEventListener('change', (e) => {
+      if (e.matches) setOpen(false);
+    });
+  }
+</script>

@@ -1,0 +1,182 @@
+---
+import { asset } from '../lib/url';
+
+/**
+ * Trailer presentation.
+ *
+ * The video is not loaded until the viewer asks for it: the poster is a plain
+ * image with a play affordance, and only on activation does the <video> get a
+ * src. That keeps a 12 MB asset off every page load while still making the
+ * trailer the obvious next action.
+ *
+ * Uses native controls — a custom control surface would add keyboard and
+ * screen-reader surface area for no benefit here.
+ */
+interface Props {
+  id?: string;
+  label?: string;
+}
+const { id = 'trailer', label = 'Mythbound — Official Trailer' } = Astro.props;
+---
+
+<div class="player" id={id} data-player>
+  <div class="player__frame">
+    <img
+      class="player__poster"
+      src={asset('assets/video/trailer-poster.jpg')}
+      alt=""
+      width="1920"
+      height="918"
+      loading="lazy"
+      decoding="async"
+      data-player-poster
+    />
+
+    <video
+      class="player__video"
+      data-player-video
+      data-src={asset('assets/video/mythbound-trailer-1080.mp4')}
+      poster={asset('assets/video/trailer-poster.jpg')}
+      controls
+      playsinline
+      preload="none"
+      hidden
+    >
+      <track
+        kind="captions"
+        srclang="en"
+        label="English"
+        src={asset('assets/video/mythbound-trailer.en.vtt')}
+        default
+      />
+    </video>
+
+    <button class="player__play" type="button" data-player-play>
+      <span class="player__play-ring" aria-hidden="true">
+        <svg viewBox="0 0 16 18" aria-hidden="true" focusable="false">
+          <path d="M16 9 0 18V0z" fill="currentColor" />
+        </svg>
+      </span>
+      <span class="player__play-label">
+        <span class="player__play-kicker">Watch</span>
+        <span class="player__play-title">{label}</span>
+      </span>
+    </button>
+  </div>
+</div>
+
+<style>
+  .player__frame {
+    position: relative;
+    aspect-ratio: 1920 / 918;
+    overflow: hidden;
+    border-radius: var(--r-lg);
+    background: var(--c-ink-raised);
+    border: 1px solid var(--s-hairline);
+    box-shadow: var(--sh-3), var(--sh-inset-top);
+  }
+
+  .player__poster,
+  .player__video {
+    position: absolute;
+    inset: 0;
+    inline-size: 100%;
+    block-size: 100%;
+    object-fit: cover;
+  }
+  .player__video[hidden] { display: none; }
+  .player__video:not([hidden]) { position: relative; }
+
+  .player__poster {
+    transition: transform var(--d-cine) var(--e-out), filter var(--d-slow) var(--e-out);
+    filter: saturate(0.92) brightness(0.82);
+  }
+
+  .player__play {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--sp-5);
+    flex-direction: column;
+    text-align: center;
+    color: var(--t-primary);
+    /* Gradient keeps the label legible over any poster frame. */
+    background: radial-gradient(
+      70% 60% at 50% 50%,
+      color-mix(in oklab, var(--c-ink) 30%, transparent),
+      color-mix(in oklab, var(--c-ink) 72%, transparent)
+    );
+  }
+  .player__play[hidden] { display: none; }
+
+  .player__play-ring {
+    display: grid;
+    place-items: center;
+    inline-size: clamp(3.5rem, 2.6rem + 4vw, 5.5rem);
+    aspect-ratio: 1;
+    border: 1px solid var(--c-gold-400);
+    border-radius: 50%;
+    color: var(--c-gold-300);
+    background: color-mix(in oklab, var(--c-ink) 55%, transparent);
+    backdrop-filter: blur(4px);
+    transition:
+      background var(--d-mid) var(--e-out),
+      color var(--d-mid) var(--e-out),
+      transform var(--d-mid) var(--e-out);
+  }
+  .player__play-ring svg {
+    inline-size: 26%;
+    margin-inline-start: 12%; /* optical centring of the triangle */
+  }
+
+  .player__play:hover .player__play-ring,
+  .player__play:focus-visible .player__play-ring {
+    background: var(--c-gold-400);
+    color: var(--c-navy-900);
+    transform: scale(1.06);
+  }
+  .player__play:hover ~ .player__poster { filter: saturate(1) brightness(0.9); }
+  .player__frame:hover .player__poster { transform: scale(1.02); }
+
+  @media (prefers-reduced-motion: reduce) {
+    .player__frame:hover .player__poster { transform: none; }
+    .player__play:hover .player__play-ring { transform: none; }
+  }
+
+  .player__play-label { display: grid; gap: var(--sp-2); }
+  .player__play-kicker {
+    font-size: var(--fs-eyebrow);
+    font-weight: 600;
+    letter-spacing: var(--tr-eyebrow);
+    text-transform: uppercase;
+    color: var(--c-gold-300);
+  }
+  .player__play-title {
+    font-family: var(--f-display);
+    font-size: var(--fs-lg);
+    text-transform: uppercase;
+    letter-spacing: var(--tr-display);
+  }
+</style>
+
+<script>
+  document.querySelectorAll<HTMLElement>('[data-player]').forEach((root) => {
+    const video = root.querySelector<HTMLVideoElement>('[data-player-video]');
+    const button = root.querySelector<HTMLButtonElement>('[data-player-play]');
+    const poster = root.querySelector<HTMLImageElement>('[data-player-poster]');
+    if (!video || !button) return;
+
+    button.addEventListener('click', () => {
+      if (!video.src) video.src = video.dataset.src ?? '';
+      video.hidden = false;
+      button.hidden = true;
+      poster?.setAttribute('hidden', '');
+      video.focus();
+      video.play().catch(() => {
+        /* Controls are visible; the viewer can start it manually. */
+      });
+    });
+  });
+</script>

@@ -1,0 +1,239 @@
+---
+import Base from '../layouts/Base.astro';
+import Hero from '../components/Hero.astro';
+import SectionHeading from '../components/SectionHeading.astro';
+import Figure from '../components/Figure.astro';
+import CompareBlock from '../components/CompareBlock.astro';
+import Snapshot from '../components/Snapshot.astro';
+import CTA from '../components/CTA.astro';
+
+import { techIntro, techSections, toolchain } from '../data/tech';
+import { url } from '../lib/url';
+---
+
+<Base
+  title="Development"
+  description="How Mythbound is built: Unreal Engine, motion capture with Motion Matching, blockout-first arena design, and the technical art behind a fast Norse arena brawler."
+  navOverlay
+>
+  <Hero
+    variant="still"
+    stillId="movement-greybox-test"
+    size="tall"
+    eyebrow={techIntro.eyebrow}
+    heading={techIntro.title}
+    statement="Built in Unreal Engine — from the first grey box to a playable arena."
+    primary={{ label: 'Play the trailer', href: `${url('/mythbound')}#trailer` }}
+  />
+
+  {/* ------------------------------------------------------------ snapshot */}
+  <section class="section section--tight" aria-labelledby="snap-title">
+    <div class="wrap wrap--wide">
+      <h2 id="snap-title" class="visually-hidden">Project snapshot</h2>
+      <p class="intro-lede reveal">{techIntro.lede}</p>
+      <Snapshot />
+    </div>
+  </section>
+
+  {/* ------------------------------------------------------------ sections */}
+  <div class="tech">
+    {
+      techSections.map((sec, i) => (
+        <section
+          class:list={['section', 'tech__section', i % 2 === 1 && 'tech__section--alt']}
+          aria-labelledby={`tech-${sec.id}`}
+        >
+          <div class="wrap wrap--wide">
+            <div class="tech__head reveal">
+              <p class="eyebrow">{sec.eyebrow}</p>
+              <h2 id={`tech-${sec.id}`} class="display tech__title">{sec.title}</h2>
+              <p class="tech__body">{sec.body}</p>
+
+              {sec.points && (
+                <ul role="list" class="tech__points">
+                  {sec.points.map((p) => (
+                    <li>{p}</li>
+                  ))}
+                </ul>
+              )}
+            </div>
+
+            <div class="tech__media">
+              {sec.compare ? (
+                <CompareBlock dev={sec.compare.dev} final={sec.compare.final} />
+              ) : (
+                sec.image && (
+                  <Figure
+                    id={sec.image}
+                    alt={sec.imageCaption ?? sec.title}
+                    caption={sec.imageCaption}
+                    ratio="16 / 9"
+                    sizes="(min-width: 1200px) 1100px, 100vw"
+                    widths={[720, 1100, 1600, 2000]}
+                  />
+                )
+              )}
+            </div>
+          </div>
+        </section>
+      ))
+    }
+  </div>
+
+  {/* ----------------------------------------------------------- toolchain */}
+  <section class="section tools" aria-labelledby="tools-title">
+    <div class="wrap wrap--wide">
+      <SectionHeading
+        eyebrow="Pipeline"
+        title="The toolchain"
+        lede="A conventional, production-grade pipeline — chosen so the team can move quickly between disciplines rather than fight the tools."
+        class="tools__head"
+      />
+      <ul role="list" class="tools__grid">
+        {
+          toolchain.map((group, i) => (
+            <li class="tools__group reveal" style={`--reveal-delay:${i * 60}ms`}>
+              <h3 class="tools__group-title">{group.group}</h3>
+              <ul role="list" class="tools__list">
+                {group.tools.map((t) => (
+                  <li>{t}</li>
+                ))}
+              </ul>
+            </li>
+          ))
+        }
+      </ul>
+
+      <div class="budgets reveal">
+        <h3 class="budgets__title">Asset budgets</h3>
+        <dl class="budgets__list">
+          <div><dt>Characters</dt><dd>25,000–40,000 tris · 2K textures</dd></div>
+          <div><dt>Weapons</dt><dd>15,000–25,000 tris · 2K textures</dd></div>
+          <div><dt>Environment &amp; props</dt><dd>200–30,000 tris by tier · 1K textures</dd></div>
+        </dl>
+      </div>
+    </div>
+  </section>
+
+  <CTA
+    eyebrow="The game"
+    title="See it in motion"
+    body="Everything on this page exists to serve one thing: a fast, readable fight in a Norse arena."
+    primary={{ label: 'Watch the trailer', href: `${url('/mythbound')}#trailer` }}
+    secondary={{ label: 'About Skaldforge', href: url('/studio') }}
+  />
+</Base>
+
+<style>
+  .intro-lede {
+    font-size: var(--fs-xl);
+    line-height: 1.45;
+    color: var(--t-primary);
+    max-width: 54ch;
+    margin-block-end: var(--sp-7);
+    text-wrap: balance;
+  }
+
+  .tech__section { border-block-start: 1px solid var(--s-hairline); }
+  .tech__section--alt {
+    background: radial-gradient(
+      70% 70% at 20% 0%,
+      color-mix(in oklab, var(--c-navy-800) 40%, transparent),
+      transparent 70%
+    );
+  }
+
+  .tech__head {
+    display: grid;
+    gap: var(--sp-4);
+    max-width: 62rem;
+    margin-block-end: var(--sp-7);
+  }
+  .tech__title { font-size: var(--fs-h2); max-width: 18ch; }
+  .tech__body { color: var(--t-secondary); max-width: 58ch; font-size: var(--fs-lg); }
+
+  .tech__points {
+    display: grid;
+    gap: var(--sp-2);
+    margin-block-start: var(--sp-3);
+  }
+  @media (min-width: 700px) {
+    .tech__points { grid-template-columns: repeat(2, 1fr); gap: var(--sp-2) var(--sp-6); }
+  }
+  .tech__points li {
+    display: flex;
+    gap: var(--sp-3);
+    align-items: baseline;
+    font-size: var(--fs-sm);
+    color: var(--t-secondary);
+  }
+  .tech__points li::before {
+    content: '';
+    inline-size: 0.5rem;
+    block-size: 1px;
+    background: var(--c-gold-500);
+    flex: none;
+    transform: translateY(-0.3em);
+  }
+
+  /* ------------------------------------------------------------ toolchain */
+  .tools { border-block-start: 1px solid var(--s-hairline); }
+  .tools__head { margin-block-end: var(--sp-8); }
+
+  .tools__grid {
+    display: grid;
+    gap: 1px;
+    background: var(--s-hairline);
+    border: 1px solid var(--s-hairline);
+    border-radius: var(--r-lg);
+    overflow: hidden;
+  }
+  @media (min-width: 560px) { .tools__grid { grid-template-columns: repeat(2, 1fr); } }
+  @media (min-width: 900px) { .tools__grid { grid-template-columns: repeat(3, 1fr); } }
+
+  .tools__group {
+    display: grid;
+    gap: var(--sp-3);
+    align-content: start;
+    padding: var(--sp-5);
+    background: color-mix(in oklab, var(--c-navy-900) 40%, var(--c-ink));
+  }
+  .tools__group-title {
+    font-size: var(--fs-eyebrow);
+    font-weight: 600;
+    letter-spacing: var(--tr-eyebrow);
+    text-transform: uppercase;
+    color: var(--c-gold-500);
+  }
+  .tools__list { display: grid; gap: var(--sp-2); }
+  .tools__list li { font-size: var(--fs-sm); color: var(--t-secondary); }
+
+  /* -------------------------------------------------------------- budgets */
+  .budgets {
+    margin-block-start: var(--sp-6);
+    padding: var(--sp-6);
+    border: 1px solid var(--s-hairline);
+    border-radius: var(--r-lg);
+  }
+  .budgets__title {
+    font-family: var(--f-display);
+    font-size: var(--fs-lg);
+    text-transform: uppercase;
+    letter-spacing: var(--tr-display);
+    margin-block-end: var(--sp-5);
+  }
+  .budgets__list { display: grid; gap: var(--sp-4); }
+  @media (min-width: 800px) { .budgets__list { grid-template-columns: repeat(3, 1fr); } }
+  .budgets__list dt {
+    font-size: var(--fs-eyebrow);
+    letter-spacing: var(--tr-eyebrow);
+    text-transform: uppercase;
+    color: var(--t-muted);
+    margin-block-end: var(--sp-2);
+  }
+  .budgets__list dd {
+    margin: 0;
+    font-size: var(--fs-sm);
+    color: var(--t-secondary);
+  }
+</style>

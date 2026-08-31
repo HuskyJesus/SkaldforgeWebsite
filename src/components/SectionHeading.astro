@@ -1,0 +1,43 @@
+---
+interface Props {
+  eyebrow?: string;
+  title: string;
+  lede?: string;
+  align?: 'start' | 'center';
+  /** Heading level so page hierarchy stays semantically correct. */
+  as?: 'h2' | 'h3';
+  class?: string;
+}
+const {
+  eyebrow,
+  title,
+  lede,
+  align = 'start',
+  as: Tag = 'h2',
+  class: className,
+} = Astro.props;
+---
+
+<header class:list={['sh', `sh--${align}`, className, 'reveal']}>
+  {eyebrow && <p class:list={['eyebrow', align === 'center' && 'eyebrow--center']}>{eyebrow}</p>}
+  <Tag class="display sh__title">{title}</Tag>
+  {lede && <p class="lede sh__lede">{lede}</p>}
+</header>
+
+<style>
+  .sh { display: grid; gap: var(--sp-4); }
+  .sh--center {
+    justify-items: center;
+    text-align: center;
+  }
+  .sh--center .sh__lede { margin-inline: auto; }
+
+  .sh__title {
+    font-size: var(--fs-h2);
+    color: var(--t-primary);
+    max-width: 20ch;
+  }
+  .sh--center .sh__title { max-width: 24ch; }
+
+  .sh__lede { margin-block-start: var(--sp-1); }
+</style>
