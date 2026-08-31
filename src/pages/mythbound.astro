@@ -37,7 +37,7 @@ const gallery = [
     variant="still"
     stillId="bridge-beam"
     size="tall"
-    eyebrow={`${game.status} — Coming ${game.releaseWindow}`}
+    eyebrow={`${game.status}. Coming ${game.releaseWindow}`}
     statement="A competitive Norse arena brawler. Chain your movement, take the relic, and prove your place in Valhalla."
     primary={{ label: 'Watch Trailer', href: '#trailer' }}
     secondary={{ label: 'How it’s built', href: url('/technology') }}
@@ -50,23 +50,21 @@ const gallery = [
         <div class="overview__text reveal">
           <p class="eyebrow">Overview</p>
           <h2 id="overview-title" class="display overview__title">
-            The gods are watching. That is the whole problem.
+            The gods are watching. Give them a fight.
           </h2>
           <div class="prose">
             <p>
-              Those who enter the arena are the Bound — contestants who signed their souls over
+              Those who enter the arena are the Bound, contestants who signed their souls over
               in exchange for something greater than themselves. Each one fights under the
               sponsorship of a god who trades power for spectacle.
             </p>
             <p>
               Thor backs Eirik. Loki backs Skari. Njord backs Alvar. Hel backs Yrsa. {game.announcer}
-              presides over the competition, and none of them are especially interested in a
-              careful fight.
+              presides over a competition where every Bound brings a different way to fight.
             </p>
             <p>
-              What that produces is a fast, close-range brawler about carrying speed. Every
-              movement tool feeds the next one, and the fight rewards whoever arrives with the
-              most momentum still intact.
+              Run, slide, kick off walls and carry your speed into melee. Combine your movement
+              with two god-granted abilities to create openings and keep opponents under pressure.
             </p>
           </div>
         </div>
@@ -80,8 +78,8 @@ const gallery = [
   {/* ------------------------------------------------------ 3. RELIC RUSH */}
   <section class="section section--tight" aria-labelledby="mode-title">
     <div class="wrap wrap--wide">
-      <SectionHeading
-        eyebrow={`Premiere mode — ${relicRush.format}`}
+      <SectionHeading id="mode-title"
+        eyebrow="Featured mode"
         title={relicRush.name}
         lede={relicRush.body}
         class="mode__head"
@@ -115,23 +113,23 @@ const gallery = [
   {/* ----------------------------------------------------- 3b. ALL GAMEMODES */}
   <section class="section" aria-labelledby="modes-title">
     <div class="wrap wrap--wide">
-      <SectionHeading
+      <SectionHeading id="modes-title"
         eyebrow="Game modes"
         title="Three ways to fight"
-        lede="One objective mode built around the relic, and two that come down to who is left standing."
+        lede="Fight for the relic, compete as a team, or face every rival alone."
         class="modes__head"
       />
       <GameModes />
     </div>
   </section>
 
-  {/* --------------------------------------------- 4–6. MOVEMENT / COMBAT / POWER */}
+  {/* --------------------------------------------- 4 to 6. MOVEMENT / COMBAT / POWER */}
   <section class="section" aria-labelledby="systems-title">
     <div class="wrap wrap--wide">
-      <SectionHeading
+      <SectionHeading id="systems-title"
         eyebrow="Systems"
-        title="One connected skill ceiling"
-        lede="Traversal, melee and sponsor abilities were designed against each other. The interesting play lives where they overlap."
+        title="Speed meets strength"
+        lede="Chain your movement, time your attacks, and choose when to use your god's power."
         class="systems__head"
       />
       <div class="systems">
@@ -144,7 +142,7 @@ const gallery = [
               body={p.body}
               points={p.detail}
               imageId={p.image}
-              imageAlt={`Mythbound gameplay — ${p.heading.toLowerCase()}`}
+              imageAlt={`Mythbound gameplay. ${p.heading.toLowerCase()}`}
               media={i % 2 === 0 ? 'right' : 'left'}
               ratio="16 / 10"
             />
@@ -157,7 +155,7 @@ const gallery = [
   {/* ------------------------------------------------------- 7. THE BOUND */}
   <section class="section section--tight" aria-labelledby="roster-title">
     <div class="wrap wrap--wide">
-      <SectionHeading
+      <SectionHeading id="roster-title"
         eyebrow="The Roster"
         title="The Bound"
         lede={boundPremise}
@@ -174,10 +172,10 @@ const gallery = [
   {/* ---------------------------------------------------------- 8. ARENAS */}
   <section class="section" aria-labelledby="arena-title">
     <div class="wrap wrap--wide">
-      <SectionHeading
+      <SectionHeading id="arena-title"
         eyebrow="The Realms"
-        title="Three arenas, three problems"
-        lede="Midgard rewards speed across open ground. Helheim compresses the fight into corridors. Asgard builds it upward."
+        title="Three realms to fight for"
+        lede="Explore the open ground of Midgard, the stone halls of Helheim and the snowbound realm of Asgard."
         class="arena__head"
       />
       <ArenaShowcase />
@@ -187,7 +185,7 @@ const gallery = [
   {/* --------------------------------------------------------- 9. GALLERY */}
   <section class="section section--tight" aria-labelledby="gallery-title">
     <div class="wrap wrap--wide">
-      <SectionHeading eyebrow="Media" title="From the arena" align="center" class="gallery__head" />
+      <SectionHeading id="gallery-title" eyebrow="Media" title="From the arena" align="center" class="gallery__head" />
       <ul role="list" class="gallery">
         {
           gallery.map((shot, i) => (
@@ -215,19 +213,19 @@ const gallery = [
       <div class="status__grid">
         <div class="status__text reveal">
           <p class="eyebrow">Development status</p>
-          <h2 id="status-title" class="display status__title">Playable, and still being sharpened</h2>
+          <h2 id="status-title" class="display status__title">A playable game. Still growing.</h2>
           <p class="status__body">
             Mythbound is in active development toward a {game.releaseWindow} window. The traversal
-            set, melee system and all three modes are implemented and playable across Midgard,
-            Helheim and Asgard, and the full roster is in the build.
+            and combat systems are playable, with four Bound, three arenas and three game modes
+            shown in the final presentation.
           </p>
           <a class="link-arrow" href={url('/technology')}>See the development work</a>
         </div>
         <div class="status__media reveal">
           <Figure
-            id="movement-greybox-test"
-            alt="An untextured greybox test arena in Unreal Engine with character mannequins, used to validate movement."
-            caption="Traversal validated in greybox before dressing"
+            id="rune-clash"
+            alt="Bound clash amid cyan and magenta effects in an arena"
+            caption="Gameplay from the current presentation"
             ratio="16 / 10"
             sizes="(min-width: 1000px) 560px, 100vw"
           />
@@ -264,7 +262,7 @@ const gallery = [
   {/* --------------------------------------------------------- 12. TRAILER */}
   <section class="section section--tight" id="trailer" aria-labelledby="trailer-title">
     <div class="wrap wrap--wide">
-      <SectionHeading eyebrow="Media" title="Official Trailer" align="center" class="trailer__head" />
+      <SectionHeading id="trailer-title" eyebrow="Media" title="Official Trailer" align="center" class="trailer__head" />
       <div class="trailer__frame reveal">
         <TrailerPlayer id="trailer-player" />
       </div>
@@ -292,9 +290,9 @@ const gallery = [
   }
   .overview__text { display: grid; gap: var(--sp-5); align-content: start; }
   .overview__title { font-size: var(--fs-h2); max-width: 18ch; }
-  .overview__aside :global(.snap) { position: sticky; top: calc(var(--nav-h) + var(--sp-5)); }
+  .overview__aside :global(.snap) { grid-template-columns: 1fr; position: sticky; top: calc(var(--nav-h) + var(--sp-5)); }
   @media (max-width: 999px) {
-    .overview__aside :global(.snap) { position: static; }
+    .overview__aside :global(.snap) { grid-template-columns: 1fr; position: static; }
   }
 
   /* ----------------------------------------------------------- relic rush */

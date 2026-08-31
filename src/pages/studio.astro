@@ -21,7 +21,7 @@ const roster = publishRoster ? [...leadership, ...team] : [];
 >
   <Hero
     variant="still"
-    stillId="midgard-set-dressing"
+    stillId="midgard"
     size="tall"
     eyebrow="The Studio"
     heading="We are Skaldforge"
@@ -38,9 +38,9 @@ const roster = publishRoster ? [...leadership, ...team] : [];
         <div class="statement__copy">
           <p>{studio.lede}</p>
           <p>
-            We are not trying to sound bigger than we are. What we have is a real playable game,
-            a clear idea of what it should feel like, and a team that covers every discipline it
-            takes to build it.
+            Our work brings movement, combat and Norse mythology into one competitive experience.
+            We build, playtest and refine Mythbound together, from its first prototypes to the
+            arenas and characters you see today.
           </p>
         </div>
       </div>
@@ -50,9 +50,9 @@ const roster = publishRoster ? [...leadership, ...team] : [];
   {/* ----------------------------------------------------------- philosophy */}
   <section class="section section--tight philosophy" aria-labelledby="philosophy-title">
     <div class="wrap wrap--wide">
-      <SectionHeading
+      <SectionHeading id="philosophy-title"
         eyebrow="How we work"
-        title="Three things we hold to"
+        title="How we build"
         class="philosophy__head"
       />
       <ul role="list" class="philosophy__list">
@@ -89,7 +89,7 @@ const roster = publishRoster ? [...leadership, ...team] : [];
         <div class="project__media reveal">
           <Figure
             id="midgard-aerial"
-            alt="Aerial view of the Midgard arena — a timber village ringed by pine forest and mountain cliffs."
+            alt="Aerial view of the Midgard arena, a timber village ringed by pine forest and mountain cliffs."
             ratio="16 / 10"
             sizes="(min-width: 1000px) 620px, 100vw"
           />
@@ -101,10 +101,10 @@ const roster = publishRoster ? [...leadership, ...team] : [];
   {/* ---------------------------------------------------------- disciplines */}
   <section class="section section--tight" aria-labelledby="disciplines-title">
     <div class="wrap wrap--wide">
-      <SectionHeading
+      <SectionHeading id="disciplines-title"
         eyebrow="Multidisciplinary"
-        title="Every discipline in one room"
-        lede="Design, art, animation, technical art and engineering work against the same build, in the same week."
+        title="A shared craft"
+        lede="Design, art, animation and engineering each shape how Mythbound looks, moves and plays."
         class="disciplines__head"
       />
       <ul role="list" class="disciplines reveal">
@@ -133,7 +133,7 @@ const roster = publishRoster ? [...leadership, ...team] : [];
     publishRoster && roster.length > 0 && (
       <section class="section section--tight" aria-labelledby="team-title">
         <div class="wrap wrap--wide">
-          <SectionHeading eyebrow="The team" title="Who builds it" class="team__head" />
+          <SectionHeading id="team-title" eyebrow="The team" title="Who builds it" class="team__head" />
           <ul role="list" class="team">
             {roster.map((m) => (
               <li class="team__member reveal">
@@ -152,7 +152,7 @@ const roster = publishRoster ? [...leadership, ...team] : [];
     (contact.email || socials.length > 0) && (
       <section class="section section--tight" aria-labelledby="contact-title">
         <div class="wrap wrap--wide">
-          <SectionHeading eyebrow="Contact" title="Get in touch" align="center" />
+          <SectionHeading id="contact-title" eyebrow="Contact" title="Get in touch" align="center" />
           <div class="contact reveal">
             {contact.email && (
               <a class="btn btn--primary" href={`mailto:${contact.email}`}>
@@ -172,7 +172,7 @@ const roster = publishRoster ? [...leadership, ...team] : [];
 
   <CTA
     lockup
-    eyebrow={`In development — ${game.releaseWindow}`}
+    eyebrow={`In development. ${game.releaseWindow}`}
     body="Mythbound is the first game from Skaldforge."
     primary={{ label: 'Discover Mythbound', href: url('/mythbound') }}
     secondary={{ label: 'Development', href: url('/technology') }}

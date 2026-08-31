@@ -1,6 +1,6 @@
 ---
 import { Image } from 'astro:assets';
-import { asset, url } from '../lib/url';
+import { asset } from '../lib/url';
 import { img } from '../lib/images';
 import mythboundLogo from '../assets/brand/mythbound-logo.png';
 
@@ -208,10 +208,11 @@ const still = img(stillId);
 
   .hero__eyebrow { color: var(--c-gold-300); }
 
-  .hero__lockup { margin: 0; line-height: 0; }
+  .hero__lockup { margin: 0; line-height: 0; inline-size: min(100%, 38.75rem); aspect-ratio: 2.35 / 1; overflow: hidden; }
   .hero__logo {
-    inline-size: clamp(16rem, 46vw, 38.75rem);
-    block-size: auto;
+    inline-size: 100%;
+    block-size: 100%;
+    object-fit: cover;
     /* Lifts the gold off dark footage without a glow effect. */
     filter: drop-shadow(0 8px 28px rgb(0 0 0 / 0.7));
   }
@@ -226,7 +227,7 @@ const still = img(stillId);
   .hero__statement {
     font-size: var(--fs-xl);
     line-height: 1.42;
-    max-width: 34ch;
+    max-width: 39ch;
     color: var(--t-primary);
     text-wrap: balance;
     text-shadow: 0 1px 16px rgb(0 0 0 / 0.6);
@@ -237,6 +238,12 @@ const still = img(stillId);
     flex-wrap: wrap;
     gap: var(--sp-3);
     margin-block-start: var(--sp-3);
+  }
+
+  @media (max-width: 599px) {
+    .hero__body { padding-block: var(--sp-7) var(--sp-8); }
+    .hero__actions { inline-size: 100%; }
+    .hero__actions .btn { flex: 1 1 100%; }
   }
 
   /* ------------------------------------------------------ pause control */
@@ -328,15 +335,23 @@ const still = img(stillId);
     if ('requestIdleCallback' in window) {
       (window as any).requestIdleCallback(load, { timeout: 2500 });
     } else {
-      window.setTimeout(load, 1200);
+      setTimeout(load, 1200);
     }
+
+    reduce.addEventListener('change', () => {
+      if (reduce.matches) {
+        video.pause();
+        video.classList.remove('is-playing');
+        if (pause) pause.hidden = true;
+      } else if (!loaded) load();
+    });
 
     // Don't decode video that isn't on screen.
     new IntersectionObserver(
       ([e]) => {
         if (!loaded || !video.src) return;
         if (e.isIntersecting) {
-          if (video.dataset.userPaused !== 'true') video.play().catch(() => {});
+          if (shouldLoad() && video.dataset.userPaused !== 'true') video.play().catch(() => {});
         } else {
           video.pause();
         }

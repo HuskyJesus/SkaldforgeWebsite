@@ -1,6 +1,6 @@
 ---
 import { nav, site } from '../data/site';
-import { url, isCurrent, asset } from '../lib/url';
+import { url, isCurrent } from '../lib/url';
 import Wordmark from './Wordmark.astro';
 
 interface Props {
@@ -13,7 +13,7 @@ const pathname = Astro.url.pathname;
 
 <header class:list={['nav', overlay && 'nav--overlay']} data-nav>
   <div class="nav__inner">
-    <a class="nav__brand" href={url('/')} aria-label={`${site.studio} — home`}>
+    <a class="nav__brand" href={url('/')} aria-label={`${site.studio} home`}>
       <Wordmark class="nav__logo" />
     </a>
 
@@ -106,6 +106,7 @@ const pathname = Astro.url.pathname;
   }
 
   .nav__brand {
+    min-block-size: 44px;
     display: flex;
     align-items: center;
     margin-inline-end: auto;
@@ -141,6 +142,9 @@ const pathname = Astro.url.pathname;
       position: relative;
       display: block;
       padding-block: var(--sp-2);
+      min-block-size: 44px;
+      display: flex;
+      align-items: center;
       font-size: var(--fs-sm);
       font-weight: 500;
       letter-spacing: var(--tr-label);
@@ -221,7 +225,8 @@ const pathname = Astro.url.pathname;
   /* ------------------------------------------------------ mobile panel */
   .nav__panel {
     position: fixed;
-    inset: var(--nav-h) 0 0 0;
+    inset: var(--nav-h) 0 auto 0;
+    block-size: calc(100dvh - var(--nav-h));
     background: var(--c-ink);
     border-block-start: 1px solid var(--s-hairline);
     padding: var(--sp-7) var(--gutter) var(--sp-8);
@@ -232,6 +237,7 @@ const pathname = Astro.url.pathname;
     overflow-y: auto;
     overscroll-behavior: contain;
   }
+  .nav.is-open { background: var(--c-ink); }
   .nav__panel[hidden] { display: none; }
   @media (min-width: 900px) { .nav__panel { display: none !important; } }
 
@@ -310,6 +316,9 @@ const pathname = Astro.url.pathname;
     const setOpen = (open: boolean) => {
       toggle.setAttribute('aria-expanded', String(open));
       panel.hidden = !open;
+      header?.classList.toggle('is-open', open);
+      document.querySelector('main')?.toggleAttribute('inert', open);
+      document.querySelector('footer')?.toggleAttribute('inert', open);
       document.body.style.overflow = open ? 'hidden' : '';
       if (open) focusables()[0]?.focus();
     };
@@ -327,20 +336,17 @@ const pathname = Astro.url.pathname;
     });
 
     // Trap focus inside the open panel.
-    panel.addEventListener('keydown', (e) => {
+    header?.addEventListener('keydown', (e) => {
+      if (toggle.getAttribute('aria-expanded') !== 'true') return;
       if (e.key !== 'Tab') return;
-      const items = focusables();
-      if (!items.length) return;
-      const first = items[0];
-      const last = items[items.length - 1];
-      if (e.shiftKey && document.activeElement === first) {
-        e.preventDefault();
-        last.focus();
-      } else if (!e.shiftKey && document.activeElement === last) {
-        e.preventDefault();
-        first.focus();
-      }
+      const items: HTMLElement[] = [toggle, ...focusables()];
+      const current = items.indexOf(document.activeElement as HTMLElement);
+      const next = (current + (e.shiftKey ? -1 : 1) + items.length) % items.length;
+      e.preventDefault();
+      items[next].focus();
     });
+
+    panel.querySelectorAll('a').forEach(link => link.addEventListener('click', () => setOpen(false)));
 
     // Restore scroll if the viewport grows past the mobile breakpoint.
     matchMedia('(min-width: 900px)').addEventListener('change', (e) => {

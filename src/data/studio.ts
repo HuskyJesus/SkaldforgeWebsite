@@ -16,19 +16,19 @@ export const studio = {
     show: true,
     title: 'Where we come from',
     body:
-      'Skaldforge formed out of the Florida Interactive Entertainment Academy at the University of Central Florida — a graduate program built around shipping real games with real teams. Mythbound is the first thing we have made together.',
+      'Skaldforge formed out of the Florida Interactive Entertainment Academy at the University of Central Florida, a graduate program focused on collaborative game development. Mythbound is our first game together.',
   },
 
   philosophy: [
     {
       title: 'Feel first',
       body:
-        'Movement and combat are prototyped in grey boxes before anything is dressed. If it does not feel right with no art on it, art will not save it.',
+        'Movement and combat are prototyped in grey boxes before anything is dressed. The goal is responsive movement and satisfying combat from the start.',
     },
     {
       title: 'Build it playable',
       body:
-        'Mythbound has been a game people can pick up and play from early on. Every discipline tests against a real build rather than a document.',
+        'Mythbound has been a game people can pick up and play from early on. Playtesting connects the work of every discipline.',
     },
     {
       title: 'One voice',
@@ -52,7 +52,7 @@ export const studio = {
 };
 
 /**
- * TEAM ROSTER — DISABLED PENDING APPROVAL.
+ * TEAM ROSTER. DISABLED PENDING APPROVAL.
  *
  * source: Final Presentation slide 3 ("Personnel"), which supersedes ASG slide 2.
  * Notably it moves Level Design Lead from Kenzey Estes to Michael Doctor and

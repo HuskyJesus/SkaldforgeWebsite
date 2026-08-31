@@ -3,7 +3,7 @@ import Figure from './Figure.astro';
 
 /**
  * Development view paired with the shipped result.
- * Two labelled figures side by side — the clearest way to show craft without
+ * Two labelled figures side by side. the clearest way to show craft without
  * claiming anything the project has not actually done.
  */
 interface Props {
@@ -11,8 +11,10 @@ interface Props {
   final: { image: string; caption: string };
   devAlt?: string;
   finalAlt?: string;
+  fit?: 'cover' | 'contain';
+  resultLabel?: string;
 }
-const { dev, final, devAlt, finalAlt } = Astro.props;
+const { dev, final, devAlt, finalAlt, fit = 'cover', resultLabel = 'Gameplay' } = Astro.props;
 ---
 
 <div class="compare reveal">
@@ -22,6 +24,7 @@ const { dev, final, devAlt, finalAlt } = Astro.props;
       id={dev.image}
       alt={devAlt ?? dev.caption}
       caption={dev.caption}
+      fit={fit}
       ratio="16 / 10"
       sizes="(min-width: 900px) 46vw, 100vw"
     />
@@ -34,11 +37,12 @@ const { dev, final, devAlt, finalAlt } = Astro.props;
   </div>
 
   <div class="compare__side">
-    <p class="compare__tag compare__tag--final">In game</p>
+    <p class="compare__tag compare__tag--final">{resultLabel}</p>
     <Figure
       id={final.image}
       alt={finalAlt ?? final.caption}
       caption={final.caption}
+      fit={fit}
       ratio="16 / 10"
       sizes="(min-width: 900px) 46vw, 100vw"
     />

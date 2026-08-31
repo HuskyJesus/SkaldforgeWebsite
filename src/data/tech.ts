@@ -4,7 +4,7 @@
  * CREDIBILITY RULE: no engine feature is named unless a supplied document says
  * the project uses it. Motion Matching is stated because ASG slide 11 says so
  * explicitly. Nanite, Lumen, GAS, Chaos, networking architecture and engine
- * version are NOT claimed anywhere — see CONTENT_TODO.md #3.
+ * version are NOT claimed anywhere. see CONTENT_TODO.md #3.
  */
 
 export type TechSection = {
@@ -27,7 +27,7 @@ export const techIntro = {
   eyebrow: 'Development',
   title: 'Forging Mythbound',
   lede:
-    'Mythbound is built in Unreal Engine. Every arena, ability and animation in the game has moved through the same route: blockout, iteration, and a playable build the team can put controllers on.',
+    'Mythbound is built in Unreal Engine. Explore the movement prototypes, character art and environment work behind the playable game.',
 };
 
 export const techSections: TechSection[] = [
@@ -36,15 +36,15 @@ export const techSections: TechSection[] = [
     eyebrow: 'Engine',
     title: 'Built in Unreal Engine',
     body:
-      'Unreal is the foundation for Mythbound’s combat, traversal and arenas. The team works in-engine from the first blockout onward, so movement and level geometry are tuned against each other rather than handed over at the end.',
+      'Unreal is the foundation for Mythbound’s combat, traversal and arenas. Early blockouts let the team test movement against level geometry before adding the final art.',
     compare: {
       dev: {
         image: 'arena-blockout-greybox',
-        caption: 'Greybox arena — movement and sightline testing',
+        caption: 'Greybox arena: movement and sightline testing',
       },
       final: {
         image: 'bridge-walls',
-        caption: 'The same discipline, dressed and lit',
+        caption: 'Arena gameplay from the trailer',
       },
     },
   },
@@ -53,21 +53,20 @@ export const techSections: TechSection[] = [
     eyebrow: 'Traversal',
     title: 'Movement built to be chained',
     body:
-      'The traversal set — running, sliding, wall-kicking, mantling and the ground slam — is designed so each action resolves back into run speed rather than stopping it. Prototypes are validated in greybox first, where nothing but the movement can be responsible for how it feels.',
+      'Run, slide, kick off walls, mantle and ground slam. Players chain these actions across an arena, while greybox spaces let the team test the transitions and tune momentum.',
     points: [
       'Momentum is preserved and redirected, not overwritten',
-      'Wall-kicks apply diminishing force to prevent infinite climbing',
-      'Slide converts speed rather than resetting it',
+            'Slide converts speed rather than resetting it',
       'Carried speed feeds directly into melee damage and knockback',
     ],
     compare: {
       dev: {
         image: 'movement-greybox-test',
-        caption: 'Traversal prototype — untextured test space',
+        caption: 'Traversal prototype: untextured test space',
       },
       final: {
         image: 'village-street',
-        caption: 'The same movement in a finished arena',
+        caption: 'Traversal in an arena gameplay capture',
       },
     },
   },
@@ -76,30 +75,28 @@ export const techSections: TechSection[] = [
     eyebrow: 'Animation',
     title: 'Motion capture and Motion Matching',
     body:
-      'Mythbound uses motion capture combined with Unreal Engine’s Motion Matching to hold a large library of blendable, movement-friendly animation. That matters for a game where a player can enter the same attack out of a slide, a wall-kick, a mantle or a fall.',
+      'The animation pipeline combines motion capture with Unreal Engine’s Motion Matching. It supports the transitions that connect traversal and combat, from a slide or wall-kick into the next action.',
     // source: ASG slide 11, verbatim in substance.
     points: [
       'Motion capture cleaned and retargeted in MotionBuilder',
       'Unreal Engine Motion Matching for blendable traversal',
       'Animation authored in Maya, with contracted support in Blender',
     ],
-    image: 'movement-greybox-test',
-    imageCaption: 'Animation validation pass in a test arena',
   },
   {
     id: 'environments',
     eyebrow: 'Environments',
     title: 'From blockout to arena',
     body:
-      'Arenas begin as pure gameplay geometry and stay playable through every stage of dressing. Midgard’s village, ruins and terrain were built against a movement set that was already in the player’s hands.',
+      'Blockouts establish the playable spaces. Environment art then gives those spaces their identity through architecture, terrain, lighting and set dressing.',
     compare: {
       dev: {
         image: 'midgard-set-dressing',
-        caption: 'Midgard — set dressing in engine, unlit',
+        caption: 'Midgard: set dressing in engine, unlit',
       },
       final: {
         image: 'midgard-aerial',
-        caption: 'Midgard — lit and playable',
+        caption: 'Midgard: lit and playable',
       },
     },
   },
@@ -108,25 +105,25 @@ export const techSections: TechSection[] = [
     eyebrow: 'Technical Art',
     title: 'Terrain, foliage and readability',
     body:
-      'A brawler that moves this fast has to stay readable. Technical art work focuses on terrain and foliage that hold up at speed, and on team-colour rim lighting that keeps four contestants legible in a crowded fight.',
+      'A brawler that moves this fast has to stay readable. Technical art work focuses on terrain and foliage that hold up at speed, with team-color rim lighting helping contestants stand out in a crowded fight.',
     image: 'terrain-foliage-test-b',
-    imageCaption: 'Terrain and foliage test — Unreal Engine',
+    imageCaption: 'Terrain and foliage test. Unreal Engine',
   },
   {
     id: 'characters',
     eyebrow: 'Characters',
-    title: 'Concept through to sculpt',
+    title: 'From concept to character',
     body:
-      'Each Bound moves from in-house concept art to a high-poly sculpt, then down to a game-ready model inside a fixed budget. Characters are authored at 25,000–40,000 triangles with 2K textures; environment and prop assets sit at 1K.',
-    // source: ASG slides 7–9.
+      'Each Bound moves from in-house concept art to a high-poly sculpt, then down to a game-ready model inside a fixed budget. The art guide sets character budgets of 25,000 to 40,000 triangles with 2K textures.',
+    // source: ASG slides 7 to 9.
     compare: {
       dev: {
-        image: 'concept-alvar',
-        caption: 'Alvar Tideborn — character concept',
+        image: 'concept-eirik',
+        caption: 'Eirik Stormbrand: character concept',
       },
       final: {
-        image: 'sculpt-skari',
-        caption: 'Skari Quickstep — high-poly sculpt',
+        image: 'eirik',
+        caption: 'Eirik Stormbrand: character render',
       },
     },
   },
@@ -135,14 +132,14 @@ export const techSections: TechSection[] = [
     eyebrow: 'Interface',
     title: 'An interface with the same voice',
     body:
-      'The UI carries the same forged-metal language as the rest of the game: engraved gold on deep navy, clean legible type, and a subtle touch of fantasy rather than a full fantasy costume.',
+      'The UI carries the same forged-metal language as the rest of the game: engraved gold on deep navy, clean legible type, with clear labels that keep the action easy to follow.',
     image: 'ui-prototype',
     imageCaption: 'In-game UI prototype',
   },
 ];
 
 /**
- * Developer ViDoc — recovered from the final presentation (slide 8).
+ * Developer ViDoc. recovered from the final presentation (slide 8).
  *
  * DISABLED PENDING CAPTIONS. The asset is committed and ready
  * (public/assets/video/developer-vidoc.mp4, 2:21), but it has no caption track.
@@ -162,7 +159,7 @@ export const vidoc = {
 /**
  * Production toolchain.
  * source: ASG slide 6. Generative-model tools listed in that slide are
- * intentionally omitted from the public site — see CONTENT_TODO.md #4.
+ * intentionally omitted from the public site. see CONTENT_TODO.md #4.
  */
 export const toolchain = [
   { group: '3D', tools: ['Maya', 'Blender', 'ZBrush', 'Marvelous Designer'] },

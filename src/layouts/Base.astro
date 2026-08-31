@@ -22,13 +22,13 @@ const { title, description, ogImage, navOverlay = false } = Astro.props;
 
 const canonical = new URL(Astro.url.pathname, Astro.site).href.replace(/\/$/, '') || Astro.site!.href;
 const ogUrl = new URL(asset(ogImage ?? site.ogImage), Astro.site).href;
-const fullTitle = title === site.title ? title : `${title} — ${site.studio}`;
+const fullTitle = title === site.title ? title : `${title}. ${site.studio}`;
 
 const orgSchema = {
   '@context': 'https://schema.org',
   '@type': 'Organization',
   name: site.studio,
-  url: Astro.site?.href,
+  url: new URL(url('/'), Astro.site).href,
   logo: new URL(asset('assets/brand/skaldforge-logo.svg'), Astro.site).href,
   description: site.description,
 };
@@ -39,7 +39,6 @@ const gameSchema = {
   name: 'Mythbound',
   url: new URL(url('/mythbound'), Astro.site).href,
   genre: 'Competitive Multiplayer Arena Brawler',
-  gamePlatform: [],
   playMode: 'MultiPlayer',
   publisher: { '@type': 'Organization', name: site.studio },
   author: { '@type': 'Organization', name: site.studio },
@@ -114,6 +113,7 @@ const gameSchema = {
           { rootMargin: '0px 0px -12% 0px', threshold: 0.05 },
         );
         targets.forEach((el) => io.observe(el));
+        document.documentElement.classList.add('motion-ready');
       }
     </script>
   </body>

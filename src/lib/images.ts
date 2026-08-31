@@ -23,8 +23,8 @@ for (const [path, mod] of Object.entries(modules)) {
  * Look up an image by id. Returns undefined so callers can hide gracefully.
  *
  * A `null` id means "there is deliberately no art here" and stays silent. A
- * non-empty id that misses the registry is a mistake — usually a renamed or
- * deleted asset — so it is reported in the build log rather than quietly
+ * non-empty id that misses the registry is a mistake. usually a renamed or
+ * deleted asset. so it is reported in the build log rather than quietly
  * dropping a whole section from the page.
  */
 const warned = new Set<string>();
@@ -35,7 +35,7 @@ export function img(id: string | null | undefined): ImageMetadata | undefined {
   if (!found && !warned.has(id)) {
     warned.add(id);
     console.warn(
-      `[images] unknown asset id "${id}" — nothing will render. Known ids: ${imageIds.join(', ')}`,
+      `[images] unknown asset id "${id}". nothing will render. Known ids: ${imageIds.join(', ')}`,
     );
   }
   return found;

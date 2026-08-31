@@ -11,6 +11,7 @@ interface Props {
   ratio?: string;
   /** Above-the-fold imagery should be eager + high priority. */
   priority?: boolean;
+  fit?: 'cover' | 'contain';
   sizes?: string;
   widths?: number[];
   /** Small uppercase tag pinned to the frame, e.g. "In development". */
@@ -23,6 +24,7 @@ const {
   alt,
   caption,
   ratio = '16 / 9',
+  fit = 'cover',
   priority = false,
   sizes = '(min-width: 1280px) 1200px, (min-width: 900px) 90vw, 100vw',
   widths = [640, 960, 1280, 1600, 2000],
@@ -36,7 +38,7 @@ const source = img(id);
 {
   source && (
     <figure class:list={['fig', className]}>
-      <div class="fig__frame" style={`--ratio:${ratio}`}>
+      <div class="fig__frame" style={`--ratio:${ratio};--fit:${fit}`}>
         <Image
           src={source}
           alt={alt}
@@ -71,7 +73,7 @@ const source = img(id);
   .fig__img {
     inline-size: 100%;
     block-size: 100%;
-    object-fit: cover;
+    object-fit: var(--fit);
     transform: scale(1.005); /* hides sub-pixel edges from the cover crop */
   }
 

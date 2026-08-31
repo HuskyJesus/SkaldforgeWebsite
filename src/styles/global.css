@@ -49,7 +49,7 @@ ul[role='list'], ol[role='list'] { list-style: none; padding: 0; }
 a { color: inherit; text-decoration: none; }
 
 /* ========================================================================= *
-   FOCUS — visible, gold, and never clipped
+   FOCUS. visible, gold, and never clipped
  * ========================================================================= */
 :focus-visible {
   outline: 2px solid var(--c-gold-400);
@@ -139,7 +139,7 @@ a { color: inherit; text-decoration: none; }
 .section--tight { padding-block: var(--sp-section-tight); }
 .section--flush-top { padding-block-start: 0; }
 
-/* Hairline divider with a gold node at the left — used between major sections */
+/* Hairline divider with a gold node at the left. used between major sections */
 .rule {
   border: 0;
   block-size: 1px;
@@ -171,7 +171,8 @@ a { color: inherit; text-decoration: none; }
   font-weight: 600;
   letter-spacing: var(--tr-label);
   text-transform: uppercase;
-  white-space: nowrap;
+  white-space: normal;
+  text-align: center;
   transition:
     background var(--d-mid) var(--e-out),
     color var(--d-mid) var(--e-out),
@@ -232,14 +233,14 @@ a { color: inherit; text-decoration: none; }
    IntersectionObserver adds .is-in. Reduced motion shows them immediately.
  * ========================================================================= */
 .reveal {
-  opacity: 0;
-  transform: translate3d(0, 1.75rem, 0);
+  opacity: 1;
+  transform: none;
   transition:
     opacity var(--d-slow) var(--e-entrance),
     transform var(--d-slow) var(--e-entrance);
   transition-delay: var(--reveal-delay, 0ms);
-  will-change: opacity, transform;
 }
+.motion-ready .reveal:not(.is-in) { opacity: 0; transform: translate3d(0, 0.75rem, 0); }
 .reveal.is-in {
   opacity: 1;
   transform: none;
@@ -248,7 +249,8 @@ a { color: inherit; text-decoration: none; }
 .no-js .reveal { opacity: 1; transform: none; }
 
 @media (prefers-reduced-motion: reduce) {
-  .reveal { opacity: 1; transform: none; transition: none; }
+  .reveal, .motion-ready .reveal:not(.is-in) { opacity: 1; transform: none; transition: none; }
+  .btn:hover { transform: none; }
 }
 
 /* ========================================================================= *

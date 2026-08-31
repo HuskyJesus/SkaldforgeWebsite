@@ -1,5 +1,5 @@
 /**
- * The Bound — playable roster.
+ * The Bound. playable roster.
  *
  * SOURCE OF TRUTH: studio-supplied character copy (current). This supersedes
  * the GDD entirely for names, kits, sponsors and personality. Obsolete ability
@@ -43,7 +43,7 @@ export const bound: Bound[] = [
       'Eirik enters the arena as a steadfast frontline warrior, breaking enemy formations while protecting those beside him.',
     kit:
       'Eirik controls space with powerful lightning attacks that stun enemies, scatter groups, and punish anyone who stands too close.',
-    build: 'Broad and heavily built — the most physically imposing of the four.',
+    build: 'Broad and heavily built. the most physically imposing of the four.',
     height: `6'7"`,
     movement: 'Explosive bursts of force. Heavy but controlled, like a hammer swing.',
     abilities: [
@@ -145,8 +145,8 @@ export const bound: Bound[] = [
 
 /**
  * Framing line for the roster.
- * source: ASG slide 20 (the contract and the marked eyes) — still current, and
+ * source: ASG slide 20 (the contract and the marked eyes). still current, and
  * consistent with every finished render.
  */
 export const boundPremise =
-  'The Bound are under contract with the old gods. Upon signing, their souls become property — and their eyes turn a solid colour, a mark of their god’s ownership.';
+  'Four contestants. Four divine sponsors. Each Bound brings a distinct fighting style and two god-granted abilities to the arena.';

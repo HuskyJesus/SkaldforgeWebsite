@@ -3,13 +3,15 @@ import { Image } from 'astro:assets';
 import { bound } from '../data/bound';
 import { img } from '../lib/images';
 import Valknut from './Valknut.astro';
+interface Props { compact?: boolean; }
+const { compact = false } = Astro.props;
 
 /**
  * The Bound.
  *
  * Each card leads with the character's finished render over a sponsor-tinted
  * ground, then the description, kit summary and the two abilities. No ultimates
- * are implied — every Bound carries exactly two.
+ * are implied. every Bound carries exactly two.
  */
 ---
 
@@ -29,7 +31,7 @@ import Valknut from './Valknut.astro';
               {render && (
                 <Image
                   src={render}
-                  alt={`${b.name}, ${b.sponsor} — full character render`}
+                  alt={`${b.name}, ${b.sponsor}, full character render`}
                   widths={[320, 500, 760]}
                   sizes="(min-width: 1100px) 300px, (min-width: 700px) 34vw, 62vw"
                   loading="lazy"
@@ -51,16 +53,16 @@ import Valknut from './Valknut.astro';
               <h3 class="display bound__name">{b.name}</h3>
               <p class="bound__desc">{b.description}</p>
 
-              <dl class="bound__abilities">
+              {!compact && <dl class="bound__abilities">
                 {b.abilities.map((a) => (
                   <div class="bound__ability">
                     <dt>{a.name}</dt>
                     <dd>{a.body}</dd>
                   </div>
                 ))}
-              </dl>
+              </dl>}
 
-              <p class="bound__sponsor-note">{b.sponsorNote}</p>
+              {!compact && <p class="bound__sponsor-note">{b.sponsorNote}</p>}
             </div>
           </article>
         </li>

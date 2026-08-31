@@ -34,7 +34,7 @@ const {
   media = 'right',
   ratio = '4 / 3',
   as: Tag = 'h3',
-} = Astro.props;
+} : Props = Astro.props;
 ---
 
 <article class:list={['split', `split--${media}`, 'reveal']}>

@@ -1,5 +1,5 @@
 /**
- * Mythbound — verified game content.
+ * Mythbound. verified game content.
  * See src/data/site.ts for the sourcing rule.
  */
 
@@ -19,7 +19,7 @@ export const game = {
 
   /**
    * source: studio direction (current). Relic Rush leads the three modes.
-   * NO PLAYER COUNT is asserted at the top level — the modes differ, and 4v4 /
+   * NO PLAYER COUNT is asserted at the top level. the modes differ, and 4v4 /
    * 3v3v3 / 1v1v1 are all explicitly obsolete.
    */
   primaryMode: 'Relic Rush',
@@ -48,7 +48,7 @@ export const snapshot = [
  *
  * source: studio direction (current). Traversal is running, sliding,
  * wall-kicking, mantling and ground slamming. Dash and grapple are NOT
- * advertised — they are older prototype tuning and may not be in the build.
+ * advertised. they are older prototype tuning and may not be in the build.
  * Combat copy stays behavioural rather than quoting frame or damage data.
  */
 export const pillars = [
@@ -58,7 +58,7 @@ export const pillars = [
     title: 'Move',
     heading: 'Momentum is the weapon',
     body:
-      'Running, sliding, wall-kicking and mantling chain into one another, and a ground slam turns height into pressure. Speed is not reset between actions — it is carried, and carrying it well is most of the skill.',
+      'Running, sliding, wall-kicking and mantling chain into one another, and a ground slam turns height into pressure. Carry your momentum from one move to the next.',
     detail: ['Run', 'Slide', 'Wall-Kick', 'Mantle', 'Ground Slam'],
     image: 'village-street',
   },
@@ -68,7 +68,7 @@ export const pillars = [
     title: 'Brawl',
     heading: 'Close range, high commitment',
     body:
-      'Melee is the foundation. Exchanges are decided by spacing, timing and whether you read the parry — and arriving with speed makes every strike land harder than it should.',
+      'Close the distance, read the parry and commit to your strike. Spacing, timing and momentum shape every melee exchange.',
     detail: ['Melee exchanges', 'Parry timing', 'Momentum scaling', 'Positioning'],
     image: 'base-clash',
   },
@@ -78,7 +78,7 @@ export const pillars = [
     title: 'Wield Power',
     heading: 'The gods are sponsors',
     body:
-      'Each Bound signs with a god who trades power for spectacle. Thor, Loki, Njord and Hel each grant a compact pair of abilities — no ultimates, just two tools that reshape how their contestant fights.',
+      'Thor, Loki, Njord and Hel each grant their Bound two distinct abilities. Lightning, deception, wind and the power of the dead give every contestant a different approach.',
     detail: ['Thor', 'Loki', 'Njord', 'Hel'],
     image: 'gold-burst',
   },
@@ -86,7 +86,7 @@ export const pillars = [
 
 /**
  * Relic Rush.
- * source: TRAILER on-screen narration —
+ * source: TRAILER on-screen narration ,
  *   "Fight your way into their base and capture the ancient relic."
  *   "Choose to defend your base or fight head on."
  *   "Battle wisely, and you're sure to secure your spot amongst the greats."
@@ -94,7 +94,7 @@ export const pillars = [
  */
 /**
  * Relic Rush.
- * source: studio direction (current) — two teams contest a central Relic and
+ * source: studio direction (current). two teams contest a central Relic and
  * carry it into the enemy goal. Each score costs the opposing team a life.
  * A team that exhausts its lives can no longer respawn; last team standing wins.
  *
@@ -102,8 +102,8 @@ export const pillars = [
  */
 export const relicRush = {
   name: 'Relic Rush',
-  format: 'Premiere mode',
-  heading: 'Three goals. One relic. No clock to hide behind.',
+  format: 'Featured mode',
+  heading: 'Take the relic. Break their defense.',
   body:
     'Two teams fight over a central relic while defending three goals of their own. Delivering the relic destroys one. When a team loses every life it can no longer respawn, and the last team standing wins.',
   beats: [
@@ -132,7 +132,7 @@ export const relicRush = {
  * "HIMINBJORG | HELHEIM | MIDGARD" and supplies a dressed capture of each.
  *
  * NOTE: the GDD and ASG call the third arena "Asgard". The final presentation
- * — the newest source — calls it Himinbjorg, which matches the brief. Treated
+ *. the newest source. calls it Himinbjorg, which matches the brief. Treated
  * as a rename. See CONTENT_TODO.md #2.
  *
  * `hasFinalArt` gates whether a finished capture is shown; all three now have
@@ -144,7 +144,7 @@ export const arenas = [
     name: 'Midgard',
     // Only Midgard's open/expansive character is substantiated as current.
     blurb:
-      'The most expansive of the arenas — open ground and long lines that give traversal somewhere to run.',
+      'Open ground and long sightlines give fast traversal room to shine.',
     hasFinalArt: true,
     image: 'midgard',
   },
@@ -166,7 +166,7 @@ export const arenas = [
 
 /**
  * Game modes.
- * source: Final Presentation slide 7 — "Relic Rush | Free for All | Team
+ * source: Final Presentation slide 7. "Relic Rush | Free for All | Team
  * Deathmatch", each with a gameplay capture. This supersedes the GDD's older
  * 3v3v3 / 1v1v1 / Capture the Flag section.
  *
@@ -179,7 +179,7 @@ export const modes = [
     name: 'Relic Rush',
     kicker: 'Objective · Two teams',
     body:
-      'Two teams fight over a central relic while defending three goals of their own. The relic destroys a goal on entry. Lose every life and you stop respawning — last team standing wins.',
+      'Two teams fight over a central relic while defending three goals of their own. The relic destroys a goal on entry. Lose every life and you stop respawning. The last team standing wins.',
     video: 'mode-relic-rush',
     feature: true,
   },
@@ -195,7 +195,7 @@ export const modes = [
   {
     id: 'free-for-all',
     name: 'Free For All',
-    kicker: '2–8 players',
+    kicker: '2 to 8 players',
     body:
       'Players fight without allies in a battle for survival. The most eliminations when time expires wins.',
     video: 'mode-free-for-all',

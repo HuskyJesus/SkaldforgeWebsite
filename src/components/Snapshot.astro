@@ -1,12 +1,16 @@
 ---
 import { snapshot } from '../data/game';
 
-/** Scannable project facts. Verified fields only — no platforms, no dates. */
+interface Props { compact?: boolean; }
+const { compact = false } = Astro.props;
+const rows = compact ? snapshot.filter(r => ['Genre', 'Engine', 'Status'].includes(r.label)) : snapshot;
+
+/** Scannable project facts. Verified fields only. no platforms, no dates. */
 ---
 
 <dl class="snap reveal">
   {
-    snapshot.map((row) => (
+    rows.map((row) => (
       <div class="snap__row">
         <dt>{row.label}</dt>
         <dd>{row.value}</dd>
@@ -43,10 +47,9 @@ import { snapshot } from '../data/game';
   }
   .snap__row dd {
     margin: 0;
-    font-family: var(--f-display);
+    font-family: var(--f-body);
     font-size: var(--fs-lg);
-    text-transform: uppercase;
-    letter-spacing: var(--tr-display);
+    font-weight: 500;
     color: var(--t-primary);
     line-height: 1.2;
   }

@@ -9,7 +9,7 @@ import { asset } from '../lib/url';
  * src. That keeps a 12 MB asset off every page load while still making the
  * trailer the obvious next action.
  *
- * Uses native controls — a custom control surface would add keyboard and
+ * Uses native controls. a custom control surface would add keyboard and
  * screen-reader surface area for no benefit here.
  */
 interface Props {
@@ -24,7 +24,7 @@ interface Props {
 }
 const {
   id = 'trailer',
-  label = 'Mythbound — Official Trailer',
+  label = 'Mythbound. Official Trailer',
   kicker = 'Watch',
   src = 'assets/video/mythbound-trailer-1080.mp4',
   poster = 'assets/video/trailer-poster.jpg',
@@ -51,6 +51,8 @@ const {
       data-src={asset(src)}
       poster={asset(poster)}
       controls
+      aria-label={label}
+      tabindex="0"
       playsinline
       preload="none"
       hidden
@@ -85,7 +87,7 @@ const {
 <style>
   .player__frame {
     position: relative;
-    aspect-ratio: 1920 / 918;
+    aspect-ratio: 16 / 9;
     overflow: hidden;
     border-radius: var(--r-lg);
     background: var(--c-ink-raised);
@@ -101,6 +103,7 @@ const {
     block-size: 100%;
     object-fit: cover;
   }
+  .player__video { object-fit: contain; }
   .player__video[hidden] { display: none; }
   .player__video:not([hidden]) { position: relative; }
 
@@ -154,7 +157,7 @@ const {
     color: var(--c-navy-900);
     transform: scale(1.06);
   }
-  .player__play:hover ~ .player__poster { filter: saturate(1) brightness(0.9); }
+  .player__frame:hover .player__poster { filter: saturate(1) brightness(0.9); }
   .player__frame:hover .player__poster { transform: scale(1.02); }
 
   @media (prefers-reduced-motion: reduce) {

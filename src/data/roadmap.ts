@@ -1,5 +1,5 @@
 /**
- * "The Arena Is Only Beginning" — forward-looking section.
+ * "The Arena Is Only Beginning". forward-looking section.
  *
  * DELIBERATELY CONSERVATIVE. Nothing here may read as a promise. Each item
  * carries its own `publish` flag so the team can enable, disable or rewrite a
@@ -23,21 +23,21 @@ export const roadmapIntro = {
   eyebrow: 'What comes next',
   title: 'The arena is only beginning',
   lede:
-    'Mythbound is in development toward a Fall 2026 window. The systems underneath it were built to carry more than the build currently holds.',
+    'Mythbound is in development toward a Fall 2026 window. Further milestones will be shared when they are confirmed.',
 };
 
 export const roadmap: RoadmapItem[] = [
   {
     id: 'roster',
-    publish: true,
+    publish: false,
     // Safe: four Bound are designed; Yrsa's kit is not yet specified in the GDD.
     title: 'A roster with room to grow',
     body:
-      'Four Bound are in development, each signed to a different god. The sponsor structure is deliberately open-ended — every new god is a new way to move and fight.',
+      'Four Bound are in development, each signed to a different god. The sponsor structure is deliberately open-ended. every new god is a new way to move and fight.',
   },
   {
     id: 'arenas',
-    publish: true,
+    publish: false,
     // Safe: all three arenas are built, lit and shown on the site.
     title: 'Three realms, and room for more',
     body:
@@ -45,29 +45,29 @@ export const roadmap: RoadmapItem[] = [
   },
   {
     id: 'depth',
-    publish: true,
+    publish: false,
     // Safe: describes existing systems, not future features.
     title: 'Depth in the movement',
     body:
-      'Momentum scaling ties traversal directly to combat output. The higher the ceiling on chaining movement, the further the skill curve runs — and that ceiling is still being raised.',
+      'Momentum scaling ties traversal directly to combat output. The higher the ceiling on chaining movement, the further the skill curve runs. and that ceiling is still being raised.',
   },
   {
     id: 'competitive',
     publish: false,
     title: 'Competitive structure',
-    body: 'PENDING — needs verified information before publication.',
+    body: 'PENDING. needs verified information before publication.',
   },
   {
     id: 'platforms',
     publish: false,
     title: 'Platforms',
-    body: 'PENDING — no platform commitments may be published.',
+    body: 'PENDING. no platform commitments may be published.',
   },
   {
     id: 'worldbuilding',
     publish: false,
     title: 'Broader worldbuilding',
-    body: 'PENDING — needs verified information before publication.',
+    body: 'PENDING. needs verified information before publication.',
   },
 ];
 
