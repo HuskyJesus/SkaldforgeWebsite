@@ -33,14 +33,12 @@ const roster = publishRoster ? [...leadership, ...team] : [];
     <div class="wrap wrap--wide">
       <div class="statement reveal">
         <h2 id="statement-title" class="display statement__title">
-          A small team building one ambitious game.
+          Small team, ambitious games.
         </h2>
         <div class="statement__copy">
           <p>{studio.lede}</p>
           <p>
-            Our work brings movement, combat and Norse mythology into one competitive experience.
-            We build, playtest and refine Mythbound together, from its first prototypes to the
-            arenas and characters you see today.
+            We take full advantage of Unreal technology to build ambitious multiplayer titles.
           </p>
         </div>
       </div>
@@ -57,7 +55,7 @@ const roster = publishRoster ? [...leadership, ...team] : [];
           <p class="project__body">
             A {game.genre.toLowerCase()} built in {game.engine}. Four Bound, contracted to the old
             gods, fight over an ancient relic in arenas designed to reward speed. Now in
-            post-production, with an Early Access window to be announced.
+            Alpha, with Early Access targeted for Q4 2026.
           </p>
           <div class="project__actions">
             <a class="btn btn--primary" href={url('/mythbound')}>Discover Mythbound</a>
@@ -143,7 +141,7 @@ const roster = publishRoster ? [...leadership, ...team] : [];
 
   <CTA
     lockup
-    eyebrow={`In post-production. Release ${game.releaseWindow}`}
+    eyebrow="In Alpha. Early Access Q4 2026. Release TBA."
     body="Mythbound is the first game from Skaldforge."
     primary={{ label: 'Discover Mythbound', href: url('/mythbound') }}
     secondary={{ label: 'Development', href: url('/technology') }}

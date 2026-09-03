@@ -15,7 +15,7 @@ export const game = {
   /** Public date remains unannounced. Internal Early Access planning is not a promise. */
   releaseWindow: 'TBA',
 
-  status: 'In Post-Production',
+  status: 'Alpha',
 
   /**
    * source: studio direction (current). Relic Rush leads the three modes.
@@ -40,7 +40,7 @@ export const snapshot = [
   { label: 'Modes', value: 'Relic Rush · Team Deathmatch · Free For All' },
   { label: 'Perspective', value: 'Third Person' }, // source: GDD "Third Person Camera"
   { label: 'Status', value: game.status },
-  { label: 'Target Window', value: game.releaseWindow },
+  { label: 'Target Window', value: 'Early Access Q4 2026 · Release TBA' },
 ] as const;
 
 /**
@@ -56,7 +56,7 @@ export const pillars = [
     id: 'move',
     index: '01',
     title: 'Move',
-    heading: 'Momentum is the weapon',
+    heading: 'Momentum is power',
     body:
       'Running, sliding, wall-kicking and mantling chain into one another. Carry your momentum from one move to the next and turn speed into an advantage.',
     detail: ['Run', 'Slide', 'Wall-Kick', 'Mantle'],
@@ -68,7 +68,7 @@ export const pillars = [
     title: 'Brawl',
     heading: 'Close range, high commitment',
     body:
-      'Close the distance, read the parry and commit to your strike. Spacing, timing and momentum shape every melee exchange.',
+      'Melee exchanges are decided by spacing, timing, and player velocity. Close the distance, predict the parry, and commit to your strikes.',
     detail: ['Melee exchanges', 'Parry timing', 'Momentum scaling', 'Positioning'],
     image: 'base-clash',
   },
@@ -78,7 +78,7 @@ export const pillars = [
     title: 'Wield Power',
     heading: 'The gods are sponsors',
     body:
-      'Thor, Loki, Njord and Hel each grant their Bound two distinct abilities. Lightning, speed, wind and the power of the dead give every contestant a different approach.',
+      'Thor, Loki, Njord and Hel each grant their Bound two distinct abilities. Lightning, magic, wind and the power of the dead give every contestant a different playstyle.',
     detail: ['Thor', 'Loki', 'Njord', 'Hel'],
     image: 'gold-burst',
   },
@@ -105,7 +105,7 @@ export const relicRush = {
   format: 'Featured mode',
   heading: 'Take the relic. Break their defenses.',
   body:
-    'Two teams fight over a central relic while defending three goals of their own. Delivering the relic destroys one. When a team loses every life it can no longer respawn, and the last team standing wins.',
+    'Two teams fight over a central relic while defending three goals of their own. Delivering the relic to a goal destroys it. When a team loses every goal they can no longer respawn. The last team standing wins.',
   beats: [
     {
       title: 'Contest the centre',
@@ -155,7 +155,7 @@ export const arenas = [
   {
     id: 'himinbjorg',
     name: 'Himinbjorg',
-    blurb: 'High atop mountains that scrape the sky, the Bound fight in and around the palace of Himinbjorg. Home to Heimdallr, it guards the gateway between Midgard and Asgard.',
+    blurb: 'High atop mountains that scrape the sky, the Bound fight in and around the palace of Himinbjorg. Home to Heimdall, it guards the gateway between Midgard and Asgard.',
     hasFinalArt: true,
     image: 'himinbjorg',
   },
@@ -174,7 +174,7 @@ export const modes = [
   {
     id: 'relic-rush',
     name: 'Relic Rush',
-    kicker: 'Objective · Two teams',
+    kicker: 'Objective · 4 VS 4',
     body:
       'Two teams fight over a central relic while defending three goals of their own. The relic destroys a goal on entry. Lose every life and you stop respawning. The last team standing wins.',
     video: 'mode-relic-rush',
@@ -183,7 +183,7 @@ export const modes = [
   {
     id: 'team-deathmatch',
     name: 'Team Deathmatch',
-    kicker: 'Two teams',
+    kicker: '4 VS 4',
     body:
       'Two teams battle to earn the most eliminations before the match timer reaches zero.',
     video: 'mode-team-deathmatch',

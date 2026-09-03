@@ -24,7 +24,7 @@ import { url } from '../lib/url';
     variant="video"
     size="full"
     eyebrow="A Skaldforge Game"
-    statement="Fight for glory in a Norse arena where movement, melee, and god-granted power collide."
+    statement="Battle for glory in Norse arenas where advanced movement, brutal melee combat, and god-granted power determine victory."
     primary={{ label: 'Watch Trailer', href: '#trailer' }}
     secondary={{ label: 'Discover Mythbound', href: url('/mythbound') }}
   />
@@ -40,12 +40,10 @@ import { url } from '../lib/url';
           </h2>
           <div class="intro__copy">
             <p>
-              Choose your Bound and fight under the sponsorship of Thor, Loki, Njord or Hel.
-              Take their power into a Norse arena where fast movement and close combat decide the fight.
-            </p>
-            <p>
-              Mythbound is a {game.genre.toLowerCase()} from Skaldforge.
-              Chain your parkour, challenge your rivals, and fight for the relic.
+              Mythbound is a competitive multiplayer PvP arena-brawler in a modern Norse world.
+              Thrust into the arenas of Himinbjorg, Midgard, and Helheim, the bound use a
+              combination of parkour, brutal melee combat, and godly abilities to brawl against
+              one another.
             </p>
           </div>
           <a class="link-arrow" href={url('/mythbound')}>Explore the game</a>
@@ -72,7 +70,7 @@ import { url } from '../lib/url';
     <div class="wrap wrap--wide">
       <SectionHeading id="pillars-title"
         eyebrow="How it plays"
-        title="Move. Brawl. Wield power."
+        title="Fight like a god."
         lede="Carry your momentum into combat. Turn your god's power into an opening."
         class="pillars__head"
       />
@@ -125,7 +123,7 @@ import { url } from '../lib/url';
     <div class="wrap wrap--wide">
       <SectionHeading id="arenas-title"
         eyebrow="The Realms"
-        title="Arenas built for momentum"
+        title="Legendary Battle Arenas"
         lede="Fight across Midgard, Helheim and Himinbjorg."
         class="arenas__head"
       />
@@ -194,8 +192,8 @@ import { url } from '../lib/url';
         <h2 id="studio-title" class="display studio__title">We are Skaldforge</h2>
         <p class="studio__statement">{studio.statement}</p>
         <p class="studio__body">
-          Designers, artists, animators and engineers working together on Mythbound.
-          One team, a shared world, and a game built to be played.
+          Skaldforge is a small indie game development team based in Orlando specializing
+          in ambitious multiplayer Unreal titles.
         </p>
 
 
@@ -223,7 +221,7 @@ import { url } from '../lib/url';
   <CTA
     lockup
     eyebrow={`Release ${game.releaseWindow}`}
-    body="A competitive Norse arena brawler in post-production at Skaldforge."
+    body="Early Access Launch in Q4 2026."
     primary={{ label: 'Discover Mythbound', href: url('/mythbound') }}
     secondary={{ label: 'Development', href: url('/technology') }}
   />

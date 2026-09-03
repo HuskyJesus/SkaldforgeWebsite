@@ -1,34 +1,29 @@
 ---
 /**
- * Skaldforge raven wordmark, inlined so it can take `currentColor`.
+ * Skaldforge site logo.
  *
- * The supplied SVG is a two-tone artwork: a solid #000000 group (raven +
- * lettering) and a #ffffff group (the knockouts. eyes and letter counters).
- * For a dark site the ink becomes currentColor and the knockouts become
- * transparent, so the mark reads as a single-colour silhouette with real holes
- * on any background. The original file is untouched in public/assets/brand/.
+ * Uses the studio-supplied emblem artwork (public/assets/brand/skaldforge-emblem.png).
+ * The source file is a flat, full-colour badge (gold valknut on a navy ground),
+ * not a silhouette, so it is rendered as a plain image rather than masked with
+ * currentColor the way the previous raven wordmark was.
  */
-import raw from '../assets/brand/skaldforge-logo.svg?raw';
+import { asset } from '../lib/url';
 
 interface Props {
   class?: string;
   title?: string;
 }
 const { class: className, title } = Astro.props;
-
-const svg = raw
-  .replace(/<\?xml[^>]*\?>/i, '')
-  .replace(/<!DOCTYPE[^>]*>/i, '')
-  .replace(/\s(width|height)="[^"]*"/gi, '')
-  .replace(/fill="#000000"/gi, 'fill="currentColor"')
-  .replace(/fill="#ffffff"/gi, 'fill="transparent"')
-  .replace(
-    /<svg /i,
-    `<svg class="${className ?? ''}" role="${title ? 'img' : 'presentation'}" ${
-      title ? '' : 'aria-hidden="true" focusable="false"'
-    } `,
-  )
-  .replace(/(<svg[^>]*>)/i, title ? `$1<title>${title}</title>` : '$1');
+const src = asset('assets/brand/skaldforge-emblem.png');
 ---
 
-<Fragment set:html={svg} />
+<img
+  src={src}
+  alt={title ?? ''}
+  role={title ? 'img' : 'presentation'}
+  aria-hidden={title ? undefined : 'true'}
+  class={className}
+  width="184"
+  height="184"
+  decoding="async"
+/>

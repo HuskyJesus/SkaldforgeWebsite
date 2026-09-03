@@ -23,7 +23,7 @@ export const roadmapIntro = {
   eyebrow: 'What comes next',
   title: 'The arena is only beginning',
   lede:
-    'Mythbound is in post-production. Release timing and further milestones will be shared when they are confirmed.',
+    'Mythbound is in Alpha. Release timing and further milestones will be shared when they are confirmed.',
 };
 
 export const roadmap: RoadmapItem[] = [

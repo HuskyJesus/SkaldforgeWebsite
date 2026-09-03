@@ -26,6 +26,7 @@ export const nav = [
   { label: 'Mythbound', href: '/mythbound' },
   { label: 'Development', href: '/technology' },
   { label: 'Studio', href: '/studio' },
+  { label: 'Contact', href: '/contact' },
 ] as const;
 
 /**
@@ -35,6 +36,5 @@ export const nav = [
 export const socials: { label: string; href: string }[] = [];
 
 export const contact = {
-  // Enable once a monitored public address exists. See CONTENT_TODO.md #7.
-  email: null as string | null,
+  email: 'skaldforgestudio@gmail.com' as string | null,
 };
