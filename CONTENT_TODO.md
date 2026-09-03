@@ -145,8 +145,20 @@ technology story. The Development page now focuses on those areas and uses
 current gameplay clips instead of old blockouts, asset budgets or concept-art
 pipeline material.
 
-**Still not claimed:** Nanite, Lumen, Chaos, World Partition, a specific
-networking architecture or unconfirmed engine features.
+**Still not claimed:** Nanite, Lumen, Chaos, a specific networking architecture
+or unconfirmed engine features.
+
+**Update, September 3, 2026 (STUDIO):** the Development page toolchain section
+was rebuilt around the full public Unreal and art stack: Blueprints, GAS,
+CommonUI, Enhanced Input, StateTree, Niagara, PCG, **World Partition**,
+Full-Body IK, Motion Matching and EOS, plus Unreal Insights for profiling.
+World Partition is confirmed in use, specifically for streaming the visibility
+of gameplay-relevant collision (mantle volumes, simple collision, etc.), not
+for open-world streaming claims. The genre/engine/modes/perspective/status/
+target-window snapshot grid was removed from this page only (`Snapshot`
+usage removed from `technology.astro`; still shown on Home and Mythbound).
+The Developer ViDoc video was replaced with an updated cut; same filename,
+still captionless (video has burned-in captions per #15).
 
 ## 14. Generative-AI tools omitted from the public toolchain : CONFIRM
 

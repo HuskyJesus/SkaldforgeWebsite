@@ -1,0 +1,47 @@
+diff --git a/src/data/tech.ts b/src/data/tech.ts
+index 2fb3f2d..416f76c 100644
+--- a/src/data/tech.ts
++++ b/src/data/tech.ts
+@@ -11,10 +11,39 @@ export const techFeatures = [
+   { id: 'multiplayer', eyebrow: 'Competitive Multiplayer', title: 'Built around the fight', body: 'Mythbound is developed as a multiplayer game. Movement, melee, abilities and objectives are tested together so every system serves the same fast, readable competition.', video: 'mode-team-deathmatch', poster: 'mode-team-deathmatch-poster.jpg' },
+ ] as const;
+ 
++/** Public toolchain, confirmed in use on Mythbound. source: studio direction. */
+ export const toolchain = [
+-  { group: 'Engine', tools: ['Unreal Engine 5.7'] },
+-  { group: '3D and Animation', tools: ['Maya', 'MotionBuilder', 'Blender', 'ZBrush'] },
+-  { group: 'Materials and VFX', tools: ['Substance Painter', 'Substance Designer', 'EmberGen'] },
++  {
++    group: 'Unreal Tool Stack',
++    tools: [
++      'Blueprints',
++      'GAS',
++      'CommonUI',
++      'Enhanced Input',
++      'StateTree',
++      'Niagara',
++      'PCG',
++      'World Partition',
++      'Full-Body IK',
++      'Motion Matching',
++      'EOS',
++      'Unreal Insights',
++    ],
++  },
++  {
++    group: 'Art Stack',
++    tools: [
++      'Maya',
++      'Blender',
++      'ZBrush',
++      'Houdini',
++      'Substance Painter',
++      'Substance Designer',
++      'EmberGen',
++      'Vicon Shogun',
++      'Photoshop',
++    ],
++  },
+ ] as const;
+ 
+ export const vidoc = { publish: true, title: 'Inside Mythbound', lede: 'The team shares the work, challenges and decisions behind the current game.', src: 'assets/video/developer-vidoc.mp4', poster: 'assets/video/vidoc-poster.jpg', captions: null as string | null };
