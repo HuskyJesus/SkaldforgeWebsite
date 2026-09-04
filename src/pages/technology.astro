@@ -2,7 +2,6 @@
 import Base from '../layouts/Base.astro';
 import Hero from '../components/Hero.astro';
 import SectionHeading from '../components/SectionHeading.astro';
-import Snapshot from '../components/Snapshot.astro';
 import TrailerPlayer from '../components/TrailerPlayer.astro';
 import CTA from '../components/CTA.astro';
 import { techIntro, techFeatures, toolchain, vidoc } from '../data/tech';
@@ -16,12 +15,13 @@ import { asset, url } from '../lib/url';
 
   <section class="section section--tight" aria-labelledby="snapshot-title">
     <div class="wrap wrap--wide intro">
-      <div class="intro__copy reveal">
+      <div class="intro__title-col reveal">
         <p class="eyebrow">Built in Unreal Engine 5.7</p>
         <h2 id="snapshot-title" class="display intro__title">Technology in service of the fight</h2>
+      </div>
+      <div class="intro__copy reveal">
         <p>{techIntro.lede}</p>
       </div>
-      <Snapshot />
     </div>
   </section>
 
@@ -42,10 +42,17 @@ import { asset, url } from '../lib/url';
 
   <section class="section section--tight tools" aria-labelledby="tools-title">
     <div class="wrap wrap--wide">
-      <SectionHeading id="tools-title" eyebrow="Production" title="Tools behind the arena" lede="A focused pipeline built around Unreal Engine." class="tools__head" />
-      <ul role="list" class="tools__grid">
-        {toolchain.map(group => <li><h3>{group.group}</h3><p>{group.tools.join(' · ')}</p></li>)}
-      </ul>
+      <SectionHeading id="tools-title" eyebrow="Production" title="Tools behind the arena" lede="The Unreal Engine and art pipeline the team builds Mythbound with." class="tools__head" />
+      <div class="tools__stacks">
+        {toolchain.map(stack => (
+          <div class="stack reveal">
+            <h3 class="stack__title">{stack.group}</h3>
+            <ul role="list" class="stack__tags">
+              {stack.tools.map(tool => <li class="tag">{tool}</li>)}
+            </ul>
+          </div>
+        ))}
+      </div>
     </div>
   </section>
 
@@ -80,10 +87,12 @@ import { asset, url } from '../lib/url';
 </script>
 
 <style>
-  .intro { display:grid; gap:var(--sp-7); align-items:start; }
-  @media(min-width:900px){.intro{grid-template-columns:1.1fr .9fr;gap:var(--sp-9)}}
-  .intro__copy{display:grid;gap:var(--sp-4)} .intro__title,.feature__title{font-size:var(--fs-h2)}
-  .intro__copy>p:last-child,.feature__copy>p:last-child{color:var(--t-secondary);font-size:var(--fs-lg);max-width:54ch}
+  .intro { display:grid; gap:var(--sp-6); align-items:start; }
+  @media(min-width:900px){.intro{grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:clamp(var(--sp-7),6vw,var(--sp-9))}}
+  .intro__title-col{display:grid;gap:var(--sp-4)} .intro__title{font-size:var(--fs-h2);max-width:16ch}
+  .feature__title{font-size:var(--fs-h2)}
+  .intro__copy{color:var(--t-secondary);font-size:var(--fs-lg)}
+  .intro__copy>p,.feature__copy>p:last-child{color:var(--t-secondary);font-size:var(--fs-lg);max-width:54ch}
   .feature{border-block-start:1px solid var(--s-hairline)}
   .feature--alt{background:radial-gradient(65% 75% at 20% 10%,color-mix(in oklab,var(--c-navy-800) 42%,transparent),transparent 72%)}
   .feature__grid{display:grid;gap:var(--sp-7);align-items:center}.feature__copy{display:grid;gap:var(--sp-4)}
@@ -91,10 +100,11 @@ import { asset, url } from '../lib/url';
   @media(min-width:960px){.feature__grid{grid-template-columns:minmax(0,.78fr) minmax(0,1.22fr);gap:var(--sp-9)}.feature--alt .feature__copy{order:2}.feature--alt .feature__video{order:1}}
   @media(prefers-reduced-motion:reduce){.feature__video{display:none}}
   .tools,.vidoc{border-block-start:1px solid var(--s-hairline)} .tools__head,.vidoc__head{margin-block-end:var(--sp-7)}
-  .tools__grid{display:grid;gap:1px;background:var(--s-hairline);border:1px solid var(--s-hairline);border-radius:var(--r-lg);overflow:hidden}
-  @media(min-width:720px){.tools__grid{grid-template-columns:repeat(3,1fr)}}
-  .tools__grid li{padding:var(--sp-5);background:color-mix(in oklab,var(--c-navy-900) 40%,var(--c-ink))}
-  .tools__grid h3{font-size:var(--fs-eyebrow);letter-spacing:var(--tr-eyebrow);text-transform:uppercase;color:var(--c-gold-500);margin-block-end:var(--sp-3)}
-  .tools__grid p{font-size:var(--fs-sm);color:var(--t-secondary)}
+  .tools__stacks{display:grid;gap:var(--sp-5)}
+  @media(min-width:760px){.tools__stacks{grid-template-columns:repeat(2,1fr);gap:var(--sp-6)}}
+  .stack{padding:var(--sp-6);border:1px solid var(--s-hairline);border-radius:var(--r-lg);background:color-mix(in oklab,var(--c-navy-900) 40%,var(--c-ink))}
+  .stack__title{font-size:var(--fs-eyebrow);letter-spacing:var(--tr-eyebrow);text-transform:uppercase;color:var(--c-gold-500);margin-block-end:var(--sp-4);padding-block-end:var(--sp-3);border-block-end:1px solid var(--s-hairline)}
+  .stack__tags{display:flex;flex-wrap:wrap;gap:var(--sp-2)}
+  .tag{font-family:var(--f-body);font-size:var(--fs-sm);color:var(--t-secondary);padding:var(--sp-2) var(--sp-3);border:1px solid var(--s-hairline);border-radius:var(--r-md);background:color-mix(in oklab,var(--c-navy-800) 55%,transparent);white-space:nowrap}
   .vidoc__frame{max-width:68rem;margin-inline:auto}
 </style>
