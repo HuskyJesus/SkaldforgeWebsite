@@ -2,16 +2,19 @@
 /**
  * Skaldforge site logo.
  *
- * The studio-supplied emblem is light artwork on a transparent ground, drawn to
- * sit directly on the site's dark chrome, so it is rendered as a plain image.
- * Do not tint it through a CSS mask: an alpha mask floods the black linework
- * that forms the "Skaldforge" lettering with the fill colour and collapses the
- * raven into a solid silhouette.
+ * Points at the dark-ground derivative of the studio's vector master, not the
+ * master itself: skaldforge-logo.svg is drawn black-on-light, so on the site's
+ * near-black chrome the raven vanishes and only the knocked-out lettering is
+ * left. See scripts/gen-wordmark.mjs, which rebuilds the derivative on every
+ * build by swapping the two fills.
  *
- * It points at the trimmed derivative, not the emblem itself. The emblem's
- * artwork fills only 67 of its canvas's 184 rows, so sizing the raw file by
- * height would draw the mark at about a third of its intended size. See
- * scripts/gen-wordmark.mjs, which rebuilds the derivative on every build.
+ * It is full-colour two-tone artwork, so it is rendered as a plain image. Do not
+ * tint it through a CSS mask: an alpha mask floods the lettering with the fill
+ * colour and collapses the raven into a solid silhouette.
+ *
+ * SVG rather than the supplied raster on purpose -- skaldforge-emblem.png is a
+ * 184px rendition whose lettering is thin outline strokes, and at the nav's
+ * ~2rem cap they blur away and the mark reads as a white blob.
  *
  * Nav and Footer size this with `block-size`.
  */
@@ -22,7 +25,7 @@ interface Props {
   title?: string;
 }
 const { class: className, title } = Astro.props;
-const src = asset('assets/brand/skaldforge-wordmark.png');
+const src = asset('assets/brand/skaldforge-wordmark.svg');
 ---
 
 <img
@@ -31,7 +34,7 @@ const src = asset('assets/brand/skaldforge-wordmark.png');
   role={title ? 'img' : 'presentation'}
   aria-hidden={title ? undefined : 'true'}
   class={className}
-  width="184"
-  height="67"
+  width="2115"
+  height="914"
   decoding="async"
 />

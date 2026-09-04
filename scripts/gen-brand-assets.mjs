@@ -1,18 +1,22 @@
 /**
- * Generates derived brand assets (icons + wordmark + social card) from the
- * supplied source art. Run with: node scripts/gen-brand-assets.mjs
+ * Generates derived brand assets (icons + social card) from the supplied source
+ * art. Run with: node scripts/gen-brand-assets.mjs
  *
  * Nothing here invents artwork. Every output is a resize, trim or composite of
  * a studio-supplied master:
- *   public/assets/brand/skaldforge-emblem.png raven wordmark    -> favicons + mark
- *   src/assets/brand/mythbound-logo.png     Mythbound logotype  -> social card
+ *   public/assets/brand/skaldforge-logo.svg  raven wordmark     -> favicons
+ *   src/assets/brand/mythbound-logo.png      Mythbound logotype -> social card
  * See ART_ASSET_CHECKLIST.md P0 for the bespoke 1200x630 card the last one
  * stands in for.
+ *
+ * The site wordmark is a separate derivative with its own script; importing it
+ * runs it, so the icons below can rely on its output being current.
  *
  * src/assets/brand/valknut-badge.png is the gold valknut that used to be the
  * site icon. It is kept because it is studio art, but the favicon is the
  * Skaldforge logo itself, so nothing here reads it.
  */
+import './gen-wordmark.mjs';
 import sharp from 'sharp';
 import { writeFileSync, mkdirSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
@@ -27,8 +31,8 @@ mkdirSync(join(pub, 'assets', 'social'), { recursive: true });
 // ---------------------------------------------------------------- app icons
 // Built from the Skaldforge logo, NOT a placeholder drawing. An earlier
 // revision of this script rebuilt the icons from a stand-in favicon.svg and
-// silently overwrote the real artwork, so the source here is the same emblem
-// the site header uses and no output is ever also an input.
+// silently overwrote the real artwork, so the source here is the same mark the
+// site header uses and no output is ever also an input.
 //
 // The logo is a wide wordmark (roughly 2.75:1) and a favicon is square, so it
 // is centred on the studio's navy-and-gold badge rather than stretched. The
@@ -48,14 +52,13 @@ const badge = Buffer.from(
    </svg>`,
 );
 
-const emblem = await sharp(join(pub, 'assets', 'brand', 'skaldforge-emblem.png'))
-  .trim({ threshold: 1 })
-  .toBuffer();
-const emblemMeta = await sharp(emblem).metadata();
-
+// Rasterised from the vector wordmark rather than the 184px emblem raster, so
+// the lettering stays legible once it is scaled down into a 32px favicon.
 const markW = Math.round(S * 0.88);
-const markH = Math.round((markW * emblemMeta.height) / emblemMeta.width);
-const mark = await sharp(emblem).resize(markW, markH).toBuffer();
+const mark = await sharp(join(pub, 'assets', 'brand', 'skaldforge-wordmark.svg'), { density: 600 })
+  .resize({ width: markW })
+  .toBuffer();
+const markH = (await sharp(mark).metadata()).height;
 
 const iconMaster = await sharp(badge)
   .composite([
@@ -102,18 +105,6 @@ icoParts.forEach((buf, i) => {
   offset += buf.length;
 });
 writeFileSync(join(pub, 'favicon.ico'), Buffer.concat([header, ...icoParts]));
-
-// ----------------------------------------------------------------- wordmark
-// The supplied emblem is a black silhouette centred in a square canvas with a
-// lot of transparent padding. The site tints it with currentColor through a CSS
-// mask, so the padding has to go: otherwise the mark renders at roughly a third
-// of its allotted height inside an empty box.
-const wordmark = await sharp(join(pub, 'assets', 'brand', 'skaldforge-emblem.png'))
-  .trim({ threshold: 1 })
-  .png({ compressionLevel: 9 })
-  .toBuffer({ resolveWithObject: true });
-writeFileSync(join(pub, 'assets', 'brand', 'skaldforge-wordmark.png'), wordmark.data);
-console.log(`wordmark trimmed to ${wordmark.info.width}x${wordmark.info.height}`);
 
 // -------------------------------------------------------------- social card
 // 1200x630: darkened gameplay plate + centred Mythbound lockup.
