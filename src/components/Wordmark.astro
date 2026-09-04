@@ -6,18 +6,19 @@
  * master itself: skaldforge-logo.svg is drawn black-on-light, so on the site's
  * near-black chrome the raven vanishes and only the knocked-out lettering is
  * left. See scripts/gen-wordmark.mjs, which rebuilds the derivative on every
- * build by swapping the two fills.
+ * build by swapping the two fills and cropping off the master's empty margin.
  *
- * It is full-colour two-tone artwork, so it is rendered as a plain image. Do not
- * tint it through a CSS mask: an alpha mask floods the lettering with the fill
- * colour and collapses the raven into a solid silhouette.
+ * It is two-tone artwork, so it is rendered as a plain image. Do not tint it
+ * through a CSS mask: an alpha mask floods the lettering with the fill colour
+ * and collapses the raven into a solid silhouette.
  *
- * SVG rather than the supplied raster on purpose -- skaldforge-emblem.png is a
+ * SVG rather than the supplied raster on purpose. skaldforge-emblem.png is a
  * 184px rendition whose lettering is thin outline strokes, and at the nav's
  * ~2rem cap they blur away and the mark reads as a white blob.
  *
  * Nav and Footer size this with `block-size`.
  */
+import { readFileSync } from 'node:fs';
 import { asset } from '../lib/url';
 
 interface Props {
@@ -25,7 +26,16 @@ interface Props {
   title?: string;
 }
 const { class: className, title } = Astro.props;
+
+const file = new URL('../../public/assets/brand/skaldforge-wordmark.svg', import.meta.url);
 const src = asset('assets/brand/skaldforge-wordmark.svg');
+
+// The intrinsic ratio comes from the generated file rather than being copied
+// here, so a re-cropped master cannot leave this component declaring a stale
+// aspect and squashing the mark.
+const viewBox = readFileSync(file, 'utf8').match(/viewBox="([\d.\s-]+)"/);
+if (!viewBox) throw new Error('skaldforge-wordmark.svg has no viewBox; run scripts/gen-wordmark.mjs.');
+const [, , width, height] = viewBox[1].trim().split(/\s+/).map(Number);
 ---
 
 <img
@@ -34,7 +44,7 @@ const src = asset('assets/brand/skaldforge-wordmark.svg');
   role={title ? 'img' : 'presentation'}
   aria-hidden={title ? undefined : 'true'}
   class={className}
-  width="2115"
-  height="914"
+  width={Math.round(width)}
+  height={Math.round(height)}
   decoding="async"
 />
