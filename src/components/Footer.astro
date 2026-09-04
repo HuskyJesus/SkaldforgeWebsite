@@ -81,7 +81,7 @@ const year = new Date().getFullYear();
   }
 
   .footer__brand { display: grid; gap: var(--sp-4); align-content: start; }
-  /* Global for the same reason as the nav wordmark: injected via set:html. */
+  /* Global for the same reason as the nav wordmark: it is a child component. */
   .footer__brand :global(.footer__logo) {
     block-size: 2.75rem;
     inline-size: auto;
