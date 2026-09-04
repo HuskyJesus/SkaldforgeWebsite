@@ -2,18 +2,18 @@
 /**
  * Skaldforge site logo.
  *
- * The studio-supplied emblem is a black raven-and-wordmark silhouette on a
- * transparent ground, centred in a square canvas. Two things follow from that:
+ * The studio-supplied emblem is light artwork on a transparent ground, drawn to
+ * sit directly on the site's dark chrome, so it is rendered as a plain image.
+ * Do not tint it through a CSS mask: an alpha mask floods the black linework
+ * that forms the "Skaldforge" lettering with the fill colour and collapses the
+ * raven into a solid silhouette.
  *
- *  1. It is painted with `currentColor` through a CSS mask, not drawn as an
- *     <img>. A black silhouette rendered as a plain image is invisible on the
- *     site's near-black nav and footer.
- *  2. It masks the *trimmed* derivative, so the box maps to the artwork rather
- *     than to the square canvas's transparent padding. The raven only fills
- *     67 of the master's 184 rows, so masking the untrimmed file would render
- *     the mark at about a third of its intended height.
+ * It points at the trimmed derivative, not the emblem itself. The emblem's
+ * artwork fills only 67 of its canvas's 184 rows, so sizing the raw file by
+ * height would draw the mark at about a third of its intended size. See
+ * scripts/gen-wordmark.mjs, which rebuilds the derivative on every build.
  *
- * Nav and Footer size this with `block-size` and tint it with `color`.
+ * Nav and Footer size this with `block-size`.
  */
 import { asset } from '../lib/url';
 
@@ -25,23 +25,13 @@ const { class: className, title } = Astro.props;
 const src = asset('assets/brand/skaldforge-wordmark.png');
 ---
 
-<span
-  class:list={['wordmark', className]}
+<img
+  src={src}
+  alt={title ?? ''}
   role={title ? 'img' : 'presentation'}
-  aria-label={title ?? undefined}
   aria-hidden={title ? undefined : 'true'}
-  style={`--wordmark-image: url('${src}')`}
-></span>
-
-<style>
-  .wordmark {
-    display: block;
-    /* Intrinsic ratio of the trimmed artwork (184x67). */
-    aspect-ratio: 184 / 67;
-    block-size: 1.5rem;
-    inline-size: auto;
-    background-color: currentColor;
-    -webkit-mask: var(--wordmark-image) no-repeat center / contain;
-    mask: var(--wordmark-image) no-repeat center / contain;
-  }
-</style>
+  class={className}
+  width="184"
+  height="67"
+  decoding="async"
+/>

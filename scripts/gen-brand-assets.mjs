@@ -4,14 +4,17 @@
  *
  * Nothing here invents artwork. Every output is a resize, trim or composite of
  * a studio-supplied master:
- *   src/assets/brand/skaldforge-icon.png    gold valknut badge  -> all favicons
- *   public/assets/brand/skaldforge-emblem.png raven wordmark    -> nav/footer mark
+ *   public/assets/brand/skaldforge-emblem.png raven wordmark    -> favicons + mark
  *   src/assets/brand/mythbound-logo.png     Mythbound logotype  -> social card
  * See ART_ASSET_CHECKLIST.md P0 for the bespoke 1200x630 card the last one
  * stands in for.
+ *
+ * src/assets/brand/valknut-badge.png is the gold valknut that used to be the
+ * site icon. It is kept because it is studio art, but the favicon is the
+ * Skaldforge logo itself, so nothing here reads it.
  */
 import sharp from 'sharp';
-import { writeFileSync, copyFileSync, mkdirSync } from 'node:fs';
+import { writeFileSync, mkdirSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
 import { dirname, join } from 'node:path';
 
@@ -22,11 +25,44 @@ const src = join(root, 'src', 'assets');
 mkdirSync(join(pub, 'assets', 'social'), { recursive: true });
 
 // ---------------------------------------------------------------- app icons
-// The master is the studio valknut badge, NOT a placeholder drawing. Earlier
-// revisions of this script rebuilt the icons from a stand-in favicon.svg and
-// silently overwrote the real artwork, so the master lives in src/assets/brand
-// where it can never be clobbered by its own output.
-const iconMaster = join(src, 'brand', 'skaldforge-icon.png');
+// Built from the Skaldforge logo, NOT a placeholder drawing. An earlier
+// revision of this script rebuilt the icons from a stand-in favicon.svg and
+// silently overwrote the real artwork, so the source here is the same emblem
+// the site header uses and no output is ever also an input.
+//
+// The logo is a wide wordmark (roughly 2.75:1) and a favicon is square, so it
+// is centred on the studio's navy-and-gold badge rather than stretched. The
+// badge is the treatment the previous app icons already used.
+const S = 512;
+const badge = Buffer.from(
+  `<svg width="${S}" height="${S}" xmlns="http://www.w3.org/2000/svg">
+     <defs>
+       <radialGradient id="g" cx="50%" cy="42%" r="78%">
+         <stop offset="0%" stop-color="#16283f"/>
+         <stop offset="100%" stop-color="#080d16"/>
+       </radialGradient>
+     </defs>
+     <rect width="${S}" height="${S}" fill="url(#g)"/>
+     <rect x="${S * 0.012}" y="${S * 0.012}" width="${S * 0.976}" height="${S * 0.976}"
+           fill="none" stroke="#c9a227" stroke-width="${S * 0.024}"/>
+   </svg>`,
+);
+
+const emblem = await sharp(join(pub, 'assets', 'brand', 'skaldforge-emblem.png'))
+  .trim({ threshold: 1 })
+  .toBuffer();
+const emblemMeta = await sharp(emblem).metadata();
+
+const markW = Math.round(S * 0.88);
+const markH = Math.round((markW * emblemMeta.height) / emblemMeta.width);
+const mark = await sharp(emblem).resize(markW, markH).toBuffer();
+
+const iconMaster = await sharp(badge)
+  .composite([
+    { input: mark, top: Math.round(S / 2 - markH / 2), left: Math.round(S / 2 - markW / 2) },
+  ])
+  .png({ compressionLevel: 9 })
+  .toBuffer();
 
 const png = (size) =>
   sharp(iconMaster).resize(size, size, { fit: 'cover' }).png({ compressionLevel: 9 });
@@ -41,9 +77,8 @@ for (const [size, name] of [
   await png(size).toFile(join(pub, name));
 }
 
-// The master is already 512x512, so copy it rather than round-tripping it
-// through an encoder that only makes the file bigger.
-copyFileSync(iconMaster, join(pub, 'icon-512.png'));
+// The composed badge is already 512x512, so write it straight out.
+writeFileSync(join(pub, 'icon-512.png'), iconMaster);
 
 // A real favicon.ico for user agents and link previews that request the bare
 // /favicon.ico path instead of reading the <link rel="icon"> tags.

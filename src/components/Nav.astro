@@ -114,16 +114,17 @@ const pathname = Astro.url.pathname;
   }
   /*
     The wordmark lives in its own component, so Astro's scoped selectors never
-    match it. These two rules are global on purpose. `color` is what tints the
-    masked silhouette; see Wordmark.astro.
+    match it. These two rules are global on purpose. It is full-colour studio
+    artwork, so the hover is a lift in opacity rather than a tint; `color` has
+    no effect on it. See Wordmark.astro.
   */
   .nav__brand :global(.nav__logo) {
     block-size: clamp(1.75rem, 1.4rem + 1.2vw, 2.4rem);
     inline-size: auto;
-    color: var(--c-bone);
-    transition: color var(--d-mid) var(--e-out);
+    opacity: 0.92;
+    transition: opacity var(--d-mid) var(--e-out);
   }
-  .nav__brand:hover :global(.nav__logo) { color: var(--c-gold-300); }
+  .nav__brand:hover :global(.nav__logo) { opacity: 1; }
 
   /* ---------------------------------------------------------- desktop */
   .nav__desktop { display: none; }
