@@ -1,14 +1,16 @@
 import { defineConfig } from 'astro/config';
 import sitemap from '@astrojs/sitemap';
 
-// Deployment is environment driven so the site can move from GitHub Pages to a
-// custom Skaldforge domain without touching a single link in the source.
-//   GitHub Pages (project site) -> SITE_URL=https://skaldforgestudio-git.github.io  BASE_PATH=/SkaldforgeWebsite
-//   Custom domain               -> SITE_URL=https://skaldforge.com                 BASE_PATH=/
-// CI never relies on these defaults: the deploy workflow feeds both values in
-// from actions/configure-pages, so they only matter for local builds.
-const SITE_URL = process.env.SITE_URL ?? 'https://skaldforgestudio-git.github.io';
-const BASE_PATH = process.env.BASE_PATH ?? '/SkaldforgeWebsite';
+// Deployment is environment driven so the site can move between hosts without
+// touching a single link in the source.
+//   Custom domain (live)        -> SITE_URL=https://skaldforge.studio             BASE_PATH=/
+//   GitHub Pages (project site) -> SITE_URL=https://skaldforgestudio-git.github.io BASE_PATH=/SkaldforgeWebsite
+// The deploy workflow pins both values to the custom domain rather than reading
+// them from actions/configure-pages, which reports an http:// origin until the
+// Pages certificate is issued and would bake http:// into canonical URLs,
+// og:url and the sitemap.
+const SITE_URL = process.env.SITE_URL ?? 'https://skaldforge.studio';
+const BASE_PATH = process.env.BASE_PATH ?? '/';
 
 export default defineConfig({
   site: SITE_URL,

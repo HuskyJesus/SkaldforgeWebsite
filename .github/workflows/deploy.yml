@@ -36,12 +36,13 @@ jobs:
         uses: actions/configure-pages@v5
 
       - name: Build
-        # `configure-pages` resolves the correct origin and sub-path for this
-        # repository, so nothing about the deployment target is hardcoded.
-        # Moving to a custom domain only needs a CNAME file plus the base "/".
+        # Pinned to the custom domain in public/CNAME. `configure-pages` reports
+        # its origin as http:// until GitHub finishes issuing the Pages
+        # certificate, and that scheme ends up baked into canonical URLs,
+        # og:url and the sitemap. Keep these two in step with public/CNAME.
         env:
-          SITE_URL: ${{ steps.pages.outputs.origin }}
-          BASE_PATH: ${{ steps.pages.outputs.base_path }}
+          SITE_URL: https://skaldforge.studio
+          BASE_PATH: /
         run: |
           npm run check
           npm run build
