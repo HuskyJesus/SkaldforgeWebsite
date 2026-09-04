@@ -3,10 +3,13 @@ import path from 'node:path';
 
 // Audit generated pages, not implementation details. Run after astro build.
 const root = path.resolve('dist');
-const base = (process.env.BASE_PATH ?? '/SkaldforgeWebsite').replace(/\/$/, '');
+// Default matches astro.config.mjs so a local audit agrees with a local build.
+const base = (process.env.BASE_PATH ?? '/').replace(/\/$/, '');
 const walk = dir => fs.readdirSync(dir, { withFileTypes: true }).flatMap(e =>
   e.isDirectory() ? walk(path.join(dir, e.name)) : [path.join(dir, e.name)]);
 const pages = walk(root).filter(f => f.endsWith('.html'));
+// An empty dist would otherwise sail through every check below and report a pass.
+if (!pages.length) { console.error('No pages found in dist. Run astro build first.'); process.exit(1); }
 const errors = [];
 const cache = new Map();
 const decode = s => s.replaceAll('&amp;', '&').replaceAll('&quot;', '"').replaceAll('&#39;', "'");
