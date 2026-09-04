@@ -20,3 +20,8 @@ pnpm-debug.log*
 Thumbs.db
 .vscode/
 .idea/
+
+# stray review artifacts (git format-patch / bundle output)
+*.patch
+*.bundle
+*.diff

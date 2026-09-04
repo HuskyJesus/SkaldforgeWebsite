@@ -3,9 +3,11 @@ import sitemap from '@astrojs/sitemap';
 
 // Deployment is environment driven so the site can move from GitHub Pages to a
 // custom Skaldforge domain without touching a single link in the source.
-//   GitHub Pages (project site) -> SITE_URL=https://huskyjesus.github.io  BASE_PATH=/SkaldforgeWebsite
-//   Custom domain               -> SITE_URL=https://skaldforge.com        BASE_PATH=/
-const SITE_URL = process.env.SITE_URL ?? 'https://huskyjesus.github.io';
+//   GitHub Pages (project site) -> SITE_URL=https://skaldforgestudio-git.github.io  BASE_PATH=/SkaldforgeWebsite
+//   Custom domain               -> SITE_URL=https://skaldforge.com                 BASE_PATH=/
+// CI never relies on these defaults: the deploy workflow feeds both values in
+// from actions/configure-pages, so they only matter for local builds.
+const SITE_URL = process.env.SITE_URL ?? 'https://skaldforgestudio-git.github.io';
 const BASE_PATH = process.env.BASE_PATH ?? '/SkaldforgeWebsite';
 
 export default defineConfig({

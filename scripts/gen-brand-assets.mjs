@@ -1,13 +1,17 @@
 /**
- * Generates derived brand assets (icons + social card) from the supplied
- * source art. Run with: node scripts/gen-brand-assets.mjs
+ * Generates derived brand assets (icons + wordmark + social card) from the
+ * supplied source art. Run with: node scripts/gen-brand-assets.mjs
  *
- * Nothing here invents artwork — the social card composites a real gameplay
- * frame with the official Mythbound logotype. See ART_ASSET_CHECKLIST.md P0
- * for the bespoke 1200x630 card this stands in for.
+ * Nothing here invents artwork. Every output is a resize, trim or composite of
+ * a studio-supplied master:
+ *   src/assets/brand/skaldforge-icon.png    gold valknut badge  -> all favicons
+ *   public/assets/brand/skaldforge-emblem.png raven wordmark    -> nav/footer mark
+ *   src/assets/brand/mythbound-logo.png     Mythbound logotype  -> social card
+ * See ART_ASSET_CHECKLIST.md P0 for the bespoke 1200x630 card the last one
+ * stands in for.
  */
 import sharp from 'sharp';
-import { readFileSync, mkdirSync } from 'node:fs';
+import { writeFileSync, copyFileSync, mkdirSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
 import { dirname, join } from 'node:path';
 
@@ -17,22 +21,64 @@ const src = join(root, 'src', 'assets');
 
 mkdirSync(join(pub, 'assets', 'social'), { recursive: true });
 
-const favicon = readFileSync(join(pub, 'favicon.svg'));
-
 // ---------------------------------------------------------------- app icons
-for (const size of [180, 192, 512]) {
-  const name = size === 180 ? 'apple-touch-icon.png' : `icon-${size}.png`;
-  await sharp(favicon, { density: 384 })
-    .resize(size, size)
-    .png({ compressionLevel: 9 })
-    .toFile(join(pub, name));
+// The master is the studio valknut badge, NOT a placeholder drawing. Earlier
+// revisions of this script rebuilt the icons from a stand-in favicon.svg and
+// silently overwrote the real artwork, so the master lives in src/assets/brand
+// where it can never be clobbered by its own output.
+const iconMaster = join(src, 'brand', 'skaldforge-icon.png');
+
+const png = (size) =>
+  sharp(iconMaster).resize(size, size, { fit: 'cover' }).png({ compressionLevel: 9 });
+
+for (const [size, name] of [
+  [16, 'favicon-16.png'],
+  [32, 'favicon-32.png'],
+  [48, 'favicon-48.png'],
+  [180, 'apple-touch-icon.png'],
+  [192, 'icon-192.png'],
+]) {
+  await png(size).toFile(join(pub, name));
 }
 
-// A 32px PNG covers browsers that ignore the SVG icon.
-await sharp(favicon, { density: 384 })
-  .resize(32, 32)
+// The master is already 512x512, so copy it rather than round-tripping it
+// through an encoder that only makes the file bigger.
+copyFileSync(iconMaster, join(pub, 'icon-512.png'));
+
+// A real favicon.ico for user agents and link previews that request the bare
+// /favicon.ico path instead of reading the <link rel="icon"> tags.
+const icoSizes = [16, 32, 48];
+const icoParts = await Promise.all(icoSizes.map((s) => png(s).toBuffer()));
+const header = Buffer.alloc(6 + 16 * icoParts.length);
+header.writeUInt16LE(0, 0); // reserved
+header.writeUInt16LE(1, 2); // type: icon
+header.writeUInt16LE(icoParts.length, 4);
+let offset = header.length;
+icoParts.forEach((buf, i) => {
+  const e = 6 + 16 * i;
+  header.writeUInt8(icoSizes[i] === 256 ? 0 : icoSizes[i], e);
+  header.writeUInt8(icoSizes[i] === 256 ? 0 : icoSizes[i], e + 1);
+  header.writeUInt8(0, e + 2); // palette size
+  header.writeUInt8(0, e + 3); // reserved
+  header.writeUInt16LE(1, e + 4); // colour planes
+  header.writeUInt16LE(32, e + 6); // bits per pixel
+  header.writeUInt32LE(buf.length, e + 8);
+  header.writeUInt32LE(offset, e + 12);
+  offset += buf.length;
+});
+writeFileSync(join(pub, 'favicon.ico'), Buffer.concat([header, ...icoParts]));
+
+// ----------------------------------------------------------------- wordmark
+// The supplied emblem is a black silhouette centred in a square canvas with a
+// lot of transparent padding. The site tints it with currentColor through a CSS
+// mask, so the padding has to go: otherwise the mark renders at roughly a third
+// of its allotted height inside an empty box.
+const wordmark = await sharp(join(pub, 'assets', 'brand', 'skaldforge-emblem.png'))
+  .trim({ threshold: 1 })
   .png({ compressionLevel: 9 })
-  .toFile(join(pub, 'favicon-32.png'));
+  .toBuffer({ resolveWithObject: true });
+writeFileSync(join(pub, 'assets', 'brand', 'skaldforge-wordmark.png'), wordmark.data);
+console.log(`wordmark trimmed to ${wordmark.info.width}x${wordmark.info.height}`);
 
 // -------------------------------------------------------------- social card
 // 1200x630: darkened gameplay plate + centred Mythbound lockup.

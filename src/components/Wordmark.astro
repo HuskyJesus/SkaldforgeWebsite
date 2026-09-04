@@ -2,10 +2,18 @@
 /**
  * Skaldforge site logo.
  *
- * Uses the studio-supplied emblem artwork (public/assets/brand/skaldforge-emblem.png).
- * The source file is a flat, full-colour badge (gold valknut on a navy ground),
- * not a silhouette, so it is rendered as a plain image rather than masked with
- * currentColor the way the previous raven wordmark was.
+ * The studio-supplied emblem is a black raven-and-wordmark silhouette on a
+ * transparent ground, centred in a square canvas. Two things follow from that:
+ *
+ *  1. It is painted with `currentColor` through a CSS mask, not drawn as an
+ *     <img>. A black silhouette rendered as a plain image is invisible on the
+ *     site's near-black nav and footer.
+ *  2. It masks the *trimmed* derivative, so the box maps to the artwork rather
+ *     than to the square canvas's transparent padding. The raven only fills
+ *     67 of the master's 184 rows, so masking the untrimmed file would render
+ *     the mark at about a third of its intended height.
+ *
+ * Nav and Footer size this with `block-size` and tint it with `color`.
  */
 import { asset } from '../lib/url';
 
@@ -14,16 +22,26 @@ interface Props {
   title?: string;
 }
 const { class: className, title } = Astro.props;
-const src = asset('assets/brand/skaldforge-emblem.png');
+const src = asset('assets/brand/skaldforge-wordmark.png');
 ---
 
-<img
-  src={src}
-  alt={title ?? ''}
+<span
+  class:list={['wordmark', className]}
   role={title ? 'img' : 'presentation'}
+  aria-label={title ?? undefined}
   aria-hidden={title ? undefined : 'true'}
-  class={className}
-  width="184"
-  height="184"
-  decoding="async"
-/>
+  style={`--wordmark-image: url('${src}')`}
+></span>
+
+<style>
+  .wordmark {
+    display: block;
+    /* Intrinsic ratio of the trimmed artwork (184x67). */
+    aspect-ratio: 184 / 67;
+    block-size: 1.5rem;
+    inline-size: auto;
+    background-color: currentColor;
+    -webkit-mask: var(--wordmark-image) no-repeat center / contain;
+    mask: var(--wordmark-image) no-repeat center / contain;
+  }
+</style>
