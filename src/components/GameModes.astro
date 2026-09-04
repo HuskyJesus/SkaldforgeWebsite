@@ -36,6 +36,7 @@ import { asset } from '../lib/url';
               class="mode__video"
               data-mode-video
               data-src={asset(`assets/video/${mode.video}.mp4`)}
+              poster={asset(`assets/video/${mode.video}-poster.jpg`)}
               controls
               aria-label={`${mode.name} gameplay`}
               tabindex="0"
@@ -196,11 +197,17 @@ import { asset } from '../lib/url';
       poster?.setAttribute('hidden', '');
       video.focus();
       video.play().catch(() => {
-        // Autoplay refused. restore the poster so the card is never blank.
-        video.hidden = true;
-        button.hidden = false;
-        poster?.removeAttribute('hidden');
+        // Autoplay refused. The clip keeps its own poster and native controls,
+        // so the viewer can start it. Tearing the card back down here removed
+        // the very clip that had just been asked for.
       });
+    });
+
+    // Only a genuine media failure returns the card to its still.
+    video.addEventListener('error', () => {
+      video.hidden = true;
+      button.hidden = false;
+      poster?.removeAttribute('hidden');
     });
 
     // Stop decoding once the card scrolls away.

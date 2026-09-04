@@ -70,19 +70,34 @@ import { asset, url } from '../lib/url';
 <script>
   const reduced = window.matchMedia('(prefers-reduced-motion: reduce)');
   const videos = [...document.querySelectorAll<HTMLVideoElement>('[data-tech-video]')];
-  if (!reduced.matches) {
+
+  // A clip that never gets a src shows its poster behind native controls that
+  // do nothing, so attaching is kept separate from autoplaying: reduced motion
+  // suppresses the motion, not the player.
+  const attach = (video: HTMLVideoElement) => {
+    if (!video.src && video.dataset.src) video.src = video.dataset.src;
+  };
+
+  if ('IntersectionObserver' in window) {
+    let delivered = false;
     const observer = new IntersectionObserver((entries) => {
+      delivered = true;
       for (const entry of entries) {
         const video = entry.target as HTMLVideoElement;
         if (entry.isIntersecting) {
-          if (!video.src && video.dataset.src) video.src = video.dataset.src;
-          void video.play().catch(() => {});
+          attach(video);
+          if (!reduced.matches) void video.play().catch(() => {});
         } else {
           video.pause();
         }
       }
     }, { rootMargin: '150px 0px', threshold: 0.25 });
     videos.forEach(video => observer.observe(video));
+    // Where the observer never reports, load them anyway rather than leaving
+    // three dead players on the page.
+    setTimeout(() => { if (!delivered) videos.forEach(attach); }, 1500);
+  } else {
+    videos.forEach(attach);
   }
 </script>
 
@@ -98,7 +113,6 @@ import { asset, url } from '../lib/url';
   .feature__grid{display:grid;gap:var(--sp-7);align-items:center}.feature__copy{display:grid;gap:var(--sp-4)}
   .feature__video{inline-size:100%;aspect-ratio:16/9;object-fit:cover;border:1px solid var(--s-hairline);border-radius:var(--r-lg);box-shadow:var(--sh-3)}
   @media(min-width:960px){.feature__grid{grid-template-columns:minmax(0,.78fr) minmax(0,1.22fr);gap:var(--sp-9)}.feature--alt .feature__copy{order:2}.feature--alt .feature__video{order:1}}
-  @media(prefers-reduced-motion:reduce){.feature__video{display:none}}
   .tools,.vidoc{border-block-start:1px solid var(--s-hairline)} .tools__head,.vidoc__head{margin-block-end:var(--sp-7)}
   .tools__stacks{display:grid;gap:var(--sp-5)}
   @media(min-width:760px){.tools__stacks{grid-template-columns:repeat(2,1fr);gap:var(--sp-6)}}

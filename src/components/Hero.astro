@@ -304,54 +304,85 @@ const still = img(stillId);
   if (video) {
     const reduce = window.matchMedia('(prefers-reduced-motion: reduce)');
     const wide = window.matchMedia('(min-width: 768px)');
-    // Respect a user's metered/limited connection where the browser reports it.
-    const conn = (navigator as any).connection;
-    const saveData = Boolean(conn?.saveData);
-    const slow = /(^|-)2g$/.test(conn?.effectiveType ?? '');
+    const large = window.matchMedia('(min-width: 1280px)');
 
-    const shouldLoad = () => wide.matches && !reduce.matches && !saveData && !slow;
+    // Read the connection on each check rather than sampling it once at
+    // startup. Browsers report a conservative estimate early in a page's life
+    // and revise it moments later, so a captured value can strand the loop for
+    // the rest of the session.
+    const streamable = () => {
+      const conn = (navigator as any).connection;
+      if (conn?.saveData) return false;
+      return !/(^|-)2g$/.test(conn?.effectiveType ?? '');
+    };
+
+    const shouldPlay = () => wide.matches && !reduce.matches && streamable();
+
+    const start = () => {
+      if (video.dataset.userPaused === 'true') return;
+      video.play().catch(() => {
+        // Autoplay refused: the poster stays and no control is offered.
+      });
+    };
 
     let loaded = false;
     const load = () => {
-      if (loaded || !shouldLoad()) return;
-      loaded = true;
-      const src = window.matchMedia('(min-width: 1280px)').matches
-        ? video.dataset.srcLg
-        : video.dataset.srcSm;
+      if (loaded || !shouldPlay()) return;
+      const src = large.matches ? video.dataset.srcLg : video.dataset.srcSm;
       if (!src) return;
+      loaded = true;
       video.src = src;
-      video.play().then(
-        () => {
-          video.classList.add('is-playing');
-          pause?.removeAttribute('hidden');
-        },
-        () => {
-          // Autoplay refused: leave the poster in place, nothing to control.
-        },
-      );
+      start();
     };
 
-    // Defer past first paint so the poster wins LCP.
+    // Visibility follows playback itself. Tying it to the play() promise loses
+    // the race whenever a later play() supersedes the first, which left the
+    // loop running at zero opacity with the pause control still hidden.
+    video.addEventListener('playing', () => {
+      video.classList.add('is-playing');
+      if (pause) pause.hidden = false;
+    });
+
+    const icon = pause?.querySelector<HTMLElement>('.hero__pause-icon');
+    const label = pause?.querySelector<HTMLElement>('[data-pause-label]');
+    const syncControl = () => {
+      const playing = !video.paused;
+      icon?.setAttribute('data-icon', playing ? 'pause' : 'play');
+      if (label) label.textContent = playing ? 'Pause background video' : 'Play background video';
+    };
+    video.addEventListener('play', syncControl);
+    video.addEventListener('pause', syncControl);
+
+    // Defer past first paint so the poster wins LCP. requestIdleCallback can go
+    // unserved in a background tab, so a timer backs it up. load() is idempotent.
     if ('requestIdleCallback' in window) {
       (window as any).requestIdleCallback(load, { timeout: 2500 });
-    } else {
-      setTimeout(load, 1200);
     }
+    setTimeout(load, 1200);
 
-    reduce.addEventListener('change', () => {
+    // Conditions change after first paint: a window is widened, a phone is
+    // turned, the motion preference is toggled, the connection estimate is
+    // revised. Without this the loop stays dead for the whole session.
+    const reconsider = () => {
       if (reduce.matches) {
         video.pause();
         video.classList.remove('is-playing');
         if (pause) pause.hidden = true;
-      } else if (!loaded) load();
-    });
+        return;
+      }
+      if (!loaded) load();
+      else if (video.paused && shouldPlay()) start();
+    };
+    wide.addEventListener('change', reconsider);
+    reduce.addEventListener('change', reconsider);
+    (navigator as any).connection?.addEventListener?.('change', reconsider);
 
     // Don't decode video that isn't on screen.
     new IntersectionObserver(
       ([e]) => {
-        if (!loaded || !video.src) return;
+        if (!loaded) return;
         if (e.isIntersecting) {
-          if (shouldLoad() && video.dataset.userPaused !== 'true') video.play().catch(() => {});
+          if (shouldPlay()) start();
         } else {
           video.pause();
         }
@@ -359,22 +390,14 @@ const still = img(stillId);
       { threshold: 0.05 },
     ).observe(video);
 
-    if (pause) {
-      const icon = pause.querySelector<HTMLElement>('.hero__pause-icon');
-      const label = pause.querySelector<HTMLElement>('[data-pause-label]');
-      pause.addEventListener('click', () => {
-        const playing = !video.paused;
-        if (playing) {
-          video.pause();
-          video.dataset.userPaused = 'true';
-        } else {
-          video.dataset.userPaused = 'false';
-          video.play().catch(() => {});
-        }
-        icon?.setAttribute('data-icon', playing ? 'play' : 'pause');
-        const text = playing ? 'Play background video' : 'Pause background video';
-        if (label) label.textContent = text;
-      });
-    }
+    pause?.addEventListener('click', () => {
+      if (video.paused) {
+        video.dataset.userPaused = 'false';
+        video.play().catch(() => {});
+      } else {
+        video.dataset.userPaused = 'true';
+        video.pause();
+      }
+    });
   }
 </script>
