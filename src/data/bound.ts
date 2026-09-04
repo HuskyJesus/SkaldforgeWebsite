@@ -6,6 +6,10 @@
  * names that must not reappear: Thunderous Advance, Thunderfall, Tidal Spear,
  * Leviathan's Wake, Hex Recall, Soul Rend.
  *
+ * Skari and Yrsa are sisters and share the surname Gravewind, confirmed by the
+ * studio on September 4, 2026. The supplied character copy had it right; the
+ * older "Skari Quickstep" in the GDD, ASG slide 20 and FINAL slide 5 is dead.
+ *
  * ART: finished textured renders on transparent backgrounds, recovered from the
  * final status presentation (slide 5, "Meet the Bound"). Each was matched to its
  * character against the ASG concept sheets and documented palettes. All four
@@ -62,7 +66,7 @@ export const bound: Bound[] = [
   },
   {
     id: 'skari',
-    name: 'Skari Quickstep',
+    name: 'Skari Gravewind',
     sponsor: "Loki's Bound",
     sponsorNote:
       'Loki, god of mischief, chose Skari for her speed, cunning, and willingness to fight unfairly.',

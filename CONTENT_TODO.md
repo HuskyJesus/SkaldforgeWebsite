@@ -39,15 +39,15 @@ The studio confirmed **Himinbjorg** on August 31, 2026. This matches FINAL
 slide 6. Public copy, arena data and the image filename now use Himinbjorg.
 No further naming decision is needed.
 
-## 2. Skari's surname : likely a typo in the supplied copy
+## 2. Skari's surname: resolved
 
-The supplied character copy heads Skari's section **"Skari Gravewind"**, but
-also gives Yrsa as **"Yrsa Gravewind"**. Both cannot be Gravewind, and
-**Skari Quickstep** is used consistently in GDD, ASG slide 20 and FINAL slide 5.
+The studio confirmed **Gravewind** on September 4, 2026. Skari and Yrsa are
+sisters, so both share the surname, and the supplied character copy heading
+Skari's section "Skari Gravewind" was correct rather than a typo.
 
-**Currently published: Skari Quickstep.**
-
-**Action:** confirm. `src/data/bound.ts`.
+The older **Skari Quickstep** in the GDD, ASG slide 20 and FINAL slide 5 is
+superseded and must not be restored. Public copy and `src/data/bound.ts` now
+use Skari Gravewind. No further naming decision is needed.
 
 ## 3. Skari's pronouns : changed
 
